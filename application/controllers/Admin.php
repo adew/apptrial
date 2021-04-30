@@ -36,7 +36,8 @@ class Admin extends CI_Controller
   public function details()
   {
     $data['token_generate'] = $this->token_generate();
-    $data['avatar'] = $this->M_admin->get_data_gambar('tb_upload_gambar_user', $this->session->userdata('name'));
+    // $data['avatar'] = $this->M_admin->get_data_gambar('tb_upload_gambar_user', $this->session->userdata('name'));
+    $data['avatar'] = $this->session->userdata('foto_profil');
     $this->session->set_userdata($data);
 
     $data['title'] = 'DILMIL III-18 Ambon';
