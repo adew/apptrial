@@ -13,8 +13,7 @@
   <!-- Main content -->
   <section class="content">
     <div class="row">
-      <div class="col-xs-12">
-
+      <div class="col-md-6 align-self-stretch">
         <!-- /.box -->
         <div class="box box-primary">
           <!-- <div class="box-header">
@@ -23,152 +22,154 @@
           <!-- /.box-header -->
           <div class="box-body">
             <div class="row">
-              <div class="col-sm-6 border-right">
-                <div class="col-sm">
-                  <div class="box-body box-profile">
-                    <span class=""><img class="profile-user-img img-responsive img-circle" src="<?= base_url() ?>/dist/img/foto1.jpg" alt="User profile picture"></span>
-
-                    <!-- <h3 class="profile-username text-center">Nina Mcintire</h3>
-
-              <p class="text-muted text-center">Software Engineer</p> -->
-
-                    <!-- <ul class="list-group list-group-unbordered">
-                <li class="list-group-item">
-                  <span>sdfa</span><b>ASIS, S.Kom, S.H.</b>
-                </li>
-                <li class="list-group-item">
-                 198309252006041003
-                </li>
-                <li class="list-group-item">
-                  Kepala Sub Bagian Sub Bagian Kepegawaian, Organisasi, Dan Tata Laksana
-Pengadilan Militer III - 18 Ambon
-                </li>               
-                <li class="list-group-item">
-                  III/d
-                </li>               
-              </ul> -->
-                    <div class="table-responsive">
-                      <table class="table">
-                        <tbody>
-                          <tr>
-                            <th style="width:30%">Nama</th>
-                            <td>ASIS, S.Kom, S.H.</td>
-                          </tr>
-                          <tr>
-                            <th>NIP</th>
-                            <td>198309252006041003</td>
-                          </tr>
-                          <tr>
-                            <th>Jabatan</th>
-                            <td> Kepala Sub Bagian Sub Bagian Kepegawaian, Organisasi, Dan Tata Laksana
-                              Pengadilan Militer III - 18 Ambon</td>
-                          </tr>
-                          <tr>
-                            <th>Golongan</th>
-                            <td>III/d</td>
-                          </tr>
-
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                  <!-- /.box-body -->
-                </div>
-                <h3 class="box-title">Data PKP Bulanan</h3>
+              <div class="box-body box-profile">
+                <span class=""><img class="profile-user-img img-responsive img-circle" src="<?= base_url() ?>/dist/img/foto1.jpg" alt="User profile picture"></span>
                 <div class="table-responsive">
-                  <table class="table no-margin">
-                    <thead>
-                      <tr>
-                        <th>Bulan</th>
-                        <th>Nama File</th>
-                        <th>Score</th>
-                      </tr>
-                    </thead>
+                  <table class="table">
                     <tbody>
                       <tr>
-                        <td>Januari</td>
-                        <td><a href="pages/examples/invoice.html">OR9842.pdf</a></td>
-                        <td><span class="label label-success">90</span></td>
+                        <th style="width:30%">Nama</th>
+                        <td>ASIS, S.Kom, S.H.</td>
                       </tr>
                       <tr>
-                        <td>Februari</td>
-                        <td><a href="pages/examples/invoice.html">OR2842.pdf</a></td>
-                        <td><span class="label label-success">92</span></td>
+                        <th>NIP</th>
+                        <td>198309252006041003</td>
                       </tr>
                       <tr>
-                        <td>Maret</td>
-                        <td><a href="pages/examples/invoice.html">OR9822.pdf</a></td>
-                        <td><span class="label label-success">88</span></td>
+                        <th>Jabatan</th>
+                        <td> Kepala Sub Bagian Sub Bagian Kepegawaian, Organisasi, Dan Tata Laksana
+                          Pengadilan Militer III - 18 Ambon</td>
                       </tr>
                       <tr>
-                        <td>April</td>
-                        <td><a href="pages/examples/invoice.html">OR2842.pdf</a></td>
-                        <td><span class="label label-success">89</span></td>
-                      </tr>
-                      <tr>
-                        <td>Mei</td>
-                        <td><a href="pages/examples/invoice.html">-</a></td>
-                        <td><span class="label label-success">0</span></td>
-                      </tr>
-                      <tr>
-                        <td>Juni</td>
-                        <td><a href="pages/examples/invoice.html">-</a></td>
-                        <td><span class="label label-success">0</span></td>
-                      </tr>
-                      <tr>
-                        <td>Juli</td>
-                        <td><a href="pages/examples/invoice.html">-</a></td>
-                        <td><span class="label label-success">0</span></td>
-                      </tr>
-                      <tr>
-                        <td>Agustus</td>
-                        <td><a href="pages/examples/invoice.html">-</a></td>
-                        <td><span class="label label-success">0</span></td>
-                      </tr>
-                      <tr>
-                        <td>September</td>
-                        <td><a href="pages/examples/invoice.html">-</a></td>
-                        <td><span class="label label-success">0</span></td>
-                      </tr>
-                      <tr>
-                        <td>Oktober</td>
-                        <td><a href="pages/examples/invoice.html">-</a></td>
-                        <td><span class="label label-success">0</span></td>
-                      </tr>
-                      <tr>
-                        <td>November</td>
-                        <td><a href="pages/examples/invoice.html">-</a></td>
-                        <td><span class="label label-success">0</span></td>
-                      </tr>
-                      <tr>
-                        <td>Desember</td>
-                        <td><a href="pages/examples/invoice.html">-</a></td>
-                        <td><span class="label label-success">0</span></td>
+                        <th>Golongan</th>
+                        <td>III/d</td>
                       </tr>
 
                     </tbody>
                   </table>
                 </div>
+                <!-- /.box-body -->
               </div>
-              <div class="col-sm-6">
-                <h3 class="box-title">Grafik</h3>
-                <div class="graph-container">
-                  <div class="graph" id="examplefirst"> </div>
-                </div>
-              </div>
-
-
             </div>
 
+          </div>
+
+
+        </div>
+        <!-- /.box-body -->
+      </div>
+      <div class="col-md-6">
+        <!-- /.box -->
+        <div class="box box-primary">
+          <!-- <div class="box-header">
+              <h3 class="box-title"><i class="fa fa-fw fa-users" aria-hidden="true"></i> Users</h3>
+            </div> -->
+          <!-- /.box-header -->
+          <!-- <h3 class="box-title">Data PKP Bulanan</h3> -->
+          <div class="table-responsive">
+            <table class="table no-margin">
+              <thead>
+                <tr>
+                  <th>Bulan</th>
+                  <th>Nama File</th>
+                  <th>Score</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Januari</td>
+                  <td><a href="pages/examples/invoice.html">OR9842.pdf</a></td>
+                  <td><span class="label label-success">90</span></td>
+                </tr>
+                <tr>
+                  <td>Februari</td>
+                  <td><a href="pages/examples/invoice.html">OR2842.pdf</a></td>
+                  <td><span class="label label-success">92</span></td>
+                </tr>
+                <tr>
+                  <td>Maret</td>
+                  <td><a href="pages/examples/invoice.html">OR9822.pdf</a></td>
+                  <td><span class="label label-success">88</span></td>
+                </tr>
+                <tr>
+                  <td>April</td>
+                  <td><a href="pages/examples/invoice.html">OR2842.pdf</a></td>
+                  <td><span class="label label-success">89</span></td>
+                </tr>
+                <tr>
+                  <td>Mei</td>
+                  <td><a href="pages/examples/invoice.html">-</a></td>
+                  <td><span class="label label-success">0</span></td>
+                </tr>
+                <tr>
+                  <td>Juni</td>
+                  <td><a href="pages/examples/invoice.html">-</a></td>
+                  <td><span class="label label-success">0</span></td>
+                </tr>
+                <tr>
+                  <td>Juli</td>
+                  <td><a href="pages/examples/invoice.html">-</a></td>
+                  <td><span class="label label-success">0</span></td>
+                </tr>
+                <tr>
+                  <td>Agustus</td>
+                  <td><a href="pages/examples/invoice.html">-</a></td>
+                  <td><span class="label label-success">0</span></td>
+                </tr>
+                <tr>
+                  <td>September</td>
+                  <td><a href="pages/examples/invoice.html">-</a></td>
+                  <td><span class="label label-success">0</span></td>
+                </tr>
+                <tr>
+                  <td>Oktober</td>
+                  <td><a href="pages/examples/invoice.html">-</a></td>
+                  <td><span class="label label-success">0</span></td>
+                </tr>
+                <tr>
+                  <td>November</td>
+                  <td><a href="pages/examples/invoice.html">-</a></td>
+                  <td><span class="label label-success">0</span></td>
+                </tr>
+                <tr>
+                  <td>Desember</td>
+                  <td><a href="pages/examples/invoice.html">-</a></td>
+                  <td><span class="label label-success">0</span></td>
+                </tr>
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="box box-primary">
+          <!-- <div class="box-header">
+              <h3 class="box-title"><i class="fa fa-fw fa-users" aria-hidden="true"></i> Users</h3>
+            </div> -->
+          <!-- /.box-header -->
+
+          <div class="box-body">
+            <div class="box-body box-profile">
+              <h3 class="box-title">Grafik</h3>
+              <div class="graph-container">
+                <div class="graph" id="examplefirst"> </div>
+              </div>
+            </div>
 
           </div>
-          <!-- /.box-body -->
         </div>
-
-
-        <!-- /.col -->
       </div>
-      <!-- /.row -->
-  </section>
-  <!-- /.content -->
+    </div>
+</div>
+</div>
+
+<!-- /.col -->
+</div>
+<!-- /.row -->
+</section>
+<!-- /.content -->
 </div>
