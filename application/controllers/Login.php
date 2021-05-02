@@ -28,15 +28,17 @@ class Login extends CI_Controller
 
 	public function proses_login()
 	{
-		$this->form_validation->set_rules('username', 'Username', 'required');
+		// $this->form_validation->set_rules('username', 'Username', 'required');
+		$this->form_validation->set_rules('nip', 'Nip', 'required');
 		$this->form_validation->set_rules('password', 'Password', 'required');
 
 		if ($this->form_validation->run() == TRUE) {
-			$username = $this->input->post('username', TRUE);
+			// $username = $this->input->post('username', TRUE);
+			$nip = trim($this->input->post('nip', TRUE));
 			$password = $this->input->post('password', TRUE);
 
 			if ($this->session->userdata('token_generate') === $this->input->post('token')) {
-				$cek =  $this->M_login->cek_user('user', $username);
+				$cek =  $this->M_login->cek_user('user', $nip);
 				if ($cek->num_rows() != 1) {
 					$this->session->set_flashdata('msg', 'Username Belum Terdaftar Silahkan Register Dahulu');
 					redirect(base_url());
@@ -46,8 +48,10 @@ class Login extends CI_Controller
 					if (password_verify($password, $isi->password) === TRUE) {
 						$data_session = array(
 							'id' => $isi->id,
-							'username' => $username,
-							'email' => $isi->email,
+							// 'username' => $username,
+							'nama' => $isi->nama,
+							'nip' => $isi->nip,
+							// 'email' => $isi->email,
 							'foto_profil' => $isi->foto_profil,
 							'status' => 'login',
 							'role' => $isi->role,
@@ -56,8 +60,8 @@ class Login extends CI_Controller
 
 						$this->session->set_userdata($data_session);
 
-						$this->M_login->edit_user(['username' => $username], ['last_login' => date('d-m-Y G:i')]);
-
+						$this->M_login->edit_user(['nip' => $nip], ['last_login' => date('d-m-Y G:i')]);
+						// die('sdfa');
 						if ($isi->role == 1) {
 							redirect(base_url('admin'));
 						} else {
@@ -72,5 +76,6 @@ class Login extends CI_Controller
 				redirect(base_url());
 			}
 		}
+		redirect(base_url());
 	}
 }

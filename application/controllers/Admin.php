@@ -13,14 +13,12 @@ class Admin extends CI_Controller
 
   public function index()
   {
-    // print_r($this->session->userdata('name'));die;
     if ($this->session->userdata('status') == 'login' && $this->session->userdata('role') == 1) {
       // $data['avatar'] = $this->M_admin->get_data_gambar('tb_upload_gambar_user', $this->session->userdata('name'));
       $data['avatar'] = $this->session->userdata('foto_profil');
       $data['stokBarangMasuk'] = $this->M_admin->sum('tb_barang_masuk', 'jumlah');
       $data['stokBarangKeluar'] = $this->M_admin->sum('tb_barang_keluar', 'jumlah');
       $data['dataUser'] = $this->M_admin->numrows('user');
-      // $this->load->view('admin/index', $data);
       $data['active'] = '';
       $data['title'] = 'DILMIL III-18 Ambon';
       $this->load->view('admin/template/adm_header', $data);
@@ -50,9 +48,8 @@ class Admin extends CI_Controller
 
   public function datapkp()
   {
-    $data['token_generate'] = $this->token_generate();
-    $data['avatar'] = $this->M_admin->get_data_gambar('tb_upload_gambar_user', $this->session->userdata('name'));
-    $this->session->set_userdata($data);
+    $data['avatar'] = $this->session->userdata('foto_profil');
+    $data['list_data'] = $this->M_admin->select('tb_pkp');
 
     $data['title'] = 'DILMIL III-18 Ambon';
     $this->load->view('admin/template/adm_header', $data);
@@ -64,11 +61,22 @@ class Admin extends CI_Controller
 
   public function inputdatapkp()
   {
-    $data['token_generate'] = $this->token_generate();
-    $data['avatar'] = $this->M_admin->get_data_gambar('tb_upload_gambar_user', $this->session->userdata('name'));
-    $this->session->set_userdata($data);
+    $data['avatar'] = $this->session->userdata('foto_profil');
+    $data['nip'] = $this->session->userdata('nip');
 
-    $data['bulan'] = array(
+    $data['bulan'] = $this->load_bulan();
+
+    $data['title'] = 'DILMIL III-18 Ambon';
+    $this->load->view('admin/template/adm_header', $data);
+    $this->load->view('admin/template/adm_navbar', $data);
+    $this->load->view('admin/template/adm_sidebar', $data);
+    $this->load->view('admin/input_data_pkp', $data);
+    $this->load->view('admin/template/adm_footer', $data);
+  }
+
+  public function load_bulan()
+  {
+    $data = array(
       '01' => 'JANUARI',
       '02' => 'FEBRUARI',
       '03' => 'MARET',
@@ -82,14 +90,89 @@ class Admin extends CI_Controller
       '11' => 'NOVEMBER',
       '12' => 'DESEMBER',
     );
+    return $data;
+  }
 
+  public function savedatapkp()
+  {
+    $this->form_validation->set_rules('nip', 'NIP', 'required', array('required' => 'Wajib diisi'));
+    $this->form_validation->set_rules('bulan', 'Bulan', 'required', array('required' => 'Wajib diisi'));
+    $this->form_validation->set_rules('skor', 'Skor', 'required', array('required' => 'Wajib diisi'));
 
-    $data['title'] = 'DILMIL III-18 Ambon';
-    $this->load->view('admin/template/adm_header', $data);
-    $this->load->view('admin/template/adm_navbar', $data);
-    $this->load->view('admin/template/adm_sidebar', $data);
-    $this->load->view('admin/input_data_pkp', $data);
-    $this->load->view('admin/template/adm_footer', $data);
+    if ($this->form_validation->run() == FALSE) {
+      $data['token_generate'] = $this->token_generate();
+      $data['avatar'] = $this->session->userdata('foto_profil');
+      $data['nip'] = $this->session->userdata('nip');
+      $data['bulan'] = $this->load_bulan();
+
+      $data['title'] = 'DILMIL III-18 Ambon';
+      $this->load->view('admin/template/adm_header', $data);
+      $this->load->view('admin/template/adm_navbar', $data);
+      $this->load->view('admin/template/adm_sidebar', $data);
+      $this->load->view('admin/input_data_pkp', $data);
+      $this->load->view('admin/template/adm_footer', $data);
+    } else {
+
+      $temp = explode(".", $_FILES["file_pkp"]["name"]);
+      $newfilename = substr($this->session->userdata('nama'), 0, 7) . date('d-m-Y_his') . '.' . end($temp);
+      $config['upload_path'] = './uploads/';
+      $config['allowed_types'] = '*';
+      $config['max_size'] = 3000;
+      $config['file_name'] = $newfilename;
+
+      $this->load->library('upload', $config);
+      $this->upload->initialize($config);
+
+      if ($this->upload->do_upload('file_pkp')) {
+        // print_r($this->upload->display_errors());
+        // die;
+        $fileData = $this->upload->data();
+        $nip    = trim($this->input->post('nip', TRUE));
+        $bulan    = $this->input->post('bulan', TRUE);
+        $skor    = $this->input->post('skor', TRUE);
+
+        $data = array(
+          'nip'     => $nip,
+          'bulan'     => $bulan,
+          'file_pkp'     => $fileData['file_name'],
+          'skor'     => $skor,
+          'creat_at'     => date('d-m-Y'),
+        );
+
+        if ($this->M_admin->insert('tb_pkp', $data)) {
+          $this->session->set_flashdata('success', '<p>Selamat! Anda berhasil mengunggah file <strong>' . $fileData['file_name'] . '</strong></p>');
+        } else {
+          $this->session->set_flashdata('error', '<p>Gagal! File ' . $fileData['file_name'] . ' tidak berhasil tersimpan di database anda</p>');
+        }
+        redirect(base_url('admin/datapkp'));
+      } else {
+        $this->session->set_flashdata('error', $this->upload->display_errors());
+        redirect(base_url('admin/inputdatapkp'));
+      }
+    }
+  }
+
+  public function single_upload($field_name, $conf = array())
+  {
+    $upload_path = FCPATH . $conf['upload_path'];
+    if (!is_dir($upload_path))
+      mkdir($upload_path, 0777, true);
+
+    $config = array(
+      'upload_path' => $upload_path,
+      'allowed_types' => $conf['allowed_types'],
+      'max_size' => 0,
+      'encrypt_name' => true,
+      'file_name' => $conf['file_name'],
+
+    );
+    $this->upload->initialize($config);
+    if ($this->upload->do_upload($field_name)) {
+      $data = $this->upload->data();
+      chmod($data['full_path'], 0777);
+
+      return $data['file_name'];
+    }
   }
 
   public function sigout()
@@ -105,7 +188,7 @@ class Admin extends CI_Controller
   public function profile()
   {
     $data['token_generate'] = $this->token_generate();
-    $data['avatar'] = $this->M_admin->get_data_gambar('tb_upload_gambar_user', $this->session->userdata('name'));
+    $data['avatar'] = $this->session->userdata('foto_profil');
     $this->session->set_userdata($data);
 
     $data['title'] = 'DILMIL III-18 Ambon';
@@ -222,8 +305,8 @@ class Admin extends CI_Controller
   {
     $data['title'] = 'DILMIL III-18 Ambon';
     $data['list_users'] = $this->M_admin->kecuali('user', $this->session->userdata('name'));
-    $data['token_generate'] = $this->token_generate();
-    $data['avatar'] = $this->M_admin->get_data_gambar('tb_upload_gambar_user', $this->session->userdata('name'));
+
+    $data['avatar'] = $this->session->userdata('foto_profil');
     $this->session->set_userdata($data);
     $this->load->view('admin/template/adm_header', $data);
     $this->load->view('admin/template/adm_navbar', $data);
@@ -233,10 +316,7 @@ class Admin extends CI_Controller
 
   public function form_user()
   {
-    $data['list_satuan'] = $this->M_admin->select('tb_satuan');
-    $data['token_generate'] = $this->token_generate();
-    $data['avatar'] = $this->M_admin->get_data_gambar('tb_upload_gambar_user', $this->session->userdata('name'));
-    $this->session->set_userdata($data);
+    $data['avatar'] = $this->session->userdata('foto_profil');
     $data['title'] = 'DILMIL III-18 Ambon';
     $this->load->view('admin/template/adm_header', $data);
     $this->load->view('admin/template/adm_navbar', $data);
@@ -251,7 +331,7 @@ class Admin extends CI_Controller
     $where = array('id' => $id);
     $data['token_generate'] = $this->token_generate();
     $data['list_data'] = $this->M_admin->get_data('user', $where);
-    $data['avatar'] = $this->M_admin->get_data_gambar('tb_upload_gambar_user', $this->session->userdata('name'));
+    $data['avatar'] = $this->session->userdata('foto_profil');
     $this->session->set_userdata($data);
     $data['title'] = 'DILMIL III-18 Ambon';
     $this->load->view('admin/template/adm_header', $data);
@@ -272,43 +352,51 @@ class Admin extends CI_Controller
 
   public function proses_tambah_user()
   {
-    $this->form_validation->set_rules('username', 'Username', 'required');
-    $this->form_validation->set_rules('nama', 'Nama Lengkap', 'required');
-    $this->form_validation->set_rules('nip', 'nip', 'required');
-    $this->form_validation->set_rules('jabatan', 'jabatan', 'required');
-    $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
-    $this->form_validation->set_rules('password', 'Password', 'required');
-    $this->form_validation->set_rules('confirm_password', 'Confirm password', 'required|matches[password]');
+    // $this->form_validation->set_rules('username', 'Username', 'required', array('required' => 'Wajib diisi'));
+    $this->form_validation->set_rules('nama', 'Nama Lengkap', 'required', array('required' => 'Wajib diisi'));
+    $this->form_validation->set_rules('nip', 'NIP', 'required', array('required' => 'Wajib diisi'));
+    $this->form_validation->set_rules('jabatan', 'Jabatan', 'required', array('required' => 'Wajib diisi'));
+    $this->form_validation->set_rules('unit_kerja', 'Unit Kerja', 'required', array('required' => 'Wajib diisi'));
+    // $this->form_validation->set_rules('email', 'Email', 'required|valid_email', array('required' => 'Wajib diisi', 'valid_email' => 'Penulisan email salah'));
+    $this->form_validation->set_rules('password', 'Password', 'required', array('required' => 'Wajib diisi'));
+    // $this->form_validation->set_rules('confirm_password', 'Confirm password', 'required|matches[password]', array('required' => 'Wajib diisi'));
 
-    if ($this->form_validation->run() == TRUE) {
-      if ($this->session->userdata('token_generate') === $this->input->post('token')) {
+    if ($this->form_validation->run() == FALSE) {
+      $data['token_generate'] = $this->token_generate();
+      $data['avatar'] = $this->session->userdata('foto_profil');
 
-        $username     = $this->input->post('username', TRUE);
-        $nama     = $this->input->post('nama', TRUE);
-        $nip    = $this->input->post('nip', TRUE);
-        $jabatan    = $this->input->post('jabatan', TRUE);
-        $email        = $this->input->post('email', TRUE);
-        $password     = $this->input->post('password', TRUE);
-        $role         = $this->input->post('role', TRUE);
-
-        $data = array(
-          'username'     => $username,
-          'nama'     => $nama,
-          'nip'     => $nip,
-          'jabatan'     => $jabatan,
-          'foto_profil'     => 'nopic.png',
-          'email'        => $email,
-          'password'     => $this->hash_password($password),
-          'role'         => $role,
-        );
-        $this->M_admin->insert('user', $data);
-
-        $this->session->set_flashdata('msg_berhasil', 'User Berhasil Ditambahkan');
-        redirect(base_url('admin/form_user'));
-      }
-    } else {
-      $data['avatar'] = $this->M_admin->get_data_gambar('tb_upload_gambar_user', $this->session->userdata('name'));
+      $data['title'] = 'DILMIL III-18 Ambon';
+      $this->load->view('admin/template/adm_header', $data);
+      $this->load->view('admin/template/adm_navbar', $data);
+      $this->load->view('admin/template/adm_sidebar', $data);
       $this->load->view('admin/form_users/form_insert', $data);
+      $this->load->view('admin/template/adm_footer', $data);
+    } else {
+      // $username     = $this->input->post('username', TRUE);
+      $nama     = $this->input->post('nama', TRUE);
+      $nip    = trim($this->input->post('nip', TRUE));
+      $jabatan    = $this->input->post('jabatan', TRUE);
+      $unit_kerja    = $this->input->post('unit_kerja', TRUE);
+      // $email        = $this->input->post('email', TRUE);
+      $password     = $this->input->post('password', TRUE);
+      $role         = $this->input->post('role', TRUE);
+
+      $data = array(
+        // 'username'     => $username,
+        'nama'     => $nama,
+        'nip'     => $nip,
+        'jabatan'     => $jabatan,
+        'unit_kerja'     => $unit_kerja,
+        'foto_profil'     => 'nopic.png',
+        // 'email'        => $email,
+        'password'     => $this->hash_password($password),
+        'role'         => $role,
+      );
+      // die($nip);
+      $this->M_admin->insert('user', $data);
+
+      $this->session->set_flashdata('msg_berhasil', 'User Berhasil Ditambahkan');
+      redirect(base_url('admin/users'));
     }
   }
 
@@ -385,7 +473,7 @@ class Admin extends CI_Controller
   public function form_barangmasuk()
   {
     $data['list_satuan'] = $this->M_admin->select('tb_satuan');
-    $data['avatar'] = $this->M_admin->get_data_gambar('tb_upload_gambar_user', $this->session->userdata('name'));
+    $data['avatar'] = $this->session->userdata('foto_profil');
     $this->load->view('admin/form_barangmasuk/form_insert', $data);
   }
 
@@ -403,7 +491,7 @@ class Admin extends CI_Controller
     $where = array('id_transaksi' => $id_transaksi);
     $data['data_barang_update'] = $this->M_admin->get_data('tb_barang_masuk', $where);
     $data['list_satuan'] = $this->M_admin->select('tb_satuan');
-    $data['avatar'] = $this->M_admin->get_data_gambar('tb_upload_gambar_user', $this->session->userdata('name'));
+    $data['avatar'] = $this->session->userdata('foto_profil');
     $this->load->view('admin/form_barangmasuk/form_update', $data);
   }
 
@@ -495,14 +583,14 @@ class Admin extends CI_Controller
 
   public function form_satuan()
   {
-    $data['avatar'] = $this->M_admin->get_data_gambar('tb_upload_gambar_user', $this->session->userdata('name'));
+    $data['avatar'] = $this->session->userdata('foto_profil');
     $this->load->view('admin/form_satuan/form_insert', $data);
   }
 
   public function tabel_satuan()
   {
     $data['list_data'] = $this->M_admin->select('tb_satuan');
-    $data['avatar'] = $this->M_admin->get_data_gambar('tb_upload_gambar_user', $this->session->userdata('name'));
+    $data['avatar'] = $this->session->userdata('foto_profil');
     $this->load->view('admin/tabel/tabel_satuan', $data);
   }
 
@@ -511,7 +599,7 @@ class Admin extends CI_Controller
     $uri = $this->uri->segment(3);
     $where = array('id_satuan' => $uri);
     $data['data_satuan'] = $this->M_admin->get_data('tb_satuan', $where);
-    $data['avatar'] = $this->M_admin->get_data_gambar('tb_upload_gambar_user', $this->session->userdata('name'));
+    $data['avatar'] = $this->session->userdata('foto_profil');
     $this->load->view('admin/form_satuan/form_update', $data);
   }
 
@@ -587,7 +675,7 @@ class Admin extends CI_Controller
     $where = array('id_transaksi' => $uri);
     $data['list_data'] = $this->M_admin->get_data('tb_barang_masuk', $where);
     $data['list_satuan'] = $this->M_admin->select('tb_satuan');
-    $data['avatar'] = $this->M_admin->get_data_gambar('tb_upload_gambar_user', $this->session->userdata('name'));
+    $data['avatar'] = $this->session->userdata('foto_profil');
     $this->load->view('admin/perpindahan_barang/form_update', $data);
   }
 
@@ -636,7 +724,7 @@ class Admin extends CI_Controller
   {
     $data = "";
     $data['list_data'] = $this->M_admin->select('tb_barang_keluar');
-    $data['avatar'] = $this->M_admin->get_data_gambar('tb_upload_gambar_user', $this->session->userdata('name'));
+    $data['avatar'] = $this->session->userdata('foto_profil');
     $this->load->view('admin/tabel/tabel_barangkeluar', $data);
   }
 }

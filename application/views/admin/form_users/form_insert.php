@@ -28,68 +28,66 @@
             <div class="container">
               <form action="<?= base_url('admin/proses_tambah_user') ?>" role="form" method="post">
 
-                <?php if ($this->session->flashdata('msg_berhasil')) { ?>
+                <!-- <?php if ($this->session->flashdata('msg_berhasil')) { ?>
                   <div class="alert alert-success alert-dismissible" style="width:91%">
                     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                     <strong>Success!</strong><br> <?php echo $this->session->flashdata('msg_berhasil'); ?>
                   </div>
-                <?php } ?>
-
-                <?php if (validation_errors()) { ?>
-                  <div class="alert alert-warning alert-dismissible">
-                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                    <strong>Warning!</strong><br> <?php echo validation_errors(); ?>
-                  </div>
-                <?php } ?>
+                <?php } ?> -->
 
                 <div class="box-body">
-                  <div class="form-group" style="display:block;">
+                  <!-- <div class="form-group" style="display:block;">
                     <label for="username" style="width:87%;margin-left: 0px;">Username</label>
-                    <input type="text" name="username" style="width: 30%;margin-right: 67px;margin-left: 0px;" class="form-control" id="username" placeholder="Username">
+                    <?php echo form_error('username', '<p class="callout callout-warning" style=" width: 50%" role="alert">', '</p>'); ?>
+                    <input type="text" name="username" value="<?php echo set_value('username'); ?>" style=" width: 50%;margin-right: 67px;margin-left: 0px;" class="form-control" id="username" placeholder="Username">
+                  </div> -->
+                  <div class="form-group" style="display:block;">
+                    <label for="nip" style="width:87%;margin-left: 0px;">NIP</label>
+                    <?php echo form_error('nip', '<p class="callout callout-warning" style=" width: 50%" role="alert">', '</p>'); ?>
+                    <input type="text" name="nip" value="<?php echo set_value('nip'); ?>" style="width: 50%;margin-right: 67px;margin-left: 0px;" class="form-control" id="nip" placeholder="NIP">
                   </div>
                   <div class="form-group" style="display:block;">
                     <label for="nama" style="width:87%;margin-left: 0px;">Nama Lengkap</label>
-                    <input type="text" name="nama" style="width: 30%;margin-right: 67px;margin-left: 0px;" class="form-control" id="nama" placeholder="Nama Lengkap">
-                  </div>
-                  <div class="form-group" style="display:block;">
-                    <label for="nip" style="width:87%;margin-left: 0px;">NIP</label>
-                    <input type="text" name="nip" style="width: 30%;margin-right: 67px;margin-left: 0px;" class="form-control" id="nip" placeholder="NIP">
+                    <?php echo form_error('nama', '<p class="callout callout-warning" style=" width: 50%" role="alert">', '</p>'); ?>
+                    <input type="text" name="nama" value="<?php echo set_value('nama'); ?>" style="width: 50%;margin-right: 67px;margin-left: 0px;" class="form-control" id="nama" placeholder="Nama Lengkap">
                   </div>
                   <div class="form-group" style="display:block;">
                     <label for="jabatan" style="width:87%;margin-left: 0px;">Jabatan</label>
-                    <input type="text" name="jabatan" style="width: 30%;margin-right: 67px;margin-left: 0px;" class="form-control" id="jabatan" placeholder="Jabatan">
+                    <?php echo form_error('jabatan', '<p class="callout callout-warning" style=" width: 50%" role="alert">', '</p>'); ?>
+                    <input type="text" name="jabatan" value="<?php echo set_value('jabatan'); ?>" style="width: 50%;margin-right: 67px;margin-left: 0px;" class="form-control" id="jabatan" placeholder="Jabatan">
                   </div>
                   <div class="form-group" style="display:block;">
+                    <label for="unit_kerja" style="width:87%;margin-left: 0px;">Unit Kerja</label>
+                    <?php echo form_error('jabatan', '<p class="callout callout-warning" style=" width: 50%" role="alert">', '</p>'); ?>
+                    <textarea rows="3" name="unit_kerja" value="<?php echo set_value('unit_kerja'); ?>" style="width: 50%;margin-right: 67px;margin-left: 0px;" class="form-control" id="unit_kerja" placeholder="Unit Kerja"></textarea>
+                  </div>
+                  <!-- <div class="form-group" style="display:block;">
                     <label for="email" style="width:73%;">Email</label>
-                    <input type="text" name="email" style="width:30%;margin-right: 67px;" class="form-control" id="email" placeholder="Email">
-                  </div>
+                    <?php echo form_error('email', '<p class="callout callout-warning" style=" width: 50%" role="alert">', '</p>'); ?>
+                    <input type="text" name="email" value="<?php echo set_value('email'); ?>" style="width:50%;margin-right: 67px;" class="form-control" id="email" placeholder="Email">
+                  </div> -->
                   <div class="form-group" style="display:block;">
-                    <label for="password" style="width:73%;">Password</label>
-                    <input type="password" name="password" style="width:30%;margin-right: 67px;" class="form-control" id="password" placeholder="Password">
+                    <label for="password" style="width:73%;">Password default</label>
+                    <?php echo form_error('password', '<p class="callout callout-warning" style=" width: 50%" role="alert">', '</p>'); ?>
+                    <input type="text" name="password" value="12345" style="width:50%;margin-right: 67px;" class="form-control" id="password" placeholder="Password" readonly>
                   </div>
-                  <div class="form-group" style="display:block;">
+                  <!-- <div class="form-group" style="display:block;">
                     <label for="confirm_password" style="width:73%;">Confirm Password</label>
-                    <input type="password" name="confirm_password" style="width:30%;margin-right: 67px;" class="form-control" id="confirm_password" placeholder="Confirm Password">
-                  </div>
+                    <input type="password" name="confirm_password" style="width:50%;margin-right: 67px;" class="form-control" id="confirm_password" placeholder="Confirm Password">
+                  </div> -->
                   <div class="form-group" style="display:block;">
                     <label for="role" style="width:73%;">Role</label>
                     <select class="form-control" name="role" style="width:11%;margin-right: 18px;">
-                      <option value="0" selected=""></option>
-                      <option value="0">User Biasa</option>
+                      <option value="0" selected="">User Biasa</option>
                       <option value="1">User Admin</option>
                     </select>
                   </div>
                   <!-- /.box-body -->
-                  <?php if (isset($token_generate)) { ?>
-                    <input type="hidden" name="token" class="form-control" value="<?= $token_generate ?>">
-                  <?php } else {
-                    redirect(base_url('admin/form_user'));
-                  } ?>
 
-                  <div class="box-footer" style="width:93%;">
-                    <a type="button" class="btn btn-default" style="width:10%;margin-right:26%" onclick="history.back(-1)" name="btn_kembali"><i class="fa fa-arrow-left" aria-hidden="true"></i> Kembali</a>
-                    <a type="button" class="btn btn-info" style="width:13%;margin-right:29%" href="<?= base_url('admin/users') ?>" name="btn_listusers"><i class="fa fa-table" aria-hidden="true"></i> Lihat Users</a>
-                    <button type="submit" style="width:20%" class="btn btn-primary"><i class="fa fa-check" aria-hidden="true"></i> Submit</button>
+                  <div class="box-footer" style="width:50%;">
+                    <a type="button" class="btn btn-default" onclick="history.back(-1)" name="btn_kembali"><i class="fa fa-arrow-left" aria-hidden="true"></i> Kembali</a>
+                    <!-- <a type="button" class="btn btn-info" style="width:13%;margin-right:29%" href="<?= base_url('admin/users') ?>" name="btn_listusers"><i class="fa fa-table" aria-hidden="true"></i> Lihat Users</a> -->
+                    <button type="submit" style="width:20%" class="btn btn-primary pull-right"><i class="fa fa-check" aria-hidden="true"></i> Simpan</button>
                   </div>
               </form>
             </div>
