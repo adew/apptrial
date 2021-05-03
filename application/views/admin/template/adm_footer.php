@@ -51,64 +51,14 @@
 <script src="<?php echo base_url() ?>assets/web_admin/bower_components/select2/dist/js/select2.full.min.js"></script>
 
 <script>
+  var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   $(document).ready(function() {
-
-    var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-
-    Morris.Line({
+    var graph = Morris.Line({
       element: 'examplefirst',
-      data: [{
-        m: '2021-01', // <-- valid timestamp strings
-        // a: 0,
-        b: 90
-      }, {
-        m: '2021-02',
-        // a: 54,
-        b: 92
-      }, {
-        m: '2021-03',
-        // a: 243,
-        b: 88
-      }, {
-        m: '2021-04',
-        // a: 206,
-        b: 89
-      }, {
-        m: '2021-05',
-        // a: 161,
-        b: 0
-      }, {
-        m: '2021-06',
-        // a: 187,
-        b: 0
-      }, {
-        m: '2021-07',
-        // a: 210,
-        b: 0
-      }, {
-        m: '2021-08',
-        // a: 204,
-        b: 0
-      }, {
-        m: '2021-09',
-        // a: 224,
-        b: 0
-      }, {
-        m: '2021-10',
-        // a: 301,
-        b: 0
-      }, {
-        m: '2021-11',
-        // a: 262,
-        b: 0
-      }, {
-        m: '2021-12',
-        // a: 199,
-        b: 0
-      }, ],
-      xkey: 'm',
-      ykeys: ['a', 'b'],
-      labels: ['2014', '2021'],
+      // data: jsonObject,
+      xkey: 'label',
+      ykeys: ['skor'],
+      labels: ['2021'],
       xLabelFormat: function(x) { // <--- x.getMonth() returns valid index
         var month = months[x.getMonth()];
         return month;
@@ -118,7 +68,69 @@
         return month;
       },
     });
+    $.ajax({
+      url: '<?= site_url("admin/get_data/") . $this->uri->segment(3) ?>',
+      dataType: 'JSON',
+      async: false,
+      contentType: "application/json; charset=utf-8",
+      success: function(jsonObject) {
+        graph.setData(jsonObject);
+      }
+    });
   });
+  // Morris.Line({
+  //   element: 'examplefirst',
+  //   data: [{
+  //     label: '2021-01', // <-- valid timestamp strings
+  //     skor: 90
+  //   }, {
+  //     label: '2021-02',
+  //     skor: 92
+  //   }, {
+  //     label: '2021-03',
+  //     skor: 88
+  //   }, {
+  //     label: '2021-04',
+  //     skor: 89
+  //   }, {
+  //     label: '2021-05',
+  //     skor: 0
+  //   }, {
+  //     label: '2021-06',
+  //     skor: 0
+  //   }, {
+  //     label: '2021-07',
+  //     skor: 0
+  //   }, {
+  //     label: '2021-08',
+  //     skor: 0
+  //   }, {
+  //     label: '2021-09',
+  //     skor: 0
+  //   }, {
+  //     label: '2021-10',
+  //     skor: 0
+  //   }, {
+  //     label: '2021-11',
+  //     skor: 0
+  //   }, {
+  //     label: '2021-12',
+  //     skor: 0
+  // }, ],
+  // xkey: 'label',
+  //   ykeys: ['skor'],
+  //   labels: ['2021'],
+  //   xLabelFormat: function(x) { // <--- x.getMonth() returns valid index
+  //     var month = months[x.getMonth()];
+  //     return month;
+  //   },
+  //   dateFormat: function(x) {
+  //     var month = months[new Date(x).getMonth()];
+  //     return month;
+  //   },
+  // });
+
+
 
   $('.btn-delete').on('click', function() {
     var getLink = $(this).attr('href');

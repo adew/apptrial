@@ -14,11 +14,9 @@ class Admin extends CI_Controller
   public function index()
   {
     if ($this->session->userdata('status') == 'login' && $this->session->userdata('role') == 1) {
-      // $data['avatar'] = $this->M_admin->get_data_gambar('tb_upload_gambar_user', $this->session->userdata('name'));
       $data['avatar'] = $this->session->userdata('foto_profil');
-      $data['stokBarangMasuk'] = $this->M_admin->sum('tb_barang_masuk', 'jumlah');
-      $data['stokBarangKeluar'] = $this->M_admin->sum('tb_barang_keluar', 'jumlah');
-      $data['dataUser'] = $this->M_admin->numrows('user');
+
+      $data['list_data'] = $this->M_admin->select('user');
       $data['active'] = '';
       $data['title'] = 'DILMIL III-18 Ambon';
       $this->load->view('admin/template/adm_header', $data);
@@ -33,8 +31,11 @@ class Admin extends CI_Controller
 
   public function details()
   {
-    $data['token_generate'] = $this->token_generate();
-    // $data['avatar'] = $this->M_admin->get_data_gambar('tb_upload_gambar_user', $this->session->userdata('name'));
+    $id = $this->uri->segment(3);
+    $where = array('nip' => $id);
+    $data['data_user'] = $this->M_admin->get_data('user', $where);
+    $data['data_pkp'] = $this->M_admin->get_data('tb_pkp', $where);
+
     $data['avatar'] = $this->session->userdata('foto_profil');
     $this->session->set_userdata($data);
 
@@ -44,6 +45,27 @@ class Admin extends CI_Controller
     $this->load->view('admin/template/adm_sidebar', $data);
     $this->load->view('admin/dashboard_details', $data);
     $this->load->view('admin/template/adm_footer', $data);
+  }
+
+  public function get_data()
+  {
+    $id = $this->uri->segment(3);
+    $where = array('nip' => $id);
+    $data_pkp = $this->M_admin->get_data_array('tb_pkp', $where);
+    $json_data = array();
+    foreach ($data_pkp as $key => $rec) {
+      $json_array['label'] = date('Y') . '-' . $rec['bulan'];
+      $json_array['skor'] = (int)$rec['skor'];
+      $key++;
+      array_push($json_data, $json_array);
+    }
+    for ($x = $key; $x <= 12; $x++) {
+      $json_array['label'] = date('Y') . '-' . $x;
+      $json_array['skor'] = 0;
+      $key++;
+      array_push($json_data, $json_array);
+    }
+    echo json_encode($json_data);
   }
 
   public function datapkp()
@@ -140,7 +162,7 @@ class Admin extends CI_Controller
         );
 
         if ($this->M_admin->insert('tb_pkp', $data)) {
-          $this->session->set_flashdata('success', '<p>Selamat! Anda berhasil mengunggah file <strong>' . $fileData['file_name'] . '</strong></p>');
+          $this->session->set_flashdata('success', '<pre>Selamat! Anda berhasil mengunggah file <strong>' . $fileData['file_name'] . '</strong></pre>');
         } else {
           $this->session->set_flashdata('error', '<p>Gagal! File ' . $fileData['file_name'] . ' tidak berhasil tersimpan di database anda</p>');
         }

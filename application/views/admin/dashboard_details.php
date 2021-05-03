@@ -6,7 +6,8 @@
     </h1>
     <ol class="breadcrumb">
       <li><a href="<?= base_url('admin') ?>"><i class="fa fa-dashboard"></i> Home</a></li>
-      <li><a href="<?= base_url('admin/users') ?>" class="active">Details</a></li>
+      <li>Details</li>
+      <!-- <li><a href="<?= base_url('admin/details/') . $this->uri->segment(3) ?>" class="active">Details</a></li> -->
     </ol>
   </section>
 
@@ -23,27 +24,28 @@
           <div class="box-body">
             <div class="row">
               <div class="box-body box-profile">
-                <span class=""><img class="profile-user-img img-responsive img-circle" src="<?= base_url() ?>/dist/img/foto1.jpg" alt="User profile picture"></span>
+                <span class=""><img class="profile-user-img img-responsive img-circle" src="<?= base_url('dist/img/') . $avatar ?>" alt="User profile picture"></span>
                 <div class="table-responsive">
                   <table class="table">
                     <tbody>
-                      <tr>
-                        <th style="width:30%">Nama</th>
-                        <td>ASIS, S.Kom, S.H.</td>
-                      </tr>
-                      <tr>
-                        <th>NIP</th>
-                        <td>198309252006041003</td>
-                      </tr>
-                      <tr>
-                        <th>Jabatan</th>
-                        <td> Kepala Sub Bagian Sub Bagian Kepegawaian, Organisasi, Dan Tata Laksana
-                          Pengadilan Militer III - 18 Ambon</td>
-                      </tr>
-                      <tr>
-                        <th>Golongan</th>
-                        <td>III/d</td>
-                      </tr>
+                      <?php foreach ($data_user as $list => $value) : ?>
+                        <tr>
+                          <th style="width:30%">Nama</th>
+                          <td><?= $value->nama ?></td>
+                        </tr>
+                        <tr>
+                          <th>NIP</th>
+                          <td><?= $value->nip ?></td>
+                        </tr>
+                        <tr>
+                          <th>Jabatan</th>
+                          <td><?= $value->jabatan ?></td>
+                        </tr>
+                        <tr>
+                          <th>Unit Kerja</th>
+                          <td><?= $value->unit_kerja ?></td>
+                        </tr>
+                      <?php endforeach; ?>
 
                     </tbody>
                   </table>
@@ -76,67 +78,13 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>Januari</td>
-                  <td><a href="pages/examples/invoice.html">OR9842.pdf</a></td>
-                  <td><span class="label label-success">90</span></td>
-                </tr>
-                <tr>
-                  <td>Februari</td>
-                  <td><a href="pages/examples/invoice.html">OR2842.pdf</a></td>
-                  <td><span class="label label-success">92</span></td>
-                </tr>
-                <tr>
-                  <td>Maret</td>
-                  <td><a href="pages/examples/invoice.html">OR9822.pdf</a></td>
-                  <td><span class="label label-success">88</span></td>
-                </tr>
-                <tr>
-                  <td>April</td>
-                  <td><a href="pages/examples/invoice.html">OR2842.pdf</a></td>
-                  <td><span class="label label-success">89</span></td>
-                </tr>
-                <tr>
-                  <td>Mei</td>
-                  <td><a href="pages/examples/invoice.html">-</a></td>
-                  <td><span class="label label-success">0</span></td>
-                </tr>
-                <tr>
-                  <td>Juni</td>
-                  <td><a href="pages/examples/invoice.html">-</a></td>
-                  <td><span class="label label-success">0</span></td>
-                </tr>
-                <tr>
-                  <td>Juli</td>
-                  <td><a href="pages/examples/invoice.html">-</a></td>
-                  <td><span class="label label-success">0</span></td>
-                </tr>
-                <tr>
-                  <td>Agustus</td>
-                  <td><a href="pages/examples/invoice.html">-</a></td>
-                  <td><span class="label label-success">0</span></td>
-                </tr>
-                <tr>
-                  <td>September</td>
-                  <td><a href="pages/examples/invoice.html">-</a></td>
-                  <td><span class="label label-success">0</span></td>
-                </tr>
-                <tr>
-                  <td>Oktober</td>
-                  <td><a href="pages/examples/invoice.html">-</a></td>
-                  <td><span class="label label-success">0</span></td>
-                </tr>
-                <tr>
-                  <td>November</td>
-                  <td><a href="pages/examples/invoice.html">-</a></td>
-                  <td><span class="label label-success">0</span></td>
-                </tr>
-                <tr>
-                  <td>Desember</td>
-                  <td><a href="pages/examples/invoice.html">-</a></td>
-                  <td><span class="label label-success">0</span></td>
-                </tr>
-
+                <?php foreach ($data_pkp as $list => $value) : ?>
+                  <tr>
+                    <td><?= $value->bulan ?></td>
+                    <td><a href="<?= base_url('uploads/') . $value->file_pkp ?>"><?= $value->file_pkp ?></td>
+                    <td><span class="label label-success"><?= $value->skor ?></span></td>
+                  </tr>
+                <?php endforeach; ?>
               </tbody>
             </table>
           </div>
