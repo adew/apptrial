@@ -3,11 +3,11 @@
   <!-- Content Header (Page header) -->
   <section class="content-header">
     <h1>
-      Tabel Users
+      Tabel Pegawai
     </h1>
     <ol class="breadcrumb">
       <li><a href="<?= base_url('admin') ?>"><i class="fa fa-dashboard"></i> Home</a></li>
-      <li><a href="<?= base_url('admin/users') ?>" class="active">Users</a></li>
+      <li><a href="<?= base_url('admin/users') ?>" class="active">Pegawai</a></li>
     </ol>
   </section>
 
@@ -19,7 +19,7 @@
         <!-- /.box -->
         <div class="box box-primary">
           <div class="box-header">
-            <h3 class="box-title"><i class="ion-ios-people-outline step size-96" aria-hidden="true"></i> Users</h3>
+            <h3 class="box-title"><i class="ion-ios-people-outline step size-96" aria-hidden="true"></i> Pegawai</h3>
           </div>
           <!-- /.box-header -->
           <div class="box-body">
@@ -31,7 +31,7 @@
               </div>
             <?php } ?> -->
 
-            <a href="<?= base_url('admin/form_user') ?>" style="margin-bottom:10px;" type="button" class="btn btn-primary" name="tambah_data"><i class="fa fa-plus-circle" aria-hidden="true"></i> Tambah Data</a>
+            <a href="<?= base_url('admin/form_user') ?>" style="margin-bottom:10px;" type="button" class="btn btn-sm btn-primary" name="tambah_data"><i class="fa fa-plus-circle" aria-hidden="true"></i> Tambah Data</a>
             <table id="example1" class="table table-bordered table-striped">
               <thead>
                 <tr>
@@ -40,8 +40,8 @@
                   <th>Jabatan</th>
                   <th>Unit Kerja</th>
                   <th>Role</th>
-                  <th>Last Login</th>
-                  <th class="text-center" style="width: 130px;">Action</th>
+                  <th style="width: 110px;">Terakhir Login</th>
+                  <th class="text-center" style="width: 130px;"></th>
 
                 </tr>
               </thead>
@@ -60,8 +60,8 @@
                       <?php } ?>
                       <td><?= $dd->last_login ?></td>
                       <td class="text-center">
-                        <a type="button" class="btn btn-info" href="<?= base_url('admin/update_user/' . $dd->id) ?>" name="btn_update" style="margin-right:20px;"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                        <a type="button" class="btn btn-danger btn-delete" href="<?= base_url('admin/proses_delete_user/' . $dd->id) ?>" name="btn_delete" style="margin:auto;"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                        <!-- <a type="button" class="btn btn-sm btn-primary" href="<?= base_url('admin/update_user/' . $dd->id) ?>" name="btn_update"><i class="fa fa-edit" aria-hidden="true"></i></a> -->
+                        <a type="button" class="btn btn-sm btn-danger btn-delete" href="<?= base_url('admin/proses_delete_user/' . $dd->id) ?>" name="btn_delete" style="margin:auto;"><i class="fa fa-trash" aria-hidden="true"></i></a>
                       </td>
 
                 </tr>
@@ -85,7 +85,7 @@
 <!-- /.content-wrapper -->
 <footer class="main-footer">
   <div class="pull-right hidden-xs">
-    <b>Version</b> 2.4.0
+    <b>Version</b> 1.0.0
   </div>
   <strong>Copyright &copy; <?= date('Y') ?></strong>
 
@@ -127,26 +127,6 @@
       return false;
     });
   });
-
-  // $(function() {
-  //   $('#example1').DataTable({
-  //     'paging': true,
-  //     'lengthChange': false,
-  //     'searching': false,
-  //     'ordering': false,
-  //     'info': true,
-  //     'autoWidth': false
-
-  //   })
-  //   $('#example2').DataTable({
-  //     'paging': true,
-  //     'lengthChange': false,
-  //     'searching': false,
-  //     'ordering': true,
-  //     'info': true,
-  //     'autoWidth': false
-  //   })
-  // });
 </script>
 </body>
 

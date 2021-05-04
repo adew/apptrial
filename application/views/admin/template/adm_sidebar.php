@@ -41,26 +41,22 @@
         <a href="<?php echo base_url('cuti/datacuti') ?>">
           <i class="fa fa-database" aria-hidden="true"></i> <span>Data Cuti</span></a>
       </li>
-      <!-- <li>
-        <a href="<?php echo base_url('cuti/satker') ?>">
-          <i class="fa fa-fw fa-building" aria-hidden="true"></i> <span>Satker</span></a>
-      </li>
       <li>
-        <a href="<?php echo base_url('cuti/jabatan') ?>">
-          <i class="fa fa-fw fa-building" aria-hidden="true"></i> <span>Jabatan</span></a>
-      </li> -->
+        <a href="<?php echo base_url('cuti/inputdatacuti') ?>">
+          <i class="fa fa-calendar-minus-o" aria-hidden="true"></i> <span>Pengajuan Cuti</span></a>
+      </li>
       <li>
         <a href="<?php echo base_url('cuti/variabelcuti') ?>">
-          <i class="fa fa-fw fa-dollar" aria-hidden="true"></i> <span>Jenis Cuti</span></a>
+          <i class="fa fa-circle-o-notch" aria-hidden="true"></i> <span>Jenis Cuti</span></a>
       </li>
-      <li class="header">Manajemen User</li>
+      <li class="header">MANAJEMEN USER</li>
       <li>
         <a href="<?php echo base_url('admin/profile') ?>">
           <i class="fa fa-cogs" aria-hidden="true"></i> <span>Profile</span></a>
       </li>
       <li>
         <a href="<?php echo base_url('admin/users') ?>">
-          <i class="fa fa-fw fa-users" aria-hidden="true"></i> <span>Users</span></a>
+          <i class="fa fa-fw fa-users" aria-hidden="true"></i> <span>Pegawai</span></a>
       </li>
     </ul>
   </section>

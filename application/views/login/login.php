@@ -2,7 +2,9 @@
 <html lang="id-ID">
 
 <head>
-    <link rel="shortcut icon" href="/images/favicon.ico?v=1589275692" type="image/x-icon" />
+    <title>Halaman Login Pegawai</title>
+    <link rel="shortcut icon" href="<?php echo base_url() ?>favicon.ico" type="image/x-icon">
+
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="<?= base_url() ?>/assets/fontawesome/css/font-awesome.min.css">
@@ -11,11 +13,9 @@
     <link rel="stylesheet" href="<?= base_url() ?>/login.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
 
 <body class="login-page">
-
-
-
     <header class="jumbotron subhead" id="overview" style="margin-bottom: 0px">
         <div class="container-logo">
             <img alt="Logo Mahkamah Agung RI" class="logo-ma" src="<?= base_url() ?>/dist/img/logo2.png">

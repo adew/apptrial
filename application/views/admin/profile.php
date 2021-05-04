@@ -23,9 +23,9 @@
 
             <img class="profile-user-img img-responsive img-circle" src="<?php echo base_url('assets/upload/user/img/' . $avatar) ?>" alt="User profile picture">
 
-            <h3 class="profile-username text-center"><?= $this->session->userdata('name') ?></h3>
+            <h3 class="profile-username text-center"><?= $this->session->userdata('nama') ?></h3>
 
-            <p class="text-muted text-center">Software Engineer</p><br>
+            <p class="text-muted text-center"><?= $this->session->userdata('jabatan') ?></p><br>
 
             <?php if ($this->session->flashdata('msg_berhasil_gambar')) { ?>
               <div class="alert alert-success alert-dismissible">
@@ -61,8 +61,8 @@
       <div class="col-md-9">
         <div class="nav-tabs-custom">
           <ul class="nav nav-tabs">
-            <li class="active"><a href="#settings" data-toggle="tab">Change Password</a></li>
-            <li><a href="#picture" data-toggle="tab">Change Picture</a></li>
+            <li class="active"><a href="#settings" data-toggle="tab">Ubah Password</a></li>
+            <li><a href="#picture" data-toggle="tab">Ubah Foto</a></li>
           </ul>
           <div class="tab-content">
 
@@ -74,7 +74,7 @@
               <form class="form-horizontal" action="<?= base_url('admin/proses_gambar_upload') ?>" method="post" enctype="multipart/form-data">
 
                 <div class="form-group">
-                  <label for="username" class="col-sm-2 control-label">Open Picture</label>
+                  <label for="username" class="col-sm-2 control-label">Upload Foto</label>
 
                   <div class="col-sm-10">
                     <input type="file" name="userpicture" class="form-control" id="username">
@@ -88,7 +88,7 @@
 
                 <div class="form-group">
                   <div class="col-sm-offset-2 col-sm-10">
-                    <button type="submit" class="btn btn-success"><i class="fa fa-send" aria-hidden="true"></i>&nbsp;Submit</button>
+                    <button type="submit" class="btn btn-sm btn-primary">Simpan</button>
                   </div>
                 </div>
               </form>
@@ -112,28 +112,27 @@
                 <?php } ?>
 
                 <div class="form-group">
-                  <label for="username" class="col-sm-2 control-label">Username</label>
-
+                  <label for="nip" class="col-sm-2 control-label">NIP</label>
                   <div class="col-sm-10">
-                    <input type="text" name="username" class="form-control" id="username" disabled="" value="<?= $this->session->userdata('username') ?>">
+                    <input type="text" name="nip" class="form-control" id="nip" disabled="" value="<?= $this->session->userdata('nip') ?>">
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="email" class="col-sm-2 control-label">Email</label>
+                  <label for="nama" class="col-sm-2 control-label">Nama Lengkap</label>
 
                   <div class="col-sm-10">
-                    <input type="email" name="email" class="form-control" id="email" value="<?= $this->session->userdata('email') ?>">
+                    <input type="nama" name="nama" class="form-control" id="nama" value="<?= $this->session->userdata('nama') ?>" disabled>
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="new_password" class="col-sm-2 control-label">New Password</label>
+                  <label for="new_password" class="col-sm-2 control-label">Password Baru</label>
 
                   <div class="col-sm-10">
                     <input type="password" name="new_password" class="form-control" id="new_password" placeholder="New Password">
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="confirm_new_password" class="col-sm-2 control-label">Confirm New Password</label>
+                  <label for="confirm_new_password" class="col-sm-2 control-label">Konrirmasi Password Baru</label>
 
                   <div class="col-sm-10">
                     <input type="password" name="confirm_new_password" class="form-control" id="confirm_new_password" placeholder="Confirm New Password">
@@ -147,7 +146,7 @@
 
                 <div class="form-group">
                   <div class="col-sm-offset-2 col-sm-10">
-                    <button type="submit" class="btn btn-success"><i class="fa fa-send" aria-hidden="true"></i>&nbsp;Submit</button>
+                    <button type="submit" class="btn btn-sm btn-primary">Simpan</button>
                   </div>
                 </div>
               </form>

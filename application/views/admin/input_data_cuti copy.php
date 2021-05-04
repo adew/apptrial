@@ -3,12 +3,12 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Pengajuan Cuti
+        Cuti
         <!-- <small>Human Resource Management System</small> -->
       </h1>
       <ol class="breadcrumb">
         <li><a href="index.php"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-        <li class="active">Pengajuan Cuti</li>
+        <li class="active">Cuti</li>
       </ol>
     </section>
 
@@ -25,22 +25,64 @@
               <i class="ion ion-clipboard"></i>
               <h3 class="box-title">Input Data Cuti</h3>
             </div><!-- /.box-header -->
+            <?php
+            if (isset($_POST['simpan'])) {
+              $kode          = $_POST['kode'];
+              $nik           = $_POST['nik'];
+              $tanggal_awal  = $_POST['tanggal_awal'];
+              $tanggal_akhir = $_POST['tanggal_akhir'];
+              $jumlah        = $_POST['jumlah'];
+              $jenis_cuti    = $_POST['jenis_cuti'];
+              $ket           = $_POST['ket'];
+              $status        = $_POST['status'];
+
+              $sql = mysqli_query($koneksi, "SELECT * FROM karyawan WHERE nik='$nik'");
+              if (mysqli_num_rows($sql) == 0) {
+                header("Location: cuti.php");
+              } else {
+                $row = mysqli_fetch_assoc($sql);
+              }
+
+              $jumlah_cuti = $row['jumlah_cuti'];
+              $nama = $row['nama'];
+
+              if ($jumlah_cuti == 0) {
+                echo "<script>alert('cuti $nama sudah habis, tidak bisa membuat cuti!'); window.location = 'cuti.php'</script>";
+              } else if ($jumlah_cuti <= 0) {
+                echo "<script>alert('cuti $nama sudah habis, tidak bisa membuat cuti!'); window.location = 'cuti.php'</script>";
+              } else {
+
+                $query = mysqli_query($koneksi, "INSERT INTO cuti (kode, nik, tanggal_awal, tanggal_akhir, jumlah, jenis_cuti, ket, status) VALUES ('$kode', '$nik', '$tanggal_awal', '$tanggal_akhir', '$jumlah', '$jenis_cuti', '$ket', '$status')");
+
+                $qu     = mysqli_query($koneksi, "UPDATE karyawan SET jumlah_cuti=(jumlah_cuti-'$jumlah') WHERE nik='$nik'");
+                if ($query && $qu) {
+                  echo "<script>alert('cuti $nama berhasil di buat!'); window.location = 'cuti.php'</script>";
+                  //echo '<div class="alert alert-info alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Data berhasil disimpan.</div>';
+                } else {
+                  echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Data gagal disimpan, silahkan coba lagi.</div>';
+                }
+              }
+            }
+
+            ?>
             <div class="box-body">
               <div class="form-panel">
                 <form class="form-horizontal style-form" action="#" method="post" enctype="multipart/form-data" name="form1" id="form1">
                   <div class="form-group">
-                    <label class="col-sm-2 col-sm-2 control-label">NIP</label>
+                    <label class="col-sm-2 col-sm-2 control-label">Kode</label>
                     <div class="col-sm-4">
-                      <input name="nip" type="text" id="kode" class="form-control" placeholder="NIP" value="<?= $this->session->userdata('nip') ?>" autofocus="on" disabled />
+                      <input name="kode" type="text" id="kode" class="form-control" placeholder="Tidak perlu di isi" value="" autofocus="on" readonly="readonly" />
                     </div>
                   </div>
                   <div class="form-group">
-                    <label class="col-sm-2 col-sm-2 control-label">Nama Pegawai</label>
+                    <label class="col-sm-2 col-sm-2 control-label">Karyawan</label>
                     <div class="col-sm-4">
-                      <input name="nama" type="text" id="kode" class="form-control" placeholder="Nama Pegawai" value="<?= $this->session->userdata('nama') ?>" autofocus="on" disabled />
+                      <select name="nik" id="nik" class="form-control select2" required>
+                        <option value=""> --- Pilih Karyawan --- </option>
+
+                      </select>
                     </div>
                   </div>
-
                   <div class="form-group">
                     <label class="col-sm-2 col-sm-2 control-label">Tanggal Awal Cuti</label>
                     <div class="col-sm-4">
@@ -58,19 +100,17 @@
                   <div class="form-group">
                     <label class="col-sm-2 col-sm-2 control-label">Jumlah Cuti</label>
                     <div class="col-sm-1">
-                      <input name="jumlah" type="text" id="jumlah_cuti" class="form-control" placeholder="Jumlah" value="0" autocomplete="off" disabled />
+                      <input name="jumlah" type="text" id="jumlah_cuti" class="form-control" placeholder="Jumlah" value="0" autocomplete="off" readonly />
                       <!--<span class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
                     </div>
                     <label class="col-sm-2 col-sm-2 control-label" style="text-align: left !important;">Hari</label>
                   </div>
                   <div class="form-group">
                     <label class="col-sm-2 col-sm-2 control-label">Jenis Cuti</label>
-                    <div class="col-sm-3">
+                    <div class="col-sm-4">
                       <select name="jenis_cuti" id="jenis_cuti" class="form-control select2" required>
-                        <!-- <option value=""> Pilih Jenis Cuti </option> -->
-                        <?php foreach ($jenis_cuti as $value) : ?>
-                          <option value="<?= $value->jenis_cuti ?>"> <?= $value->jenis_cuti; ?> </option>
-                        <?php endforeach; ?>
+                        <option value=""> --- Pilih Jenis Cuti --- </option>
+
                       </select>
                     </div>
                   </div>
@@ -81,7 +121,7 @@
                       <!--<span class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
                     </div>
                   </div>
-                  <!-- <div class="form-group">
+                  <div class="form-group">
                     <label class="col-sm-2 col-sm-2 control-label">Status</label>
                     <div class="col-sm-4">
                       <select name='status' id='status' class='form-control' required>
@@ -91,7 +131,7 @@
                         <option value="Pending">Pending</option>
                       </select>
                     </div>
-                  </div> -->
+                  </div>
                   <div class="form-group">
                     <label class="col-sm-2 col-sm-2 control-label"></label>
                     <div class="col-sm-10">

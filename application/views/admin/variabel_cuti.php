@@ -39,7 +39,7 @@
             <a href="<?php echo base_url('cuti/inputvariabelcuti') ?>" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i> Tambah Jenis Cuti</a>
           </div>
           <div class="box-body">
-            <table id="example" class="table table-responsive table-hover table-bordered text-center">
+            <table id="example" class="table table-responsive table-hover table-bordered">
               <thead>
                 <tr>
                   <th>
@@ -52,7 +52,7 @@
                     Deskripsi
                   </th>
                   <th>
-                    Tools
+                    <!-- Tools -->
                   </th>
                 </tr>
               </thead>
@@ -65,9 +65,9 @@
                     <td><?= $value->deskripsi ?></td>
                     <td>
 
-                      <div id="thanks"><a class="btn btn-sm btn-primary" data-placement="bottom" data-toggle="tooltip" title="Edit Cuti" href="edit-departemen.php?aksi=edit&kd="><span class="glyphicon glyphicon-edit"></span></a>
+                      <!-- <div id="thanks"><a href="#" class="btn btn-sm btn-primary" data-placement="bottom" data-toggle="tooltip" title="Edit Cuti"><i class="glyphicon glyphicon-edit"></i></a> -->
 
-                        <a type="button" id="btn-delete" class="btn btn-danger btn-delete" data-placement="bottom" data-toggle="tooltip" title="Hapus Cuti" href="<?= base_url('cuti/proses_delete_jeniscuti/' . $value->id) ?>" name="btn_delete" style="margin:auto;"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                      <a type="button" id="btn-delete" class="btn btn-sm btn-danger btn-delete" data-placement="bottom" data-toggle="tooltip" title="Hapus Cuti" href="<?= base_url('cuti/proses_delete_jeniscuti/' . $value->id) ?>" name="btn_delete" style="margin:auto;"><i class="fa fa-trash" aria-hidden="true"></i></a>
 
                     </td>
                   </tr>

@@ -6,7 +6,7 @@
       <!-- <small>Human Resource Management System</small> -->
     </h1>
     <ol class="breadcrumb">
-      <li><a href="index.php"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+      <li><a href="<?= base_url() ?>"><i class="fa fa-dashboard"></i> Dashboard</a></li>
       <li class="active">Data Cuti</li>
     </ol>
   </section>
@@ -36,7 +36,7 @@
             </div>
           </div><!-- /.box-header -->
           <div class="box-footer clearfix no-border">
-            <a href="<?php echo base_url('cuti/inputdatacuti') ?>" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i> Tambah Cuti</a>
+            <!-- <a href="<?php echo base_url('cuti/inputdatacuti') ?>" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i> Tambah Cuti</a> -->
           </div>
           <div class="box-body">
 
@@ -47,36 +47,49 @@
                     No
                   </th>
                   <th>
-                    Bulan
+                    Nama
                   </th>
                   <th>
-                    File Cuti
+                    Tanggal Awal Cuti
                   </th>
                   <th>
-                    Skor
+                    Tanggal Akhir Cuti
                   </th>
                   <th>
-                    Waktu Upload
+                    Jumlah Cuti
                   </th>
                   <th>
-                    Tools
+                    Jenis Cuti Cuti
+                  </th>
+                  <th>
+                    Keterangan
+                  </th>
+                  <th>
+                    <!-- Tools -->
                   </th>
                 </tr>
               </thead>
               <tbody>
                 <?php foreach ($list_data as $list => $value) : ?>
                   <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
 
-                    <td><?= $list + 1 ?></td>
+
+                    <!-- <td><?= $list + 1 ?></td>
                     <td><?= $value->bulan ?></td>
                     <td><a href="<?= base_url('uploads/') . $value->file_pkp ?>"><?= $value->file_pkp ?></a></td>
                     <td><?= $value->skor ?></td>
-                    <td><?= $value->creat_at ?></td>
+                    <td><?= $value->creat_at ?></td> -->
+
                     <td>
-
-                      <a class="btn btn-sm btn-primary" data-placement="bottom" data-toggle="tooltip" title="Edit Cuti" href="edit-departemen.php?aksi=edit&kd="><span class="glyphicon glyphicon-edit"></span></a>
-
-                      <a type="button" id="btn-delete" class="btn btn-danger btn-delete" data-placement="bottom" data-toggle="tooltip" title="Hapus Cuti" href="<?= base_url('cuti/proses_delete_jeniscuti/' . $value->id) ?>" name="btn_delete" style="margin:auto;"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                      <a href="#" class="btn btn-sm btn-primary" data-placement="bottom" data-toggle="tooltip" title="Edit Cuti"><span class="fa fa-edit"></span></a>
+                      <a type="button" id="btn-delete" class="btn btn-sm btn-danger btn-delete" data-placement="bottom" data-toggle="tooltip" title="Hapus Cuti" href="<?= base_url('cuti/proses_delete_jeniscuti/' . $value->id) ?>" name="btn_delete" style="margin:auto;"><i class="fa fa-trash" aria-hidden="true"></i></a>
 
                     </td>
                   </tr>

@@ -22,7 +22,7 @@
         <div class="box box-primary">
           <div class="box-header">
             <i class="ion ion-clipboard"></i>
-            <h3 class="box-title">Cuti Karyawan Yang Habis / Kurang</h3>
+            <h3 class="box-title">Cuti Pegawai Yang Habis / Kurang</h3>
             <div class="box-tools pull-right">
             </div>
           </div><!-- /.box-header -->

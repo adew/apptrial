@@ -51,7 +51,7 @@ class Login extends CI_Controller
 							// 'username' => $username,
 							'nama' => $isi->nama,
 							'nip' => $isi->nip,
-							// 'email' => $isi->email,
+							'jabatan' => $isi->jabatan,
 							'foto_profil' => $isi->foto_profil,
 							'status' => 'login',
 							'role' => $isi->role,
@@ -65,7 +65,7 @@ class Login extends CI_Controller
 						if ($isi->role == 1) {
 							redirect(base_url('admin'));
 						} else {
-							redirect(base_url('user'));
+							redirect(base_url('admin'));
 						}
 					} else {
 						$this->session->set_flashdata('msg', 'Username Dan Password Salah');
