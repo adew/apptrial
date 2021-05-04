@@ -29,6 +29,32 @@ class Cuti extends CI_Controller
     }
   }
 
+  public function datacuti()
+  {
+    $data['avatar'] = $this->session->userdata('foto_profil');
+    $data['list_data'] = $this->M_admin->select('tb_pkp');
+
+    $data['title'] = 'DILMIL III-18 Ambon';
+    $this->load->view('admin/template/adm_header', $data);
+    $this->load->view('admin/template/adm_navbar', $data);
+    $this->load->view('admin/template/adm_sidebar', $data);
+    $this->load->view('admin/data_cuti', $data);
+    $this->load->view('admin/template/adm_footer', $data);
+  }
+
+  public function inputdatacuti()
+  {
+    $data['avatar'] = $this->session->userdata('foto_profil');
+    $data['list_data'] = $this->M_admin->select('tb_pkp');
+
+    $data['title'] = 'DILMIL III-18 Ambon';
+    $this->load->view('admin/template/adm_header', $data);
+    $this->load->view('admin/template/adm_navbar', $data);
+    $this->load->view('admin/template/adm_sidebar', $data);
+    $this->load->view('admin/input_data_cuti', $data);
+    $this->load->view('admin/template/adm_footer', $data);
+  }
+
   public function satker()
   {
     if ($this->session->userdata('status') == 'login' && $this->session->userdata('role') == 1) {

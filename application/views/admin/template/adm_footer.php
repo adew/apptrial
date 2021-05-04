@@ -8,7 +8,8 @@
 <div class="control-sidebar-bg"></div>
 </div>
 <!-- ./wrapper -->
-
+<!-- <script src="https://code.jquery.com/jquery-1.8.3.min.js"></script>
+<script src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script> -->
 <!-- jQuery 3 -->
 <script src="<?php echo base_url() ?>assets/web_admin/bower_components/jquery/dist/jquery.min.js"></script>
 <script src="<?php echo base_url() ?>assets/sweetalert/dist/sweetalert.min.js"></script>
@@ -78,58 +79,6 @@
       }
     });
   });
-  // Morris.Line({
-  //   element: 'examplefirst',
-  //   data: [{
-  //     label: '2021-01', // <-- valid timestamp strings
-  //     skor: 90
-  //   }, {
-  //     label: '2021-02',
-  //     skor: 92
-  //   }, {
-  //     label: '2021-03',
-  //     skor: 88
-  //   }, {
-  //     label: '2021-04',
-  //     skor: 89
-  //   }, {
-  //     label: '2021-05',
-  //     skor: 0
-  //   }, {
-  //     label: '2021-06',
-  //     skor: 0
-  //   }, {
-  //     label: '2021-07',
-  //     skor: 0
-  //   }, {
-  //     label: '2021-08',
-  //     skor: 0
-  //   }, {
-  //     label: '2021-09',
-  //     skor: 0
-  //   }, {
-  //     label: '2021-10',
-  //     skor: 0
-  //   }, {
-  //     label: '2021-11',
-  //     skor: 0
-  //   }, {
-  //     label: '2021-12',
-  //     skor: 0
-  // }, ],
-  // xkey: 'label',
-  //   ykeys: ['skor'],
-  //   labels: ['2021'],
-  //   xLabelFormat: function(x) { // <--- x.getMonth() returns valid index
-  //     var month = months[x.getMonth()];
-  //     return month;
-  //   },
-  //   dateFormat: function(x) {
-  //     var month = months[new Date(x).getMonth()];
-  //     return month;
-  //   },
-  // });
-
 
 
   $('.btn-delete').on('click', function() {
@@ -146,9 +95,36 @@
     return false;
 
   });
+
   $(function() {
     $(".select2").select2();
   });
+
+  $("#tanggal_awal").datepicker({
+    dateFormat: 'dd-mm-yy',
+    autoclose: true,
+    todayHighlight: true,
+    orientation: "bottom",
+  })
+
+  $("#tanggal_akhir").datepicker({
+    dateFormat: 'dd-mm-yy',
+    autoclose: true,
+    todayHighlight: true,
+    orientation: "bottom",
+  }).on("change", function() {
+    var start = $('#tanggal_awal').datepicker('getDate');
+    var end = $('#tanggal_akhir').datepicker('getDate');
+    var days = Math.floor((end - start) / 1000 / 60 / 60 / 24);
+    if (days <= 12) {
+      $('#jumlah_cuti').val(days);
+    } else {
+      alert('Tidak boleh lebih dari 12 hari');
+      $('#tanggal_awal').datepicker("setDate", new Date());
+      $('#tanggal_akhir').datepicker("setDate", new Date());
+    }
+  });
+</script>
 </script>
 </script>
 

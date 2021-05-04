@@ -37,6 +37,10 @@
         <a href="<?php echo base_url('cuti') ?>">
           <i class="fa fa-desktop" aria-hidden="true"></i> <span>Monitoring Cuti</span></a>
       </li>
+      <li>
+        <a href="<?php echo base_url('cuti/datacuti') ?>">
+          <i class="fa fa-database" aria-hidden="true"></i> <span>Data Cuti</span></a>
+      </li>
       <!-- <li>
         <a href="<?php echo base_url('cuti/satker') ?>">
           <i class="fa fa-fw fa-building" aria-hidden="true"></i> <span>Satker</span></a>

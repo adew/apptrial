@@ -35,7 +35,10 @@
   <link rel="stylesheet" href="<?php echo base_url() ?>assets/sweetalert/dist/sweetalert.css">
   <link rel="stylesheet" href="<?php echo base_url() ?>assets/web_admin/bower_components/select2/dist/css/select2.min.css">
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <link href="https://code.jquery.com/ui/1.9.2/themes/smoothness/jquery-ui.css" rel="stylesheet" />
 
+  <script src="https://code.jquery.com/jquery-1.8.3.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
