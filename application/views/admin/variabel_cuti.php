@@ -6,7 +6,7 @@
       <!-- <small>Human Resource Management System</small> -->
     </h1>
     <ol class="breadcrumb">
-      <li><a href="index.php"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+      <li><a href="<a href=" <?= base_url('admin') ?>"><i class="fa fa-dashboard"></i> Dashboard</a></li>
       <li class="active">Data Jenis Cuti</li>
     </ol>
   </section>

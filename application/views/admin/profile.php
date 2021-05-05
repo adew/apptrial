@@ -77,14 +77,9 @@
                   <label for="username" class="col-sm-2 control-label">Upload Foto</label>
 
                   <div class="col-sm-10">
-                    <input type="file" name="userpicture" class="form-control" id="username">
+                    <input type="file" name="userpicture" class="form-control" id="userpicture">
                   </div>
                 </div>
-                <?php if (isset($token_generate)) { ?>
-                  <input type="hidden" name="token" class="form-control" value="<?= $token_generate ?>">
-                <?php } else {
-                  redirect(base_url('admin/profile'));
-                } ?>
 
                 <div class="form-group">
                   <div class="col-sm-offset-2 col-sm-10">
@@ -96,13 +91,20 @@
 
             <div class="tab-pane active" id="settings">
               <form class="form-horizontal" action="<?= base_url('admin/proses_new_password') ?>" method="post">
-                <!-- 
+
+                <?php if ($this->session->flashdata('msg_gagal')) { ?>
+                  <div class="alert alert-error alert-dismissible">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <strong>Error</strong><br> <?php echo $this->session->flashdata('msg_gagal'); ?>
+                  </div>
+                <?php } ?>
                 <?php if ($this->session->flashdata('msg_berhasil')) { ?>
                   <div class="alert alert-success alert-dismissible">
                     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                    <strong>Success</strong><br> <?php echo $this->session->flashdata('msg_berhasil'); ?>
+                    <strong>Berhasil</strong><br> <?php echo $this->session->flashdata('msg_berhasil'); ?>
                   </div>
-                <?php } ?> -->
+                <?php } ?>
+
 
                 <?php if (validation_errors()) { ?>
                   <div class="alert alert-warning alert-dismissible">
@@ -114,14 +116,14 @@
                 <div class="form-group">
                   <label for="nip" class="col-sm-2 control-label">NIP</label>
                   <div class="col-sm-10">
-                    <input type="text" name="nip" class="form-control" id="nip" disabled="" value="<?= $this->session->userdata('nip') ?>">
+                    <input type="text" name="nip" class="form-control" id="nip" readonly value="<?= $this->session->userdata('nip') ?>">
                   </div>
                 </div>
                 <div class="form-group">
                   <label for="nama" class="col-sm-2 control-label">Nama Lengkap</label>
 
                   <div class="col-sm-10">
-                    <input type="nama" name="nama" class="form-control" id="nama" value="<?= $this->session->userdata('nama') ?>" disabled>
+                    <input type="nama" name="nama" class="form-control" id="nama" value="<?= $this->session->userdata('nama') ?>">
                   </div>
                 </div>
                 <div class="form-group">

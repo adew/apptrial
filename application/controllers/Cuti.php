@@ -46,8 +46,6 @@ class Cuti extends CI_Controller
   {
     $data['avatar'] = $this->session->userdata('foto_profil');
     $data['jenis_cuti'] = $this->M_admin->select('tb_cuti');
-    // print_r($this->M_admin->select('tb_cuti'));
-    // die;
 
     $data['title'] = 'DILMIL III-18 Ambon';
     $this->load->view('admin/template/adm_header', $data);

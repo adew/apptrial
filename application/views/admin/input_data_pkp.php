@@ -7,7 +7,7 @@
         <!-- <small>Human Resource Management System</small> -->
       </h1>
       <ol class="breadcrumb">
-        <li><a href="index.php"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+        <li><a href="<?= base_url('admin') ?>"><i class="fa fa-dashboard"></i> Dashboard</a></li>
         <li class="active">PKP</li>
       </ol>
     </section>

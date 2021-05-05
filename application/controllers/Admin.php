@@ -211,7 +211,7 @@ class Admin extends CI_Controller
   {
     $data['token_generate'] = $this->token_generate();
     $data['avatar'] = $this->session->userdata('foto_profil');
-    $this->session->set_userdata($data);
+    // $this->session->set_userdata($data);
 
     $data['title'] = 'DILMIL III-18 Ambon';
     $this->load->view('admin/template/adm_header', $data);
@@ -233,31 +233,34 @@ class Admin extends CI_Controller
 
   public function proses_new_password()
   {
-    $this->form_validation->set_rules('email', 'Email', 'required');
+    $this->form_validation->set_rules('nip', 'nip', 'required');
+    $this->form_validation->set_rules('nama', 'nama', 'required');
     $this->form_validation->set_rules('new_password', 'New Password', 'required');
     $this->form_validation->set_rules('confirm_new_password', 'Confirm New Password', 'required|matches[new_password]');
 
     if ($this->form_validation->run() == TRUE) {
-      if ($this->session->userdata('token_generate') === $this->input->post('token')) {
-        $username = $this->input->post('username');
-        $email = $this->input->post('email');
-        $new_password = $this->input->post('new_password');
+      $nip = $this->input->post('nip');
+      $nama = $this->input->post('nama');
+      $new_password = $this->input->post('new_password');
 
-        $data = array(
-          'email'    => $email,
-          'password' => $this->hash_password($new_password)
-        );
+      $data = array(
+        'nip'    => $nip,
+        'nama'    => $nama,
+        'password' => $this->hash_password($new_password)
+      );
 
-        $where = array(
-          'id' => $this->session->userdata('id')
-        );
+      $where = array(
+        'id' => $this->session->userdata('id')
+      );
 
-        $this->M_admin->update_password('user', $where, $data);
+      $this->M_admin->update_password('user', $where, $data);
 
-        $this->session->set_flashdata('msg_berhasil', 'Password Telah Diganti');
-        redirect(base_url('admin/profile'));
-      }
+      $this->session->set_flashdata('msg_berhasil', 'Password Telah Diganti');
+      // redirect(base_url('admin/users'));
+      $this->load->view('admin/profile');
     } else {
+
+      $this->session->set_flashdata('msg_gagal', 'Password Gagal Diganti');
       $this->load->view('admin/profile');
     }
   }
@@ -266,7 +269,9 @@ class Admin extends CI_Controller
   {
     $data = "";
     $config =  array(
-      'upload_path'     => "./assets/upload/user/img/",
+
+      'upload_path'     =>  './uploads/',
+      // 'upload_path'     => "./assets/upload/user/img/",
       'allowed_types'   => "gif|jpg|png|jpeg",
       'encrypt_name'    => False, //
       'max_size'        => "50000",  // ukuran file gambar
@@ -277,12 +282,12 @@ class Admin extends CI_Controller
     $this->upload->initialize($config);
 
     if (!$this->upload->do_upload('userpicture')) {
-      $this->session->set_flashdata('msg_error_gambar', $this->upload->display_errors());
+      $this->session->set_flashdata('msg_gagal', $this->upload->display_errors());
       $this->load->view('admin/profile', $data);
     } else {
       $upload_data = $this->upload->data();
       $nama_file = $upload_data['file_name'];
-      $ukuran_file = $upload_data['file_size'];
+      // $ukuran_file = $upload_data['file_size'];
 
       //resize img + thumb Img -- Optional
       $config['image_library']     = 'gd2';
@@ -295,22 +300,23 @@ class Admin extends CI_Controller
       $this->load->library('image_lib', $config);
       $this->image_lib->initialize($config);
       if (!$this->image_lib->resize()) {
-        $data['pesan_error'] = $this->image_lib->display_errors();
+        // $data['pesan_error'] = $this->image_lib->display_errors();
+        $this->session->set_flashdata('msg_gagal', $this->image_lib->display_errors());
         $this->load->view('admin/profile', $data);
       }
 
       $where = array(
-        'username_user' => $this->session->userdata('name')
+        'nip' => $this->session->userdata('nip')
       );
 
       $data = array(
-        'nama_file' => $nama_file,
-        'ukuran_file' => $ukuran_file
+        'foto_profil' => $nama_file
       );
-
-      $this->M_admin->update('tb_upload_gambar_user', $data, $where);
-      $this->session->set_flashdata('msg_berhasil_gambar', 'Gambar Berhasil Di Upload');
-      redirect(base_url('admin/profile'));
+      $this->session->set_userdata($data);
+      $this->M_admin->update('user', $data, $where);
+      $this->session->set_flashdata('msg_berhasil', 'Gambar Berhasil Di Upload');
+      $this->load->view('admin/profile');
+      // redirect(base_url('admin/profile'));
     }
   }
 
