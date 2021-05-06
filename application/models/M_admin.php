@@ -14,11 +14,11 @@ class M_admin extends CI_Model
     return $query->result();
   }
 
-  public function cek_jumlah($tabel, $id_transaksi)
+  public function cek_data($tabel, $column, $id)
   {
-    return  $this->db->select('*')
+    return  $this->db->select_sum('lama_cuti')
       ->from($tabel)
-      ->where('id_transaksi', $id_transaksi)
+      ->where($column, $id)
       ->get();
   }
 

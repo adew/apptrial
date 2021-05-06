@@ -93,7 +93,33 @@
       window.location.href = getLink
     });
     return false;
+  });
 
+  $('#btn-reject').on('click', function() {
+    var getLink = $(this).attr('href');
+    swal({
+      title: '',
+      text: 'Anda akan menolak pengajuan cuti?',
+      html: true,
+      confirmButtonColor: '#d9534f',
+      showCancelButton: true,
+    }, function() {
+      window.location.href = getLink
+    });
+    return false;
+  });
+  $('#btn-accept').on('click', function() {
+    var getLink = $(this).attr('href');
+    swal({
+      title: '',
+      text: 'Anda akan menyetujui pengajuan cuti?',
+      html: true,
+      confirmButtonColor: '#00a65a',
+      showCancelButton: true,
+    }, function() {
+      window.location.href = getLink
+    });
+    return false;
   });
 
   $(function() {
@@ -117,7 +143,7 @@
     var end = $('#tanggal_akhir').datepicker('getDate');
     var days = Math.floor((end - start) / 1000 / 60 / 60 / 24);
     if (days <= 12) {
-      $('#jumlah_cuti').val(days);
+      $('#lama_cuti').val(days);
     } else {
       alert('Tidak boleh lebih dari 12 hari');
       $('#tanggal_awal').datepicker("setDate", new Date());

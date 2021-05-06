@@ -28,7 +28,7 @@
                 <ul class="users-list clearfix">
                   <?php foreach ($list_data as $list => $value) : ?>
                     <li><a href="<?= base_url('admin/details/') . $value->nip ?>">
-                        <img src="<?= base_url('dist/img/') . $value->foto_profil ?>" style="width:128px; height:128px;" alt="User Image">
+                        <img src="<?= base_url('uploads/profile/') . $value->foto_profil ?>" style="width:128px; height:128px;" alt="User Image">
                         <span class="users-list-name"><?= $value->nama ?></span>
                         <span class="users-list-date">NIP <?= $value->nip ?></span></a>
                     </li>

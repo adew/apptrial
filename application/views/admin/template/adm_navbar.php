@@ -29,7 +29,7 @@
             <li class="dropdown user user-menu" style="display: inline-flex;">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
 
-                <img src="<?php echo base_url('assets/upload/user/img/' . $avatar) ?>" class="user-image" alt="User Image">
+                <img src="<?php echo base_url('uploads/profile/' . $avatar) ?>" class="user-image" alt="User Image">
 
                 <!-- <span class="hidden-xs"><?= $this->session->userdata('nama') ?></span> -->
               </a>
@@ -38,7 +38,7 @@
                 <!-- User image -->
                 <li class="user-header">
 
-                  <img src="<?php echo base_url('assets/upload/user/img/' . $avatar) ?>" class="img-circle" alt="User Image">
+                  <img src="<?php echo base_url('uploads/profile/' . $avatar) ?>" class="img-circle" alt="User Image">
 
 
                   <p>

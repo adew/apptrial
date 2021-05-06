@@ -21,7 +21,7 @@
         <div class="box box-primary">
           <div class="box-body box-profile">
 
-            <img class="profile-user-img img-responsive img-circle" src="<?php echo base_url('assets/upload/user/img/' . $avatar) ?>" alt="User profile picture">
+            <img class="profile-user-img img-responsive img-circle" src="<?php echo base_url('uploads/profile/' . $avatar) ?>" alt="User profile picture">
 
             <h3 class="profile-username text-center"><?= $this->session->userdata('nama') ?></h3>
 
@@ -44,7 +44,7 @@
             <?php if (isset($pesan_error)) { ?>
               <div class="alert alert-danger alert-dismissible">
                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                <strong>Warning!</strong><br> <?php echo $pesan; ?>
+                <strong>Warning!</strong><br> <?php echo $pesan_error; ?>
               </div>
             <?php } ?>
 

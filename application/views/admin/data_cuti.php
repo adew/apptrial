@@ -2,7 +2,7 @@
   <!-- Content Header (Page header) -->
   <section class="content-header">
     <h1>
-      Cuti
+      Cuti Pegawai
       <!-- <small>Human Resource Management System</small> -->
     </h1>
     <ol class="breadcrumb">
@@ -35,36 +35,40 @@
               </form>
             </div>
           </div><!-- /.box-header -->
-          <div class="box-footer clearfix no-border">
-            <!-- <a href="<?php echo base_url('cuti/inputdatacuti') ?>" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i> Tambah Cuti</a> -->
-          </div>
+
           <div class="box-body">
 
-            <table id="example" class="table table-responsive table-hover table-bordered text-center">
+            <table id="example" class="table table-responsive table-hover table-bordered">
               <thead>
                 <tr>
-                  <th>
+                  <th style="width: 3%;">
                     No
                   </th>
-                  <th>
+                  <th style="width: 10%;">
+                    Waktu Pengajuan
+                  </th>
+                  <th style="width: 20%;">
                     Nama
                   </th>
-                  <th>
-                    Tanggal Awal Cuti
+                  <th style="width: 8%;">
+                    Dari Tanggal
+                  </th>
+                  <th style="width: 8%;">
+                    Sampai Tanggal
+                  </th>
+                  <th style="width: 5%;">
+                    Lama Cuti
                   </th>
                   <th>
-                    Tanggal Akhir Cuti
-                  </th>
-                  <th>
-                    Jumlah Cuti
-                  </th>
-                  <th>
-                    Jenis Cuti Cuti
+                    Jenis Cuti
                   </th>
                   <th>
                     Keterangan
                   </th>
-                  <th>
+                  <th style="width: 8%;">
+                    Status
+                  </th>
+                  <th style="width: 6%;">
                     <!-- Tools -->
                   </th>
                 </tr>
@@ -72,13 +76,23 @@
               <tbody>
                 <?php foreach ($list_data as $list => $value) : ?>
                   <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td><?= $list + 1 ?></td>
+                    <td><?= $value->creat_at ?></td>
+                    <td><?= $value->nama ?></td>
+                    <td><?= $value->tgl_awal ?></td>
+                    <td><?= $value->tgl_akhir ?></td>
+                    <td><?= $value->lama_cuti ?>&nbsp;Hari</td>
+                    <td><?= $value->jenis_cuti ?></td>
+                    <td><?= $value->keterangan ?></td>
+                    <?php if ($value->status_cuti == 0) {
+                      $status_cuti = '<span class="label label-warning">Menunggu</span>';
+                    } elseif ($value->status_cuti == 1) {
+                      $status_cuti = '<span class="label label-success">Disetujui</span>';
+                    } else {
+                      $status_cuti = '<span class="label label-danger">Ditolak</span>';
+                    } ?>
+                    <td><?= $status_cuti ?></td>
+
 
 
                     <!-- <td><?= $list + 1 ?></td>
@@ -88,8 +102,8 @@
                     <td><?= $value->creat_at ?></td> -->
 
                     <td>
-                      <a href="#" class="btn btn-sm btn-primary" data-placement="bottom" data-toggle="tooltip" title="Edit Cuti"><span class="fa fa-edit"></span></a>
-                      <a type="button" id="btn-delete" class="btn btn-sm btn-danger btn-delete" data-placement="bottom" data-toggle="tooltip" title="Hapus Cuti" href="<?= base_url('cuti/proses_delete_jeniscuti/' . $value->id) ?>" name="btn_delete" style="margin:auto;"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                      <a href="<?= base_url('cuti/cutiditolak/' . $value->id) ?>" type="button" id="btn-reject" class="btn btn-sm btn-danger" data-placement="bottom" data-toggle="tooltip" title="Ditolak" name="btn_delete" style="margin:auto;"><i class="fa fa-times-circle" aria-hidden="true"></i></a>
+                      <a href="<?= base_url('cuti/cutidisetujui/' . $value->id) ?>" id="btn-accept" class="btn btn-sm btn-success" data-placement="bottom" data-toggle="tooltip" title="Disetujui"><span class="fa fa-check-circle"></span></a>
 
                     </td>
                   </tr>

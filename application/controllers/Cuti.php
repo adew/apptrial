@@ -32,7 +32,7 @@ class Cuti extends CI_Controller
   public function datacuti()
   {
     $data['avatar'] = $this->session->userdata('foto_profil');
-    $data['list_data'] = $this->M_admin->select('tb_pkp');
+    $data['list_data'] = $this->M_admin->select('tb_pengajuan_cuti');
 
     $data['title'] = 'DILMIL III-18 Ambon';
     $this->load->view('admin/template/adm_header', $data);
@@ -55,37 +55,127 @@ class Cuti extends CI_Controller
     $this->load->view('admin/template/adm_footer', $data);
   }
 
-  public function satker()
+  public function pengajuancuti()
   {
-    if ($this->session->userdata('status') == 'login' && $this->session->userdata('role') == 1) {
+    $this->form_validation->set_rules('nip', 'NIP', 'required', array('required' => 'Wajib diisi'));
+    $this->form_validation->set_rules('nama', 'Nama Lengkap', 'required', array('required' => 'Wajib diisi'));
+    $this->form_validation->set_rules('tanggal_awal', 'Tanggal Awal', 'required', array('required' => 'Wajib diisi'));
+    $this->form_validation->set_rules('tanggal_akhir', 'Tanggal Akhir', 'required', array('required' => 'Wajib diisi'));
+    $this->form_validation->set_rules('lama_cuti', 'Lama Cuti', 'required', array('required' => 'Wajib diisi'));
+    $this->form_validation->set_rules('jenis_cuti', 'Jenis Cuti', 'required', array('required' => 'Wajib diisi'));
+    $this->form_validation->set_rules('keterangan', 'Keterangan', 'required', array('required' => 'Wajib diisi'));
+
+    if ($this->form_validation->run() == FALSE) {
+
       $data['avatar'] = $this->session->userdata('foto_profil');
-      $data['active'] = '';
+      $data['jenis_cuti'] = $this->M_admin->select('tb_cuti');
+      $this->session->set_flashdata('msg_gagal', 'Pengajuan Cuti Gagal dikirim');
+
       $data['title'] = 'DILMIL III-18 Ambon';
       $this->load->view('admin/template/adm_header', $data);
       $this->load->view('admin/template/adm_navbar', $data);
       $this->load->view('admin/template/adm_sidebar', $data);
-      $this->load->view('admin/satker_cuti', $data);
+      $this->load->view('admin/input_data_cuti', $data);
       $this->load->view('admin/template/adm_footer', $data);
     } else {
-      $this->load->view('login/login');
+
+      $nip       = $this->input->post('nip', TRUE);
+      $nama       = $this->input->post('nama', TRUE);
+      $tanggal_awal       = $this->input->post('tanggal_awal', TRUE);
+      $tanggal_akhir       = $this->input->post('tanggal_akhir', TRUE);
+      $lama_cuti       = $this->input->post('lama_cuti', TRUE);
+      $jenis_cuti    = $this->input->post('jenis_cuti', TRUE);
+      $keterangan       = $this->input->post('keterangan', TRUE);
+
+      $id = $this->session->userdata('nip');
+      $cek_data = $this->M_admin->cek_data('tb_pengajuan_cuti', 'nip', $id);
+      $jumlah = $cek_data->result_array();
+      print_r($jumlah[0]['lama_cuti']);
+      die;
+      if (!$cek_data->row()) {
+        $saldo_cuti = 12;
+      } else {
+        $saldo_cuti = 12 - $cek_data->num_rows();
+      }
+      $data = array(
+        'nip'     => $nip,
+        'nama'     => $nama,
+        'tgl_awal'     => $tanggal_awal,
+        'tgl_akhir'     => $tanggal_akhir,
+        'lama_cuti'     => $lama_cuti,
+        'saldo_cuti'     => $saldo_cuti,
+        'jenis_cuti'     => $jenis_cuti,
+        'keterangan'        => $keterangan,
+        'status_cuti'        => 0,
+        'creat_at'        => date('d-m-Y'),
+      );
+      $this->M_admin->insert('tb_pengajuan_cuti', $data);
+
+      $this->session->set_flashdata('msg_berhasil', 'Pengajuan Cuti Berhasil dikirim');
+      redirect(base_url('cuti/inputdatacuti'));
     }
   }
 
-  public function inputsatker()
+  public function cutiditolak()
   {
-    if ($this->session->userdata('status') == 'login' && $this->session->userdata('role') == 1) {
-      $data['avatar'] = $this->session->userdata('foto_profil');
-      $data['active'] = '';
-      $data['title'] = 'DILMIL III-18 Ambon';
-      $this->load->view('admin/template/adm_header', $data);
-      $this->load->view('admin/template/adm_navbar', $data);
-      $this->load->view('admin/template/adm_sidebar', $data);
-      $this->load->view('admin/input_satker_cuti', $data);
-      $this->load->view('admin/template/adm_footer', $data);
-    } else {
-      $this->load->view('login/login');
-    }
+    $id = $this->uri->segment(3);
+    $where = array('id' => $id);
+
+    $data = array(
+      'status_cuti'     => 2,
+    );
+    $this->M_admin->update('tb_pengajuan_cuti', $data, $where);
+    $this->session->set_flashdata('msg_berhasil', 'Data Berhasil Diupdate');
+    redirect(base_url('cuti/datacuti'));
   }
+  public function cutidisetujui()
+  {
+    $id = $this->uri->segment(3);
+    $where = array('id' => $id);
+
+    $data = array(
+      'status_cuti'     => 1,
+    );
+    $this->M_admin->update('tb_pengajuan_cuti', $data, $where);
+    $this->session->set_flashdata('msg_berhasil', 'Data Berhasil Diupdate');
+    redirect(base_url('cuti/datacuti'));
+  }
+
+
+
+  //// DATA TIDAK TERPAKAI
+
+  // public function satker()
+  // {
+  //   if ($this->session->userdata('status') == 'login' && $this->session->userdata('role') == 1) {
+  //     $data['avatar'] = $this->session->userdata('foto_profil');
+  //     $data['active'] = '';
+  //     $data['title'] = 'DILMIL III-18 Ambon';
+  //     $this->load->view('admin/template/adm_header', $data);
+  //     $this->load->view('admin/template/adm_navbar', $data);
+  //     $this->load->view('admin/template/adm_sidebar', $data);
+  //     $this->load->view('admin/satker_cuti', $data);
+  //     $this->load->view('admin/template/adm_footer', $data);
+  //   } else {
+  //     $this->load->view('login/login');
+  //   }
+  // }
+
+  // public function inputsatker()
+  // {
+  //   if ($this->session->userdata('status') == 'login' && $this->session->userdata('role') == 1) {
+  //     $data['avatar'] = $this->session->userdata('foto_profil');
+  //     $data['active'] = '';
+  //     $data['title'] = 'DILMIL III-18 Ambon';
+  //     $this->load->view('admin/template/adm_header', $data);
+  //     $this->load->view('admin/template/adm_navbar', $data);
+  //     $this->load->view('admin/template/adm_sidebar', $data);
+  //     $this->load->view('admin/input_satker_cuti', $data);
+  //     $this->load->view('admin/template/adm_footer', $data);
+  //   } else {
+  //     $this->load->view('login/login');
+  //   }
+  // }
   public function jabatan()
   {
     if ($this->session->userdata('status') == 'login' && $this->session->userdata('role') == 1) {
