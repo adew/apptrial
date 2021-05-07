@@ -90,8 +90,7 @@ class Cuti extends CI_Controller
       $id = $this->session->userdata('nip');
       $cek_data = $this->M_admin->cek_data('tb_pengajuan_cuti', 'nip', $id);
       $jumlah = $cek_data->result_array();
-      print_r($jumlah[0]['lama_cuti']);
-      die;
+
       if (!$cek_data->row()) {
         $saldo_cuti = 12;
       } else {

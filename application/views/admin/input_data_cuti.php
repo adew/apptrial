@@ -70,7 +70,7 @@
                   <div class="form-group">
                     <label class="col-sm-2 col-sm-2 control-label">Lama Cuti</label>
                     <div class="col-sm-1">
-                      <input name="lama_cuti" type="text" id="lama_cuti" class="form-control" placeholder="Jumlah" value="0" autocomplete="off" readonly />
+                      <input name="lama_cuti" type="text" id="lama_cuti" class="form-control" placeholder="Jumlah" value="0" autocomplete="off" />
                       <!--<span class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
                     </div>
                     <label class="col-sm-2 col-sm-2 control-label" style="text-align: left !important;">Hari</label>

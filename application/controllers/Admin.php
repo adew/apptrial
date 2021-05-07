@@ -270,7 +270,7 @@ class Admin extends CI_Controller
     $data = "";
     $config =  array(
 
-      'upload_path'     =>  './uploads/',
+      'upload_path'     =>  './uploads/profile/',
       // 'upload_path'     => "./assets/upload/user/img/",
       'allowed_types'   => "gif|jpg|png|jpeg",
       'encrypt_name'    => False, //
@@ -304,6 +304,9 @@ class Admin extends CI_Controller
         $this->session->set_flashdata('msg_gagal', $this->image_lib->display_errors());
         $this->load->view('admin/profile', $data);
       }
+
+      //Hapus file foto
+      unlink('./uploads/profile/' . $this->session->userdata('foto_profil'));
 
       $where = array(
         'nip' => $this->session->userdata('nip')

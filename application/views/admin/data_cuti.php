@@ -102,8 +102,8 @@
                     <td><?= $value->creat_at ?></td> -->
 
                     <td>
-                      <a href="<?= base_url('cuti/cutiditolak/' . $value->id) ?>" type="button" id="btn-reject" class="btn btn-sm btn-danger" data-placement="bottom" data-toggle="tooltip" title="Ditolak" name="btn_delete" style="margin:auto;"><i class="fa fa-times-circle" aria-hidden="true"></i></a>
-                      <a href="<?= base_url('cuti/cutidisetujui/' . $value->id) ?>" id="btn-accept" class="btn btn-sm btn-success" data-placement="bottom" data-toggle="tooltip" title="Disetujui"><span class="fa fa-check-circle"></span></a>
+                      <a href="<?= base_url('cuti/cutiditolak/' . $value->id) ?>" type="button" class="btn btn-sm btn-danger btn-reject" data-placement="bottom" data-toggle="tooltip" title="Ditolak" name="btn_delete" style="margin:auto;"><i class="fa fa-times-circle" aria-hidden="true"></i></a>
+                      <a href="<?= base_url('cuti/cutidisetujui/' . $value->id) ?>" class="btn btn-sm btn-success btn-accept" data-placement="bottom" data-toggle="tooltip" title="Disetujui"><span class="fa fa-check-circle"></span></a>
 
                     </td>
                   </tr>

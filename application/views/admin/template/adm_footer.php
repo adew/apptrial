@@ -95,7 +95,7 @@
     return false;
   });
 
-  $('#btn-reject').on('click', function() {
+  $('.btn-reject').on('click', function() {
     var getLink = $(this).attr('href');
     swal({
       title: '',
@@ -108,7 +108,7 @@
     });
     return false;
   });
-  $('#btn-accept').on('click', function() {
+  $('.btn-accept').on('click', function() {
     var getLink = $(this).attr('href');
     swal({
       title: '',
@@ -138,18 +138,19 @@
     autoclose: true,
     todayHighlight: true,
     orientation: "bottom",
-  }).on("change", function() {
-    var start = $('#tanggal_awal').datepicker('getDate');
-    var end = $('#tanggal_akhir').datepicker('getDate');
-    var days = Math.floor((end - start) / 1000 / 60 / 60 / 24);
-    if (days <= 12) {
-      $('#lama_cuti').val(days);
-    } else {
-      alert('Tidak boleh lebih dari 12 hari');
-      $('#tanggal_awal').datepicker("setDate", new Date());
-      $('#tanggal_akhir').datepicker("setDate", new Date());
-    }
-  });
+  })
+  // .on("change", function() {
+  //   var start = $('#tanggal_awal').datepicker('getDate');
+  //   var end = $('#tanggal_akhir').datepicker('getDate');
+  //   var days = Math.floor((end - start) / 1000 / 60 / 60 / 24);
+  //   if (days <= 12) {
+  //     $('#lama_cuti').val(days);
+  //   } else {
+  //     alert('Tidak boleh lebih dari 12 hari');
+  //     $('#tanggal_awal').datepicker("setDate", new Date());
+  //     $('#tanggal_akhir').datepicker("setDate", new Date());
+  //   }
+  // });
 </script>
 </script>
 </script>

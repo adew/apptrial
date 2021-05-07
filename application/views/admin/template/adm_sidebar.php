@@ -8,7 +8,7 @@
         <img src="<?php echo base_url('uploads/profile/' . $avatar) ?>" class="img-circle" alt="User Image">
 
       </div>
-      <div class="pull-left info">
+      <div class="pull-left info" style="position: unset;">
         <p><?= $this->session->userdata('nama') ?></p>
         <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
       </div>
