@@ -24,7 +24,7 @@
           <div class="box-body">
             <div class="row">
               <div class="box-body box-profile">
-                <span class=""><img class="profile-user-img img-responsive img-circle" src="<?= base_url('dist/img/') . $avatar ?>" alt="User profile picture"></span>
+                <span class=""><img class="profile-user-img img-responsive img-circle" src="<?php echo base_url('uploads/profile/' . $avatar) ?>" alt="User profile picture"></span>
                 <div class="table-responsive">
                   <table class="table">
                     <tbody>

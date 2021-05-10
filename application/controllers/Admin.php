@@ -9,6 +9,11 @@ class Admin extends CI_Controller
     parent::__construct();
     $this->load->model('M_admin');
     $this->load->library('upload');
+    if ($this->session->userdata('status') == 'login') {
+      return true;
+    } else {
+      $this->load->view('login/login');
+    }
   }
 
   public function index()

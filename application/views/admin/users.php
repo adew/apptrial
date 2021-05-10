@@ -60,7 +60,7 @@
                       <?php } ?>
                       <td><?= $dd->last_login ?></td>
                       <td class="text-center">
-                        <!-- <a type="button" class="btn btn-sm btn-primary" href="<?= base_url('admin/update_user/' . $dd->id) ?>" name="btn_update"><i class="fa fa-edit" aria-hidden="true"></i></a> -->
+                        <a type="button" class="btn btn-sm btn-primary" href="<?= base_url('admin/update_user/' . $dd->id) ?>" name="btn_update"><i class="fa fa-edit" aria-hidden="true"></i></a>
                         <a type="button" class="btn btn-sm btn-danger btn-delete" href="<?= base_url('admin/proses_delete_user/' . $dd->id) ?>" name="btn_delete" style="margin:auto;"><i class="fa fa-trash" aria-hidden="true"></i></a>
                       </td>
 

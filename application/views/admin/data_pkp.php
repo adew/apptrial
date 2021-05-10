@@ -76,7 +76,7 @@
 
                       <!-- <a class="btn btn-sm btn-primary" data-placement="bottom" data-toggle="tooltip" title="Edit PKP" href="#"><span class="glyphicon glyphicon-edit"></span></a> -->
 
-                      <a type="button" id="btn-delete" class="btn btn-sm btn-danger btn-delete" data-placement="bottom" data-toggle="tooltip" title="Hapus Cuti" href="<?= base_url('cuti/proses_delete_jeniscuti/' . $value->id) ?>" name="btn_delete" style="margin:auto;"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                      <a type="button" id="btn-delete" class="btn btn-sm btn-danger btn-delete" data-placement="bottom" data-toggle="tooltip" title="Hapus PKP" href="<?= base_url('cuti/proses_delete_jeniscuti/' . $value->id) ?>" name="btn_delete" style="margin:auto;"><i class="fa fa-trash" aria-hidden="true"></i></a>
 
                     </td>
                   </tr>
