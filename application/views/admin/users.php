@@ -24,12 +24,12 @@
           <!-- /.box-header -->
           <div class="box-body">
 
-            <!-- <?php if ($this->session->flashdata('msg_berhasil')) { ?>
+            <?php if ($this->session->flashdata('msg_berhasil')) { ?>
               <div class="alert alert-success alert-dismissible" style="width:100%">
                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                 <strong>Success!</strong><br> <?php echo $this->session->flashdata('msg_berhasil'); ?>
               </div>
-            <?php } ?> -->
+            <?php } ?>
 
             <a href="<?= base_url('admin/form_user') ?>" style="margin-bottom:10px;" type="button" class="btn btn-sm btn-primary" name="tambah_data"><i class="fa fa-plus-circle" aria-hidden="true"></i> Tambah Data</a>
             <table id="example1" class="table table-bordered table-striped">
@@ -46,9 +46,9 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <?php if (is_array($list_users)) { ?>
-                    <?php foreach ($list_users as $dd) : ?>
+                <?php if (is_array($list_users)) { ?>
+                  <?php foreach ($list_users as $dd) : ?>
+                    <tr>
                       <td><?= $dd->nip ?></td>
                       <td><?= $dd->nama ?></td>
                       <td><?= $dd->jabatan ?></td>
@@ -64,11 +64,11 @@
                         <a type="button" class="btn btn-sm btn-danger btn-delete" href="<?= base_url('admin/proses_delete_user/' . $dd->id) ?>" name="btn_delete" style="margin:auto;"><i class="fa fa-trash" aria-hidden="true"></i></a>
                       </td>
 
-                </tr>
-              <?php endforeach; ?>
-            <?php } else { ?>
-              <td colspan="7" align="center"><strong>Data Kosong</strong></td>
-            <?php } ?>
+                    </tr>
+                  <?php endforeach; ?>
+                <?php } else { ?>
+                  <td colspan="7" align="center"><strong>Data Kosong</strong></td>
+                <?php } ?>
               </tbody>
             </table>
           </div>

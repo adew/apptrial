@@ -1,5 +1,6 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
+define('JATAH_CUTI', 12);
 
 class Cuti extends CI_Controller
 {
@@ -10,6 +11,7 @@ class Cuti extends CI_Controller
     $this->load->model('M_admin');
     $this->load->model('M_cuti');
     $this->load->library('upload');
+
     if ($this->session->userdata('status') == 'login') {
       return true;
     } else {
@@ -21,8 +23,11 @@ class Cuti extends CI_Controller
   {
     if ($this->session->userdata('status') == 'login' && $this->session->userdata('role') == 1) {
       $data['avatar'] = $this->session->userdata('foto_profil');
+      $now = date('Y-m-d');
+      $query = $this->db->query("SELECT * FROM tb_pengajuan_cuti WHERE tgl_awal <= '" . $now . "' AND tgl_akhir >= '" . $now . "'");
 
-      $data['active'] = '';
+      $data['list_data'] = $query->result();
+
       $data['title'] = 'DILMIL III-18 Ambon';
       $this->load->view('admin/template/adm_header', $data);
       $this->load->view('admin/template/adm_navbar', $data);
@@ -92,14 +97,21 @@ class Cuti extends CI_Controller
       $jenis_cuti    = $this->input->post('jenis_cuti', TRUE);
       $keterangan       = $this->input->post('keterangan', TRUE);
 
+      // $cek_data = $this->db->query('select sum(lama_cuti) as jumlah from tb_pengajuan_cuti WHERE nip="' . $id . '"')->result();
       $id = $this->session->userdata('nip');
-      $cek_data = $this->M_admin->cek_data('tb_pengajuan_cuti', 'nip', $id);
-      $jumlah = $cek_data->result_array();
+      $cek_data = $this->M_cuti->sum_cuti_terpakai($id);
+      $cuti_terpakai = $cek_data[0]->jumlah;
 
-      if (!$cek_data->row()) {
-        $saldo_cuti = 12;
+
+      if ((JATAH_CUTI - $cuti_terpakai) < $lama_cuti) {
+        $this->session->set_flashdata('msg_gagal', 'Maaf jumlah cuti yang anda ajukan melebihi sisa cuti anda saat ini');
+        redirect(base_url('cuti/inputdatacuti'));
+      }
+
+      if ($cuti_terpakai == 0) {
+        $saldo_cuti = JATAH_CUTI -  $lama_cuti;
       } else {
-        $saldo_cuti = 12 - $cek_data->num_rows();
+        $saldo_cuti = JATAH_CUTI - ($cuti_terpakai + $lama_cuti);
       }
       $data = array(
         'nip'     => $nip,

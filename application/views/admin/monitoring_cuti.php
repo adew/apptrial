@@ -47,19 +47,22 @@
             <table id="example" class="table table-responsive table-hover table-bordered">
               <thead>
                 <tr>
-                  <th>NIK</th>
+                  <th>NIP</th>
                   <th>Nama</th>
                   <th>Jumlah Cuti </th>
                   <th>Keterangan </th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                </tr>
+                <?php foreach ($list_data as $value) : ?>
+                  <tr>
+                  <tr>
+                    <td><?= $value->nip ?></td>
+                    <td><?= $value->nama ?></td>
+                    <td><?= $value->lama_cuti ?></td>
+                    <td><?= $value->keterangan ?></td>
+                  </tr>
+                <?php endforeach; ?>
               </tbody>
             </table>
           </div><!-- /.box-body -->
