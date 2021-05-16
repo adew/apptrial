@@ -10,21 +10,18 @@
       <!-- <li><a href="<?= base_url('admin/details/') . $this->uri->segment(3) ?>" class="active">Details</a></li> -->
     </ol>
   </section>
-
   <!-- Main content -->
   <section class="content">
-    <div class="row">
-      <div class="col-md-6 align-self-stretch">
+    <div class="row d-flex align-items-stretch">
+      <div class="col-md-6">
         <!-- /.box -->
-        <div class="box box-primary">
-          <!-- <div class="box-header">
-              <h3 class="box-title"><i class="fa fa-fw fa-users" aria-hidden="true"></i> Users</h3>
-            </div> -->
+        <div class="box box-primary" style="height:350px;">
           <!-- /.box-header -->
           <div class="box-body">
             <div class="row">
               <div class="box-body box-profile">
-                <span class=""><img class="profile-user-img img-responsive img-circle" src="<?php echo base_url('uploads/profile/' . $avatar) ?>" alt="User profile picture"></span>
+                <span class=""><img class="profile-user-img img-responsive img-circle" src="<?php echo base_url('uploads/profile/' . $avatar) ?>" style="height:120px"></span>
+                <br>
                 <div class="table-responsive">
                   <table class="table">
                     <tbody>
@@ -53,21 +50,13 @@
                 <!-- /.box-body -->
               </div>
             </div>
-
           </div>
-
-
         </div>
         <!-- /.box-body -->
       </div>
       <div class="col-md-6">
         <!-- /.box -->
-        <div class="box box-primary">
-          <!-- <div class="box-header">
-              <h3 class="box-title"><i class="fa fa-fw fa-users" aria-hidden="true"></i> Users</h3>
-            </div> -->
-          <!-- /.box-header -->
-          <!-- <h3 class="box-title">Data PKP Bulanan</h3> -->
+        <div class="scroller box box-primary" style="height:350px;">
           <div class="table-responsive">
             <table class="table no-margin">
               <thead>
@@ -95,19 +84,11 @@
     <div class="row">
       <div class="col-md-12">
         <div class="box box-primary">
-          <!-- <div class="box-header">
-              <h3 class="box-title"><i class="fa fa-fw fa-users" aria-hidden="true"></i> Users</h3>
-            </div> -->
-          <!-- /.box-header -->
-
-          <div class="box-body">
-            <div class="box-body box-profile">
-              <h3 class="box-title">Grafik</h3>
-              <div class="graph-container">
-                <div class="graph" id="examplefirst"> </div>
-              </div>
+          <div class="box-body box-profile">
+            <h3 class="box-title">Grafik</h3>
+            <div class="graph-container">
+              <div class="graph" id="examplefirst"> </div>
             </div>
-
           </div>
         </div>
       </div>

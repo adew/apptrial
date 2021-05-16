@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Admin extends CI_Controller
+class Pkp extends CI_Controller
 {
 
   public function __construct()
@@ -19,10 +19,86 @@ class Admin extends CI_Controller
   public function index()
   {
     if ($this->session->userdata('status') == 'login' && $this->session->userdata('role') == 1) {
-      redirect(base_url('admin/users'));
+      $data['avatar'] = $this->session->userdata('foto_profil');
+
+      $data['list_data'] = $this->M_admin->select('user');
+      $data['active'] = '';
+      $data['title'] = 'DILMIL III-18 Ambon';
+      $this->load->view('admin/template/adm_header', $data);
+      $this->load->view('admin/template/adm_navbar', $data);
+      $this->load->view('admin/template/adm_sidebar', $data);
+      $this->load->view('admin/dashboard', $data);
+      $this->load->view('admin/template/adm_footer', $data);
     } else {
       $this->load->view('login/login');
     }
+  }
+
+  public function details()
+  {
+    $id = $this->uri->segment(3);
+    $where = array('nip' => $id);
+    $data['data_user'] = $this->M_admin->get_data('user', $where);
+    $data['data_pkp'] = $this->M_admin->get_data('tb_pkp', $where);
+
+    $data['avatar'] = $this->session->userdata('foto_profil');
+    $this->session->set_userdata($data);
+
+    $data['title'] = 'DILMIL III-18 Ambon';
+    $this->load->view('admin/template/adm_header', $data);
+    $this->load->view('admin/template/adm_navbar', $data);
+    $this->load->view('admin/template/adm_sidebar', $data);
+    $this->load->view('admin/dashboard_details', $data);
+    $this->load->view('admin/template/adm_footer', $data);
+  }
+
+  public function get_data()
+  {
+    $id = $this->uri->segment(3);
+    $where = array('nip' => $id);
+    $data_pkp = $this->M_admin->get_data_array('tb_pkp', $where);
+    $json_data = array();
+    foreach ($data_pkp as $key => $rec) {
+      $json_array['label'] = date('Y') . '-' . $rec['bulan'];
+      $json_array['skor'] = (int)$rec['skor'];
+      $key++;
+      array_push($json_data, $json_array);
+    }
+    for ($x = $key; $x <= 12; $x++) {
+      $json_array['label'] = date('Y') . '-' . $x;
+      $json_array['skor'] = 0;
+      $key++;
+      array_push($json_data, $json_array);
+    }
+    echo json_encode($json_data);
+  }
+
+  public function datapkp()
+  {
+    $data['avatar'] = $this->session->userdata('foto_profil');
+    $data['list_data'] = $this->M_admin->select('tb_pkp');
+
+    $data['title'] = 'DILMIL III-18 Ambon';
+    $this->load->view('admin/template/adm_header', $data);
+    $this->load->view('admin/template/adm_navbar', $data);
+    $this->load->view('admin/template/adm_sidebar', $data);
+    $this->load->view('admin/data_pkp', $data);
+    $this->load->view('admin/template/adm_footer', $data);
+  }
+
+  public function inputdatapkp()
+  {
+    $data['avatar'] = $this->session->userdata('foto_profil');
+    $data['nip'] = $this->session->userdata('nip');
+
+    $data['bulan'] = $this->load_bulan();
+
+    $data['title'] = 'DILMIL III-18 Ambon';
+    $this->load->view('admin/template/adm_header', $data);
+    $this->load->view('admin/template/adm_navbar', $data);
+    $this->load->view('admin/template/adm_sidebar', $data);
+    $this->load->view('admin/input_data_pkp', $data);
+    $this->load->view('admin/template/adm_footer', $data);
   }
 
   public function load_bulan()
@@ -212,8 +288,7 @@ class Admin extends CI_Controller
 
     if (!$this->upload->do_upload('userpicture')) {
       $this->session->set_flashdata('msg_gagal', $this->upload->display_errors());
-      // $this->load->view('admin/profile', $data);
-      redirect(base_url('admin/profile'));
+      $this->load->view('admin/profile', $data);
     } else {
       $upload_data = $this->upload->data();
       $nama_file = $upload_data['file_name'];
@@ -222,7 +297,7 @@ class Admin extends CI_Controller
       //resize img + thumb Img -- Optional
       $config['image_library']     = 'gd2';
       $config['source_image']      = $upload_data['full_path'];
-      $config['create_thumb']      = false;
+      $config['create_thumb']      = FALSE;
       $config['maintain_ratio']    = TRUE;
       $config['width']             = 150;
       $config['height']            = 150;
@@ -232,8 +307,7 @@ class Admin extends CI_Controller
       if (!$this->image_lib->resize()) {
         // $data['pesan_error'] = $this->image_lib->display_errors();
         $this->session->set_flashdata('msg_gagal', $this->image_lib->display_errors());
-        // $this->load->view('admin/profile', $data)
-        redirect(base_url('admin/profile'));
+        $this->load->view('admin/profile', $data);
       }
 
       //Hapus file foto
@@ -249,8 +323,8 @@ class Admin extends CI_Controller
       $this->session->set_userdata($data);
       $this->M_admin->update('user', $data, $where);
       $this->session->set_flashdata('msg_berhasil', 'Gambar Berhasil Di Upload');
-      // $this->load->view('admin/profile');
-      redirect(base_url('admin/profile'));
+      $this->load->view('admin/profile');
+      // redirect(base_url('admin/profile'));
     }
   }
 

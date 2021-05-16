@@ -24,7 +24,7 @@
             <i class="ion ion-clipboard"></i>
             <h3 class="box-title">Data PKP</h3>
             <div class="box-tools pull-right">
-              <form action='departemen.php' method="POST">
+              <!-- <form action='departemen.php' method="POST">
                 <div class="input-group" style="width: 230px;">
                   <input type="text" name="qcari" class="form-control input-sm pull-right" placeholder="Cari Usename Atau Nama">
                   <div class="input-group-btn">
@@ -32,14 +32,13 @@
                     <a href="departemen.php" class="btn btn-sm btn-success tooltips" data-placement="bottom" data-toggle="tooltip" title="Refresh"><i class="fa fa-refresh"></i></a>
                   </div>
                 </div>
-              </form>
+              </form> -->
             </div>
           </div><!-- /.box-header -->
-          <div class="box-footer clearfix no-border">
-            <a href="<?php echo base_url('admin/inputdatapkp') ?>" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i> Tambah PKP</a>
-          </div>
+          <!-- <div class="box-footer clearfix no-border">
+            <a href="<?php echo base_url('pkp/inputdatapkp') ?>" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i> Tambah PKP</a>
+          </div> -->
           <div class="box-body">
-
             <table id="example" class="table table-responsive table-hover table-bordered text-center">
               <thead>
                 <tr>

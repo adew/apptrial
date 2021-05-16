@@ -24,7 +24,7 @@
             <i class="ion ion-clipboard"></i>
             <h3 class="box-title">Data Cuti</h3>
             <div class="box-tools pull-right">
-              <form action='departemen.php' method="POST">
+              <!-- <form action='departemen.php' method="POST">
                 <div class="input-group" style="width: 230px;">
                   <input type="text" name="qcari" class="form-control input-sm pull-right" placeholder="Cari Usename Atau Nama">
                   <div class="input-group-btn">
@@ -32,7 +32,7 @@
                     <a href="departemen.php" class="btn btn-sm btn-success tooltips" data-placement="bottom" data-toggle="tooltip" title="Refresh"><i class="fa fa-refresh"></i></a>
                   </div>
                 </div>
-              </form>
+              </form> -->
             </div>
           </div><!-- /.box-header -->
 
@@ -68,7 +68,7 @@
                   <th style="width: 8%;">
                     Status
                   </th>
-                  <th style="width: 6%;">
+                  <th style="width: 8%;">
                     <!-- Tools -->
                   </th>
                 </tr>
@@ -102,8 +102,8 @@
                     <td><?= $value->creat_at ?></td> -->
 
                     <td>
-                      <a href="<?= base_url('cuti/cutiditolak/' . $value->id) ?>" type="button" class="btn btn-sm btn-danger btn-reject" data-placement="bottom" data-toggle="tooltip" title="Ditolak" name="btn_delete" style="margin:auto;"><i class="fa fa-times-circle" aria-hidden="true"></i></a>
-                      <a href="<?= base_url('cuti/cutidisetujui/' . $value->id) ?>" class="btn btn-sm btn-success btn-accept" data-placement="bottom" data-toggle="tooltip" title="Disetujui"><span class="fa fa-check-circle"></span></a>
+                      <a href="<?= base_url('cuti/cutiditolak/' . $value->id) ?>" type="button" class="btn btn-xs btn-danger btn-reject" data-placement="bottom" data-toggle="tooltip" title="Ditolak" name="btn_delete" style="margin:auto;"><i class="fa fa-times-circle" aria-hidden="true"></i></a>
+                      <a href="<?= base_url('cuti/cutidisetujui/' . $value->id) ?>" class="btn btn-xs btn-success btn-accept" data-placement="bottom" data-toggle="tooltip" title="Disetujui"><span class="fa fa-check-circle"></span></a>
 
                     </td>
                   </tr>

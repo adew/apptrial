@@ -21,16 +21,17 @@
       <li class="header">MENU PKP</li>
 
       <li class="active">
-        <a href="<?php echo base_url('admin') ?>">
-          <i class="fa fa-desktop"></i> <span>Monitoring Kinerja Pegawai</span>
-          <span class="pull-right-container">
-            <!-- <i class="fa fa-angle-left pull-right"></i> -->
-          </span>
+        <a href="<?php echo base_url('pkp') ?>">
+          <i class="fa fa-desktop"></i> <span>Monitoring Kinerja</span>
         </a>
       </li>
       <li>
-        <a href="<?php echo base_url('admin/datapkp') ?>">
+        <a href="<?php echo base_url('pkp/datapkp') ?>">
           <i class="fa fa-database" aria-hidden="true"></i> <span>Data PKP</span></a>
+      </li>
+      <li>
+        <a href="<?php echo base_url('pkp/inputdatapkp') ?>">
+          <i class="fa fa-file-excel-o" aria-hidden="true"></i> <span>Input Data PKP</span></a>
       </li>
       <li class="header">MENU CUTI</li>
       <li>

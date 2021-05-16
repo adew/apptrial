@@ -36,8 +36,8 @@ class Admin extends CI_Controller
     $data['token_generate'] = $this->token_generate();
     $data['avatar'] = $this->M_admin->get_data_gambar('tb_upload_gambar_user', $this->session->userdata('name'));
     $this->session->set_userdata($data);
-    
-    $data['title'] = 'DILMIL III-18 Ambon'; 
+
+    $data['title'] = 'DILMIL III-18 Ambon';
     $this->load->view('admin/template/adm_header', $data);
     $this->load->view('admin/template/adm_navbar', $data);
     $this->load->view('admin/template/adm_sidebar', $data);
@@ -50,8 +50,8 @@ class Admin extends CI_Controller
     $data['token_generate'] = $this->token_generate();
     $data['avatar'] = $this->M_admin->get_data_gambar('tb_upload_gambar_user', $this->session->userdata('name'));
     $this->session->set_userdata($data);
-    
-    $data['title'] = 'DILMIL III-18 Ambon'; 
+
+    $data['title'] = 'DILMIL III-18 Ambon';
     $this->load->view('admin/template/adm_header', $data);
     $this->load->view('admin/template/adm_navbar', $data);
     $this->load->view('admin/template/adm_sidebar', $data);
@@ -64,8 +64,8 @@ class Admin extends CI_Controller
     $data['token_generate'] = $this->token_generate();
     $data['avatar'] = $this->M_admin->get_data_gambar('tb_upload_gambar_user', $this->session->userdata('name'));
     $this->session->set_userdata($data);
-    
-    $data['title'] = 'DILMIL III-18 Ambon'; 
+
+    $data['title'] = 'DILMIL III-18 Ambon';
     $this->load->view('admin/template/adm_header', $data);
     $this->load->view('admin/template/adm_navbar', $data);
     $this->load->view('admin/template/adm_sidebar', $data);
@@ -88,8 +88,8 @@ class Admin extends CI_Controller
     $data['token_generate'] = $this->token_generate();
     $data['avatar'] = $this->M_admin->get_data_gambar('tb_upload_gambar_user', $this->session->userdata('name'));
     $this->session->set_userdata($data);
-    
-    $data['title'] = 'DILMIL III-18 Ambon'; 
+
+    $data['title'] = 'DILMIL III-18 Ambon';
     $this->load->view('admin/template/adm_header', $data);
     $this->load->view('admin/template/adm_navbar', $data);
     $this->load->view('admin/template/adm_sidebar', $data);
@@ -224,7 +224,6 @@ class Admin extends CI_Controller
     $this->load->view('admin/template/adm_sidebar', $data);
     $this->load->view('admin/form_users/form_insert', $data);
     $this->load->view('admin/template/adm_footer', $data);
-
   }
 
   public function update_user()
@@ -348,7 +347,7 @@ class Admin extends CI_Controller
 
 
 
-  
+
 
   ####################################
   // DATA BARANG MASUK
@@ -565,6 +564,7 @@ class Admin extends CI_Controller
 
   public function proses_data_keluar()
   {
+    $id_transaksi = '';
     $this->form_validation->set_rules('tanggal_keluar', 'Tanggal Keluar', 'trim|required');
     if ($this->form_validation->run() === TRUE) {
       $id_transaksi   = $this->input->post('id_transaksi', TRUE);

@@ -61,11 +61,10 @@ class Login extends CI_Controller
 						$this->session->set_userdata($data_session);
 
 						$this->M_login->edit_user(['nip' => $nip], ['last_login' => date('d-m-Y G:i')]);
-						// die('sdfa');
 						if ($isi->role == 1) {
-							redirect(base_url('admin'));
+							redirect(base_url('admin/users'));
 						} else {
-							redirect(base_url('admin'));
+							redirect(base_url('pkp'));
 						}
 					} else {
 						$this->session->set_flashdata('msg', 'Username Dan Password Salah');

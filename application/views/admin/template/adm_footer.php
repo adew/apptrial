@@ -70,7 +70,7 @@
       },
     });
     $.ajax({
-      url: '<?= site_url("admin/get_data/") . $this->uri->segment(3) ?>',
+      url: '<?= site_url("pkp/get_data/") . $this->uri->segment(3) ?>',
       dataType: 'JSON',
       async: false,
       contentType: "application/json; charset=utf-8",

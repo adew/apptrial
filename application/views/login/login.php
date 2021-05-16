@@ -18,7 +18,7 @@
 <body class="login-page">
     <header class="jumbotron subhead" id="overview" style="margin-bottom: 0px">
         <div class="container-logo">
-            <img alt="Logo Mahkamah Agung RI" class="logo-ma" src="<?= base_url() ?>/dist/img/logo2.png">
+            <img alt="LogoS" class="logo-ma" src="<?= base_url() ?>/dist/img/logo2.png">
             <div style="text-align: left">
                 <h2 class="logo-text">Sistem Informasi Manajemen Pegawai Elektronik</h2>
                 <p class="logo-sub-text">Pengadilan Militer III-18 Ambon</p>
@@ -108,10 +108,10 @@ Ingat akun Saya
         </div>
     </div>
     <footer class="footer-login-user" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-        <strong>SIKEP v.3.1.0. Hak Cipta &copy; 2021 <a href="https://mahkamahagung.go.id" target="_blank">Mahkamah Agung Republik Indonesia</a></strong>
+        <!-- <strong>SIKEP v.3.1.0. Hak Cipta &copy; 2021 <a href="https://mahkamahagung.go.id" target="_blank">Mahkamah Agung Republik Indonesia</a></strong> -->
     </footer>
 
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-163838281-1"></script>
+    <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=UA-163838281-1"></script> -->
     <script>
         window.dataLayer = window.dataLayer || [];
 
