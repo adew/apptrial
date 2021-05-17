@@ -18,7 +18,7 @@ class Pkp extends CI_Controller
 
   public function index()
   {
-    if ($this->session->userdata('status') == 'login' && $this->session->userdata('role') == 1) {
+    if ($this->session->userdata('status') == 'login') {
       $data['avatar'] = $this->session->userdata('foto_profil');
 
       $data['list_data'] = $this->M_admin->select('user');
@@ -75,8 +75,9 @@ class Pkp extends CI_Controller
 
   public function datapkp()
   {
+    $where = array('nip' => $this->session->userdata('nip'));
     $data['avatar'] = $this->session->userdata('foto_profil');
-    $data['list_data'] = $this->M_admin->select('tb_pkp');
+    $data['list_data'] = $this->M_admin->get_data('tb_pkp', $where);
 
     $data['title'] = 'DILMIL III-18 Ambon';
     $this->load->view('admin/template/adm_header', $data);
@@ -451,8 +452,7 @@ class Pkp extends CI_Controller
       $data['avatar'] = $this->session->userdata('foto_profil');
       $data['token_generate'] = $this->token_generate();
       $data['list_data'] = $this->M_admin->get_data('user', $where);
-      // print_r($data);
-      // die;
+
       $data['title'] = 'DILMIL III-18 Ambon';
       $this->load->view('admin/template/adm_header', $data);
       $this->load->view('admin/template/adm_navbar', $data);
@@ -481,35 +481,6 @@ class Pkp extends CI_Controller
       redirect(base_url('admin/users'));
     }
   }
-
-  // public function proses_update_user()
-  // {
-  //   $this->form_validation->set_rules('username', 'Username', 'required');
-  //   $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
-
-
-  //   if ($this->form_validation->run() == TRUE) {
-  //     if ($this->session->userdata('token_generate') === $this->input->post('token')) {
-  //       $id           = $this->input->post('id', TRUE);
-  //       $username     = $this->input->post('username', TRUE);
-  //       $email        = $this->input->post('email', TRUE);
-  //       $role         = $this->input->post('role', TRUE);
-
-  //       $where = array('id' => $id);
-  //       $data = array(
-  //         'username'     => $username,
-  //         'email'        => $email,
-  //         'role'         => $role,
-  //       );
-  //       $this->M_admin->update('user', $data, $where);
-  //       $this->session->set_flashdata('msg_berhasil', 'Data User Berhasil Diupdate');
-  //       redirect(base_url('admin/users'));
-  //     }
-  //   } else {
-  //     $this->load->view('admin/form_users/form_update');
-  //   }
-  // }
-
 
   ####################################
   // End Users

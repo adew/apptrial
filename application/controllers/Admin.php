@@ -20,6 +20,8 @@ class Admin extends CI_Controller
   {
     if ($this->session->userdata('status') == 'login' && $this->session->userdata('role') == 1) {
       redirect(base_url('admin/users'));
+    } else if ($this->session->userdata('status') == 'login' && $this->session->userdata('role') == 0) {
+      redirect(base_url('pkp'));
     } else {
       $this->load->view('login/login');
     }

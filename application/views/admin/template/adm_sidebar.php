@@ -46,19 +46,23 @@
         <a href="<?php echo base_url('cuti/inputdatacuti') ?>">
           <i class="fa fa-calendar-minus-o" aria-hidden="true"></i> <span>Pengajuan Cuti</span></a>
       </li>
-      <li>
-        <a href="<?php echo base_url('cuti/variabelcuti') ?>">
-          <i class="fa fa-circle-o-notch" aria-hidden="true"></i> <span>Jenis Cuti</span></a>
-      </li>
+      <?php if ($this->session->userdata('role') == 1) { ?>
+        <li>
+          <a href="<?php echo base_url('cuti/variabelcuti') ?>">
+            <i class="fa fa-circle-o-notch" aria-hidden="true"></i> <span>Jenis Cuti</span></a>
+        </li>
+      <?php } ?>
       <li class="header">MANAJEMEN USER</li>
       <li>
         <a href="<?php echo base_url('admin/profile') ?>">
           <i class="fa fa-cogs" aria-hidden="true"></i> <span>Profile</span></a>
       </li>
-      <li>
-        <a href="<?php echo base_url('admin/users') ?>">
-          <i class="fa fa-fw fa-users" aria-hidden="true"></i> <span>Pegawai</span></a>
-      </li>
+      <?php if ($this->session->userdata('role') == 1) { ?>
+        <li>
+          <a href="<?php echo base_url('admin/users') ?>">
+            <i class="fa fa-fw fa-users" aria-hidden="true"></i> <span>Pegawai</span></a>
+        </li>
+      <?php } ?>
     </ul>
   </section>
   <!-- /.sidebar -->

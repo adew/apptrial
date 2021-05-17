@@ -70,7 +70,14 @@
                 <?php foreach ($data_pkp as $list => $value) : ?>
                   <tr>
                     <td><?= $value->bulan ?></td>
-                    <td><a href="<?= base_url('uploads/') . $value->file_pkp ?>"><?= $value->file_pkp ?></td>
+                    <td>
+                      <?php if ($this->session->userdata('role') == 1) { ?>
+                        <a href="<?= base_url('uploads/') . $value->file_pkp ?>"><?= $value->file_pkp ?></a>
+                      <?php } else { ?>
+                        <span><?= $value->file_pkp ?></span>
+                      <?php } ?>
+
+                    </td>
                     <td><span class="label label-success"><?= $value->skor ?></span></td>
                   </tr>
                 <?php endforeach; ?>

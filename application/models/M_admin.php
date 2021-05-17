@@ -22,20 +22,20 @@ class M_admin extends CI_Model
       ->get();
   }
 
-  public function get_data_array($tabel, $id_transaksi)
+  public function get_data_array($tabel, $nip)
   {
     $query = $this->db->select()
       ->from($tabel)
-      ->where($id_transaksi)
+      ->where($nip)
       ->get();
     return $query->result_array();
   }
 
-  public function get_data($tabel, $id_transaksi)
+  public function get_data($tabel, $nip)
   {
     $query = $this->db->select()
       ->from($tabel)
-      ->where($id_transaksi)
+      ->where($nip)
       ->get();
     return $query->result();
   }

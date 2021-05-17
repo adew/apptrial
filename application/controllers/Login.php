@@ -63,8 +63,10 @@ class Login extends CI_Controller
 						$this->M_login->edit_user(['nip' => $nip], ['last_login' => date('d-m-Y G:i')]);
 						if ($isi->role == 1) {
 							redirect(base_url('admin/users'));
-						} else {
+						} else if ($isi->role == 0) {
 							redirect(base_url('pkp'));
+						} else {
+							redirect(base_url());
 						}
 					} else {
 						$this->session->set_flashdata('msg', 'Username Dan Password Salah');
