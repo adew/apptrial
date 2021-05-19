@@ -19,7 +19,7 @@
       <section class="col-lg-12 connectedSortable">
 
         <!-- TO DO List -->
-        <div class="box box-primary">
+        <div class="box box-warning">
           <div class="box-header">
             <i class="ion ion-clipboard"></i>
             <h3 class="box-title">Data PKP</h3>
@@ -38,8 +38,8 @@
           <!-- <div class="box-footer clearfix no-border">
             <a href="<?php echo base_url('pkp/inputdatapkp') ?>" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i> Tambah PKP</a>
           </div> -->
-          <div class="box-body">
-            <table id="example" class="table table-responsive table-hover table-bordered text-center">
+          <div class="scroller box-body" style="overflow-y: scroll;">
+            <table id="data_pkp" class="table table-responsive table-hover table-bordered text-center">
               <thead>
                 <tr>
                   <!-- <th>

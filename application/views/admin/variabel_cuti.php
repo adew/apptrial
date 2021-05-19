@@ -19,12 +19,12 @@
       <section class="col-lg-12 connectedSortable">
 
         <!-- TO DO List -->
-        <div class="box box-primary">
+        <div class="box box-warning">
           <div class="box-header">
             <i class="ion ion-clipboard"></i>
             <h3 class="box-title">Data Jenis Cuti</h3>
             <div class="box-tools pull-right">
-              <form action='departemen.php' method="POST">
+              <!-- <form action='departemen.php' method="POST">
                 <div class="input-group" style="width: 230px;">
                   <input type="text" name="qcari" class="form-control input-sm pull-right" placeholder="Cari Usename Atau Nama">
                   <div class="input-group-btn">
@@ -32,7 +32,7 @@
                     <a href="departemen.php" class="btn btn-sm btn-success tooltips" data-placement="bottom" data-toggle="tooltip" title="Refresh"><i class="fa fa-refresh"></i></a>
                   </div>
                 </div>
-              </form>
+              </form> -->
             </div>
           </div><!-- /.box-header -->
           <div class="box-footer clearfix no-border">

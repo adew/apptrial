@@ -19,7 +19,7 @@
       <section class="col-lg-12 connectedSortable">
 
         <!-- TO DO List -->
-        <div class="box box-primary">
+        <div class="box box-warning">
           <div class="box-header">
             <i class="ion ion-clipboard"></i>
             <h3 class="box-title">Data Cuti</h3>
@@ -36,27 +36,26 @@
             </div>
           </div><!-- /.box-header -->
 
-          <div class="box-body">
-
+          <div class="scroller box-body" style="overflow-y: scroll;">
             <table id="example" class="table table-responsive table-hover table-bordered">
               <thead>
                 <tr>
-                  <th style="width: 3%;">
+                  <th>
                     No
                   </th>
-                  <th style="width: 10%;">
+                  <th>
                     Waktu Pengajuan
                   </th>
-                  <th style="width: 20%;">
+                  <th>
                     Nama
                   </th>
-                  <th style="width: 8%;">
+                  <th>
                     Dari Tanggal
                   </th>
-                  <th style="width: 8%;">
+                  <th>
                     Sampai Tanggal
                   </th>
-                  <th style="width: 5%;">
+                  <th>
                     Lama Cuti
                   </th>
                   <th>
@@ -65,10 +64,10 @@
                   <th>
                     Keterangan
                   </th>
-                  <th style="width: 8%;">
+                  <th>
                     Status
                   </th>
-                  <th style="width: 8%;">
+                  <th>
                     <!-- Tools -->
                   </th>
                 </tr>
@@ -101,10 +100,9 @@
                     <td><?= $value->skor ?></td>
                     <td><?= $value->creat_at ?></td> -->
 
-                    <td>
-                      <a href="<?= base_url('cuti/cutiditolak/' . $value->id) ?>" type="button" class="btn btn-xs btn-danger btn-reject" data-placement="bottom" data-toggle="tooltip" title="Ditolak" name="btn_delete" style="margin:auto;"><i class="fa fa-times-circle" aria-hidden="true"></i></a>
+                    <td style="display:inline-flex;">
+                      <a style="margin-right: 5px;" href="<?= base_url('cuti/cutiditolak/' . $value->id) ?>" type="button" class="btn btn-xs btn-danger btn-reject" data-placement="bottom" data-toggle="tooltip" title="Ditolak" name="btn_delete"><i class="fa fa-times-circle" aria-hidden="true"></i></a>
                       <a href="<?= base_url('cuti/cutidisetujui/' . $value->id) ?>" class="btn btn-xs btn-success btn-accept" data-placement="bottom" data-toggle="tooltip" title="Disetujui"><span class="fa fa-check-circle"></span></a>
-
                     </td>
                   </tr>
                 <?php endforeach; ?>

@@ -68,7 +68,7 @@
                   <label class="col-sm-2 col-sm-2 control-label">Unit Kerja</label>
                   <div class="col-sm-5">
                     <?php echo form_error('unit_kerja', '<p class="callout callout-warning" style=" width: 50%" role="alert">', '</p>'); ?>
-                    <textarea rows="3" cols="100" name="unit_kerja" id="unit_kerja" placeholder="Unit Kerja"><?= $list_data[0]->unit_kerja; ?></textarea>
+                    <textarea class="form-control" rows="3" cols="100" name="unit_kerja" id="unit_kerja" placeholder="Unit Kerja"><?= $list_data[0]->unit_kerja; ?></textarea>
                   </div>
                 </div>
                 <!-- <div class="form-group">

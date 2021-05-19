@@ -21,7 +21,7 @@ class Cuti extends CI_Controller
 
   public function index()
   {
-    if ($this->session->userdata('status') == 'login' && $this->session->userdata('role') == 1) {
+    if ($this->session->userdata('status') == 'login') {
       $data['avatar'] = $this->session->userdata('foto_profil');
       $now = date('Y-m-d');
       $query = $this->db->query("SELECT * FROM tb_pengajuan_cuti WHERE tgl_awal <= '" . $now . "' AND tgl_akhir >= '" . $now . "'");

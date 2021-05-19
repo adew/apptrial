@@ -97,7 +97,7 @@ class Admin extends CI_Controller
         } else {
           $this->session->set_flashdata('error', '<p>Gagal! File ' . $fileData['file_name'] . ' tidak berhasil tersimpan di database anda</p>');
         }
-        redirect(base_url('admin/datapkp'));
+        redirect(base_url('pkp/datapkp'));
       } else {
         $this->session->set_flashdata('error', $this->upload->display_errors());
         redirect(base_url('admin/inputdatapkp'));
@@ -268,7 +268,7 @@ class Admin extends CI_Controller
   public function users()
   {
     $data['title'] = 'DILMIL III-18 Ambon';
-    $data['list_users'] = $this->M_admin->kecuali('user', $this->session->userdata('name'));
+    $data['list_users'] = $this->M_admin->kecuali('user', $this->session->userdata('nip'));
 
     $data['avatar'] = $this->session->userdata('foto_profil');
     $this->session->set_userdata($data);
@@ -296,8 +296,6 @@ class Admin extends CI_Controller
     $data['token_generate'] = $this->token_generate();
     $data['list_data'] = $this->M_admin->get_data('user', $where);
 
-    // print_r($data);
-    // die;
     $data['avatar'] = $this->session->userdata('foto_profil');
     $this->session->set_userdata($data);
     $data['title'] = 'DILMIL III-18 Ambon';
@@ -371,14 +369,11 @@ class Admin extends CI_Controller
     $this->form_validation->set_rules('jabatan', 'Jabatan', 'required', array('required' => 'Wajib diisi'));
     $this->form_validation->set_rules('unit_kerja', 'Unit Kerja', 'required', array('required' => 'Wajib diisi'));
 
-
-    $id = $this->session->userdata('nip');
-    $where = array('nip' => $id);
     if ($this->form_validation->run() == FALSE) {
 
       $data['avatar'] = $this->session->userdata('foto_profil');
       $data['token_generate'] = $this->token_generate();
-      $data['list_data'] = $this->M_admin->get_data('user', $where);
+      $data['list_data'] = $this->M_admin->get_data('user', $this->session->userdata('nip'));
       // print_r($data);
       // die;
       $data['title'] = 'DILMIL III-18 Ambon';
@@ -395,17 +390,18 @@ class Admin extends CI_Controller
       $unit_kerja    = $this->input->post('unit_kerja', TRUE);
       $role         = $this->input->post('role', TRUE);
 
+      $where = array('nip' => $nip);
       $data = array(
         'nama'     => $nama,
-        'nip'     => $nip,
+        // 'nip'     => $nip,
         'jabatan'     => $jabatan,
         'unit_kerja'     => $unit_kerja,
         'role'         => $role,
       );
-      // die($nip);
+
       $this->M_admin->update('user', $data, $where);
 
-      $this->session->set_flashdata('msg_berhasil', 'User Berhasil Ditambahkan');
+      $this->session->set_flashdata('msg_berhasil', 'User Berhasil Diupdate');
       redirect(base_url('admin/users'));
     }
   }

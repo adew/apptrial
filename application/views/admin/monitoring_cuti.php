@@ -19,7 +19,7 @@
       <section class="col-lg-6 connectedSortable">
         <!-- Custom tabs (Charts with tabs)-->
         <!-- TO DO List -->
-        <div class="box box-primary">
+        <div class="box box-warning">
           <div class="box-header">
             <i class="ion ion-clipboard"></i>
             <h3 class="box-title">Cuti Pegawai Yang Habis / Kurang</h3>
@@ -34,7 +34,7 @@
       <!-- right col (We are only adding the ID to make the widgets sortable)-->
       <section class="col-lg-6 connectedSortable">
 
-        <div class="box box-primary">
+        <div class="box box-warning">
           <div class="box-header">
             <i class="ion ion-clipboard"></i>
             <h3 class="box-title">Cuti Hari Ini</h3>

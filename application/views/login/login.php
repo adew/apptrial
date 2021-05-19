@@ -2,7 +2,9 @@
 <html lang="id-ID">
 
 <head>
-    <title>Halaman Login Pegawai</title>
+    <title>Dilmil III-18 Ambon || Login</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="<?php echo base_url() ?>favicon.ico" type="image/x-icon">
 
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
@@ -18,10 +20,11 @@
 <body class="login-page">
     <header class="jumbotron subhead" id="overview" style="margin-bottom: 0px">
         <div class="container-logo">
-            <img alt="LogoS" class="logo-ma" src="<?= base_url() ?>/dist/img/logo2.png">
+            <img alt="LogoS" class="logo-ma" src="<?= base_url() ?>/dist/img/logo1.png">
             <div style="text-align: left">
-                <h2 class="logo-text">Sistem Informasi Manajemen Pegawai Elektronik</h2>
-                <p class="logo-sub-text">Pengadilan Militer III-18 Ambon</p>
+                <h2 class="logo-text" style="color:#e0b916; text-shadow: black !important;">Pemusatan Data Informasi <br>
+                    Monitoring Cuti dan Kinerja</h2>
+                <p class="logo-sub-text" style="margin-top:10px;">Pengadilan Militer III-18 Ambon</p>
             </div>
         </div>
     </header>
@@ -38,7 +41,7 @@
 
         <div class="login-box">
             <div class="login-box-body">
-                <p class="login-box-msg">Masuk untuk menggunakan SIMPEL</p>
+                <p class="login-box-msg">Masuk untuk menggunakan PATTIMURA</p>
 
                 <form id="login-form" class="form-vertical" action="<?php echo base_url('login/proses_login') ?>" method="post" role="form">
                     <?php if (isset($token_generate)) { ?>
@@ -84,7 +87,7 @@ Ingat akun Saya
 
             </div>
             <div class="row form-group form-bottom visible-xs">
-                <a class="text-forgot-password pull-right" href="/aplikasi/user/form-reset" title="Lupa Kata Sandi" role="modal-remote" oncontextmenu="return false;" style="color:white;">Lupa Kata Sandi?</a>
+                <!-- <a class="text-forgot-password pull-right" href="/aplikasi/user/form-reset" title="Lupa Kata Sandi" role="modal-remote" oncontextmenu="return false;" style="color:white;">Lupa Kata Sandi?</a> -->
             </div>
             </form>
         </div>

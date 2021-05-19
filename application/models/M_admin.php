@@ -90,11 +90,11 @@ class M_admin extends CI_Model
     return $query->num_rows();
   }
 
-  public function kecuali($tabel, $username)
+  public function kecuali($tabel, $nip)
   {
     $query = $this->db->select()
       ->from($tabel)
-      ->where_not_in('username', $username)
+      ->where_not_in('nip', $nip)
       ->get();
 
     return $query->result();

@@ -17,60 +17,61 @@
       <div class="col-xs-12">
 
         <!-- /.box -->
-        <div class="box box-primary">
+        <div class="box box-warning">
           <div class="box-header">
             <h3 class="box-title"><i class="ion-ios-people-outline step size-96" aria-hidden="true"></i> Pegawai</h3>
           </div>
           <!-- /.box-header -->
-          <div class="box-body">
+          <div class="scroller box-body" style="overflow-y: scroll;">
+            <div class="box-body">
 
-            <?php if ($this->session->flashdata('msg_berhasil')) { ?>
-              <div class="alert alert-success alert-dismissible" style="width:100%">
-                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                <strong>Success!</strong><br> <?php echo $this->session->flashdata('msg_berhasil'); ?>
-              </div>
-            <?php } ?>
+              <?php if ($this->session->flashdata('msg_berhasil')) { ?>
+                <div class="alert alert-success alert-dismissible" style="width:100%">
+                  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                  <strong>Success!</strong><br> <?php echo $this->session->flashdata('msg_berhasil'); ?>
+                </div>
+              <?php } ?>
 
-            <a href="<?= base_url('admin/form_user') ?>" style="margin-bottom:10px;" type="button" class="btn btn-sm btn-primary" name="tambah_data"><i class="fa fa-plus-circle" aria-hidden="true"></i> Tambah Data</a>
-            <table id="example1" class="table table-bordered table-striped">
-              <thead>
-                <tr>
-                  <th>NIP/NRP</th>
-                  <th>Nama</th>
-                  <th>Jabatan</th>
-                  <th>Unit Kerja</th>
-                  <th>Role</th>
-                  <th style="width: 110px;">Terakhir Login</th>
-                  <th class="text-center" style="width: 130px;"></th>
+              <a href="<?= base_url('admin/form_user') ?>" style="margin-bottom:10px;" type="button" class="btn btn-sm btn-primary" name="tambah_data"><i class="fa fa-plus-circle" aria-hidden="true"></i> Tambah Data</a>
+              <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                  <tr>
+                    <th>NIP/NRP</th>
+                    <th>Nama</th>
+                    <th>Jabatan</th>
+                    <th>Unit Kerja</th>
+                    <th>Role</th>
+                    <th style="width: 110px;">Terakhir Login</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php if (is_array($list_users)) { ?>
+                    <?php foreach ($list_users as $dd) : ?>
+                      <tr>
+                        <td><?= $dd->nip ?></td>
+                        <td><?= $dd->nama ?></td>
+                        <td><?= $dd->jabatan ?></td>
+                        <td><?= $dd->unit_kerja ?></td>
+                        <?php if ($dd->role == 1) { ?>
+                          <td>User Admin</td>
+                        <?php } else { ?>
+                          <td>User Biasa</td>
+                        <?php } ?>
+                        <td><?= $dd->last_login ?></td>
+                        <td style="display:inline-flex;">
+                          <a style="margin-right: 5px;" type="button" class="btn btn-xs btn-primary" href="<?= base_url('admin/update_user/' . $dd->id) ?>" name="btn_update"><i class="fa fa-edit" aria-hidden="true"></i></a>
+                          <a type="button" class="btn btn-xs btn-danger btn-delete" href="<?= base_url('admin/proses_delete_user/' . $dd->id) ?>" name="btn_delete" style="margin:auto;"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                        </td>
 
-                </tr>
-              </thead>
-              <tbody>
-                <?php if (is_array($list_users)) { ?>
-                  <?php foreach ($list_users as $dd) : ?>
-                    <tr>
-                      <td><?= $dd->nip ?></td>
-                      <td><?= $dd->nama ?></td>
-                      <td><?= $dd->jabatan ?></td>
-                      <td><?= $dd->unit_kerja ?></td>
-                      <?php if ($dd->role == 1) { ?>
-                        <td>User Admin</td>
-                      <?php } else { ?>
-                        <td>User Biasa</td>
-                      <?php } ?>
-                      <td><?= $dd->last_login ?></td>
-                      <td class="text-center">
-                        <a type="button" class="btn btn-sm btn-primary" href="<?= base_url('admin/update_user/' . $dd->id) ?>" name="btn_update"><i class="fa fa-edit" aria-hidden="true"></i></a>
-                        <a type="button" class="btn btn-sm btn-danger btn-delete" href="<?= base_url('admin/proses_delete_user/' . $dd->id) ?>" name="btn_delete" style="margin:auto;"><i class="fa fa-trash" aria-hidden="true"></i></a>
-                      </td>
-
-                    </tr>
-                  <?php endforeach; ?>
-                <?php } else { ?>
-                  <td colspan="7" align="center"><strong>Data Kosong</strong></td>
-                <?php } ?>
-              </tbody>
-            </table>
+                      </tr>
+                    <?php endforeach; ?>
+                  <?php } else { ?>
+                    <td colspan="7" align="center"><strong>Data Kosong</strong></td>
+                  <?php } ?>
+                </tbody>
+              </table>
+            </div>
           </div>
           <!-- /.box-body -->
         </div>
