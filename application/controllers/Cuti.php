@@ -52,10 +52,24 @@ class Cuti extends CI_Controller
     $this->load->view('admin/template/adm_footer', $data);
   }
 
+  public function get_data()
+  {
+    $id = $this->uri->segment(3);
+
+    $data = $this->M_cuti->get_detail($id);
+
+    if ($data) {
+      echo json_encode(array('status' => true, 'data' => $data));
+    } else {
+      echo json_encode(array('status' => false));
+    }
+  }
+
   public function inputdatacuti()
   {
     $data['avatar'] = $this->session->userdata('foto_profil');
     $data['jenis_cuti'] = $this->M_admin->select('tb_cuti');
+    $data['data_user'] = $this->M_admin->select('user');
 
     $data['title'] = 'DILMIL III-18 Ambon';
     $this->load->view('admin/template/adm_header', $data);
@@ -69,11 +83,16 @@ class Cuti extends CI_Controller
   {
     $this->form_validation->set_rules('nip', 'NIP', 'required', array('required' => 'Wajib diisi'));
     $this->form_validation->set_rules('nama', 'Nama Lengkap', 'required', array('required' => 'Wajib diisi'));
+    $this->form_validation->set_rules('masa_kerja', 'Masa Kerja', 'required', array('required' => 'Wajib diisi'));
+    $this->form_validation->set_rules('nomor_hp', 'Nomor HP', 'required', array('required' => 'Wajib diisi'));
     $this->form_validation->set_rules('tanggal_awal', 'Tanggal Awal', 'required', array('required' => 'Wajib diisi'));
     $this->form_validation->set_rules('tanggal_akhir', 'Tanggal Akhir', 'required', array('required' => 'Wajib diisi'));
     $this->form_validation->set_rules('lama_cuti', 'Lama Cuti', 'required', array('required' => 'Wajib diisi'));
     $this->form_validation->set_rules('jenis_cuti', 'Jenis Cuti', 'required', array('required' => 'Wajib diisi'));
     $this->form_validation->set_rules('keterangan', 'Keterangan', 'required', array('required' => 'Wajib diisi'));
+    $this->form_validation->set_rules('alamat_cuti', 'Alamat Cuti', 'required', array('required' => 'Wajib diisi'));
+    $this->form_validation->set_rules('atasan_langsung', 'Atasan Langsung', 'required', array('required' => 'Wajib diisi'));
+    $this->form_validation->set_rules('pejabat_berwenang', 'Pejabat Berwenang', 'required', array('required' => 'Wajib diisi'));
 
     if ($this->form_validation->run() == FALSE) {
 
@@ -81,6 +100,7 @@ class Cuti extends CI_Controller
       $data['jenis_cuti'] = $this->M_admin->select('tb_cuti');
       $this->session->set_flashdata('msg_gagal', 'Pengajuan Cuti Gagal dikirim');
 
+      // redirect(base_url('cuti/inputdatacuti'));
       $data['title'] = 'DILMIL III-18 Ambon';
       $this->load->view('admin/template/adm_header', $data);
       $this->load->view('admin/template/adm_navbar', $data);
@@ -91,13 +111,17 @@ class Cuti extends CI_Controller
 
       $nip       = $this->input->post('nip', TRUE);
       $nama       = $this->input->post('nama', TRUE);
+      $masa_kerja       = $this->input->post('masa_kerja', TRUE);
+      $nomor_hp       = $this->input->post('nomor_hp', TRUE);
       $tanggal_awal       = $this->input->post('tanggal_awal', TRUE);
       $tanggal_akhir       = $this->input->post('tanggal_akhir', TRUE);
       $lama_cuti       = $this->input->post('lama_cuti', TRUE);
       $jenis_cuti    = $this->input->post('jenis_cuti', TRUE);
       $keterangan       = $this->input->post('keterangan', TRUE);
+      $alamat_cuti       = $this->input->post('alamat_cuti', TRUE);
+      $atasan_langsung       = $this->input->post('atasan_langsung', TRUE);
+      $pejabat_berwenang       = $this->input->post('pejabat_berwenang', TRUE);
 
-      // $cek_data = $this->db->query('select sum(lama_cuti) as jumlah from tb_pengajuan_cuti WHERE nip="' . $id . '"')->result();
       $id = $this->session->userdata('nip');
       $cek_data = $this->M_cuti->sum_cuti_terpakai($id);
       $cuti_terpakai = $cek_data[0]->jumlah;
@@ -107,28 +131,37 @@ class Cuti extends CI_Controller
         $this->session->set_flashdata('msg_gagal', 'Maaf jumlah cuti yang anda ajukan melebihi sisa cuti anda saat ini');
         redirect(base_url('cuti/inputdatacuti'));
       }
-
+      $saldo_cuti = JATAH_CUTI -  $lama_cuti;
       if ($cuti_terpakai == 0) {
         $saldo_cuti = JATAH_CUTI -  $lama_cuti;
       } else {
         $saldo_cuti = JATAH_CUTI - ($cuti_terpakai + $lama_cuti);
       }
+
       $data = array(
         'nip'     => $nip,
         'nama'     => $nama,
+        'masa_kerja'     => $masa_kerja,
+        'nomor_hp'     => $nomor_hp,
         'tgl_awal'     => $tanggal_awal,
         'tgl_akhir'     => $tanggal_akhir,
         'lama_cuti'     => $lama_cuti,
         'saldo_cuti'     => $saldo_cuti,
         'jenis_cuti'     => $jenis_cuti,
         'keterangan'        => $keterangan,
+        'alamat_cuti'        => $alamat_cuti,
+        'atasan_langsung'        => $atasan_langsung,
+        'pejabat_berwenang'        => $pejabat_berwenang,
         'status_cuti'        => 0,
-        'creat_at'        => date('d-m-Y'),
+        'creat_at'        => date('d-m-Y H:i:s'),
       );
+
+      // print_r($data);
+      // die;
       $this->M_admin->insert('tb_pengajuan_cuti', $data);
 
       $this->session->set_flashdata('msg_berhasil', 'Pengajuan Cuti Berhasil dikirim');
-      redirect(base_url('cuti/inputdatacuti'));
+      redirect(base_url('cuti/datacuti'));
     }
   }
 
@@ -141,8 +174,8 @@ class Cuti extends CI_Controller
       'status_cuti'     => 2,
     );
     $this->M_admin->update('tb_pengajuan_cuti', $data, $where);
-    $this->session->set_flashdata('msg_berhasil', 'Data Berhasil Diupdate');
-    redirect(base_url('cuti/datacuti'));
+    echo json_encode(array('status' => true));
+    // redirect(base_url('cuti/datacuti'));
   }
   public function cutidisetujui()
   {
@@ -153,45 +186,9 @@ class Cuti extends CI_Controller
       'status_cuti'     => 1,
     );
     $this->M_admin->update('tb_pengajuan_cuti', $data, $where);
-    $this->session->set_flashdata('msg_berhasil', 'Data Berhasil Diupdate');
-    redirect(base_url('cuti/datacuti'));
+    echo json_encode(array('status' => true));
   }
 
-
-
-  //// DATA TIDAK TERPAKAI
-
-  // public function satker()
-  // {
-  //   if ($this->session->userdata('status') == 'login' && $this->session->userdata('role') == 1) {
-  //     $data['avatar'] = $this->session->userdata('foto_profil');
-  //     $data['active'] = '';
-  //     $data['title'] = 'DILMIL III-18 Ambon';
-  //     $this->load->view('admin/template/adm_header', $data);
-  //     $this->load->view('admin/template/adm_navbar', $data);
-  //     $this->load->view('admin/template/adm_sidebar', $data);
-  //     $this->load->view('admin/satker_cuti', $data);
-  //     $this->load->view('admin/template/adm_footer', $data);
-  //   } else {
-  //     $this->load->view('login/login');
-  //   }
-  // }
-
-  // public function inputsatker()
-  // {
-  //   if ($this->session->userdata('status') == 'login' && $this->session->userdata('role') == 1) {
-  //     $data['avatar'] = $this->session->userdata('foto_profil');
-  //     $data['active'] = '';
-  //     $data['title'] = 'DILMIL III-18 Ambon';
-  //     $this->load->view('admin/template/adm_header', $data);
-  //     $this->load->view('admin/template/adm_navbar', $data);
-  //     $this->load->view('admin/template/adm_sidebar', $data);
-  //     $this->load->view('admin/input_satker_cuti', $data);
-  //     $this->load->view('admin/template/adm_footer', $data);
-  //   } else {
-  //     $this->load->view('login/login');
-  //   }
-  // }
   public function jabatan()
   {
     if ($this->session->userdata('status') == 'login' && $this->session->userdata('role') == 1) {

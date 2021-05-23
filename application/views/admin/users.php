@@ -5,10 +5,10 @@
     <h1>
       Tabel Pegawai
     </h1>
-    <ol class="breadcrumb">
+    <!-- <ol class="breadcrumb">
       <li><a href="<?= base_url('admin') ?>"><i class="fa fa-dashboard"></i> Home</a></li>
       <li><a href="<?= base_url('admin/users') ?>" class="active">Pegawai</a></li>
-    </ol>
+    </ol> -->
   </section>
 
   <!-- Main content -->
@@ -24,15 +24,7 @@
           <!-- /.box-header -->
           <div class="scroller box-body" style="overflow-y: scroll;">
             <div class="box-body">
-
-              <?php if ($this->session->flashdata('msg_berhasil')) { ?>
-                <div class="alert alert-success alert-dismissible" style="width:100%">
-                  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                  <strong>Success!</strong><br> <?php echo $this->session->flashdata('msg_berhasil'); ?>
-                </div>
-              <?php } ?>
-
-              <a href="<?= base_url('admin/form_user') ?>" style="margin-bottom:10px;" type="button" class="btn btn-sm btn-primary" name="tambah_data"><i class="fa fa-plus-circle" aria-hidden="true"></i> Tambah Data</a>
+              <a href="<?= base_url('admin/form_user') ?>" style="margin-bottom:10px;" type="button" class="btn btn-sm btn-primary" name="tambah_data"><i class="fa fa-plus" aria-hidden="true"></i>Tambah</a>
               <table id="example1" class="table table-bordered table-striped">
                 <thead>
                   <tr>

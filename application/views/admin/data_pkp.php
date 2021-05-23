@@ -5,10 +5,10 @@
       PKP
       <!-- <small>Human Resource Management System</small> -->
     </h1>
-    <ol class="breadcrumb">
+    <!-- <ol class="breadcrumb">
       <li><a href="<?= base_url('admin') ?>"><i class="fa fa-dashboard"></i> Dashboard</a></li>
       <li class="active">Data PKP</li>
-    </ol>
+    </ol> -->
   </section>
 
   <!-- Main content -->
@@ -63,23 +63,28 @@
                 </tr>
               </thead>
               <tbody>
-                <?php foreach ($list_data as $list => $value) : ?>
+                <?php
+                if (empty($list_data)) { ?>
                   <tr>
-
-                    <!-- <td><?= $list + 1 ?></td> -->
-                    <td><?= $value->bulan ?></td>
-                    <td><a href="<?= base_url('uploads/') . $value->file_pkp ?>"><?= $value->file_pkp ?></a></td>
-                    <td><?= $value->skor ?></td>
-                    <td><?= $value->creat_at ?></td>
+                    <td colspan="5">DATA KOSONG
                     <td>
-
-                      <!-- <a class="btn btn-sm btn-primary" data-placement="bottom" data-toggle="tooltip" title="Edit PKP" href="#"><span class="glyphicon glyphicon-edit"></span></a> -->
-
-                      <a type="button" id="btn-delete" class="btn btn-sm btn-danger btn-delete" data-placement="bottom" data-toggle="tooltip" title="Hapus PKP" href="<?= base_url('cuti/proses_delete_jeniscuti/' . $value->id) ?>" name="btn_delete" style="margin:auto;"><i class="fa fa-trash" aria-hidden="true"></i></a>
-
-                    </td>
                   </tr>
-                <?php endforeach; ?>
+
+                  <?php } else {
+                  foreach ($list_data as $list => $value) : ?>
+                    <tr>
+
+                      <!-- <td><?= $list + 1 ?></td> -->
+                      <td><?= $value->bulan ?></td>
+                      <td><a href="<?= base_url('uploads/') . $value->file_pkp ?>"><b><?= $value->file_pkp ?></b></a></td>
+                      <td><?= $value->skor ?></td>
+                      <td><?= $value->creat_at ?></td>
+                      <td>
+                        <button type="button" class="btn btn-xs btn-danger" onclick="delete_row('<?= base_url() ?>pkp/proses_delete_pkp/<?= $value->id ?>')" name="btn_delete" style="margin:auto;"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                      </td>
+                    </tr>
+                <?php endforeach;
+                } ?>
 
               </tbody>
             </table>

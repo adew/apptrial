@@ -5,10 +5,10 @@
     <h1>
       User Profile
     </h1>
-    <ol class="breadcrumb">
+    <!-- <ol class="breadcrumb">
       <li><a href="<?= base_url('admin') ?>"><i class="fa fa-dashboard"></i> Home</a></li>
       <li><a href="<?= base_url('admin/profile') ?>" class="active">Profile</a></li>
-    </ol>
+    </ol> -->
   </section>
 
   <!-- Main content -->
@@ -26,27 +26,6 @@
             <h3 class="profile-username text-center"><?= $this->session->userdata('nama') ?></h3>
 
             <p class="text-muted text-center"><?= $this->session->userdata('jabatan') ?></p><br>
-
-            <?php if ($this->session->flashdata('msg_berhasil_gambar')) { ?>
-              <div class="alert alert-success alert-dismissible">
-                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                <strong>Success</strong><br> <?php echo $this->session->flashdata('msg_berhasil_gambar'); ?>
-              </div>
-            <?php } ?>
-
-            <?php if ($this->session->flashdata('msg_error_gambar')) { ?>
-              <div class="alert alert-danger alert-dismissible">
-                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                <strong>Warning !</strong><br> <?php echo $this->session->flashdata('msg_error_gambar'); ?>
-              </div>
-            <?php } ?>
-
-            <?php if (isset($pesan_error)) { ?>
-              <div class="alert alert-danger alert-dismissible">
-                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                <strong>Warning!</strong><br> <?php echo $pesan_error; ?>
-              </div>
-            <?php } ?>
 
           </div>
           <!-- /.box-body -->
@@ -76,13 +55,13 @@
                 <div class="form-group">
                   <label for="username" class="col-sm-2 control-label">Upload Foto</label>
 
-                  <div class="col-sm-10">
+                  <div class="col-sm-6">
                     <input type="file" name="userpicture" class="form-control" id="userpicture">
                   </div>
                 </div>
 
                 <div class="form-group">
-                  <div class="col-sm-offset-2 col-sm-10">
+                  <div class="col-sm-offset-2 col-sm-6">
                     <button type="submit" class="btn btn-sm btn-primary">Simpan</button>
                   </div>
                 </div>
@@ -91,52 +70,30 @@
 
             <div class="tab-pane active" id="settings">
               <form class="form-horizontal" action="<?= base_url('admin/proses_new_password') ?>" method="post">
-
-                <?php if ($this->session->flashdata('msg_gagal')) { ?>
-                  <div class="alert alert-error alert-dismissible">
-                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                    <strong>Error</strong><br> <?php echo $this->session->flashdata('msg_gagal'); ?>
-                  </div>
-                <?php } ?>
-                <?php if ($this->session->flashdata('msg_berhasil')) { ?>
-                  <div class="alert alert-success alert-dismissible">
-                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                    <strong>Berhasil</strong><br> <?php echo $this->session->flashdata('msg_berhasil'); ?>
-                  </div>
-                <?php } ?>
-
-
-                <?php if (validation_errors()) { ?>
-                  <div class="alert alert-warning alert-dismissible">
-                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                    <strong>Warning!</strong><br> <?php echo validation_errors(); ?>
-                  </div>
-                <?php } ?>
-
                 <div class="form-group">
                   <label for="nip" class="col-sm-2 control-label">NIP</label>
-                  <div class="col-sm-10">
+                  <div class="col-sm-6">
                     <input type="text" name="nip" class="form-control" id="nip" readonly value="<?= $this->session->userdata('nip') ?>">
                   </div>
                 </div>
                 <div class="form-group">
                   <label for="nama" class="col-sm-2 control-label">Nama Lengkap</label>
 
-                  <div class="col-sm-10">
+                  <div class="col-sm-6">
                     <input type="nama" name="nama" class="form-control" id="nama" value="<?= $this->session->userdata('nama') ?>">
                   </div>
                 </div>
                 <div class="form-group">
                   <label for="new_password" class="col-sm-2 control-label">Password Baru</label>
 
-                  <div class="col-sm-10">
+                  <div class="col-sm-6">
                     <input type="password" name="new_password" class="form-control" id="new_password" placeholder="New Password">
                   </div>
                 </div>
                 <div class="form-group">
                   <label for="confirm_new_password" class="col-sm-2 control-label">Konrirmasi Password Baru</label>
 
-                  <div class="col-sm-10">
+                  <div class="col-sm-6">
                     <input type="password" name="confirm_new_password" class="form-control" id="confirm_new_password" placeholder="Confirm New Password">
                   </div>
                 </div>
@@ -147,8 +104,8 @@
                 } ?>
 
                 <div class="form-group">
-                  <div class="col-sm-offset-2 col-sm-10">
-                    <button type="submit" class="btn btn-sm btn-primary">Simpan</button>
+                  <div class="col-sm-offset-2 col-sm-6">
+                    <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-save"></i>Simpan </button>
                   </div>
                 </div>
               </form>

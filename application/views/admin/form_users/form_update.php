@@ -5,10 +5,10 @@
     <h1>
       Data Pegawai
     </h1>
-    <ol class="breadcrumb">
+    <!-- <ol class="breadcrumb">
       <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
       <li class="active">Edit Data Pegawai</li>
-    </ol>
+    </ol> -->
   </section>
 
   <!-- Main content -->
@@ -24,21 +24,6 @@
           </div>
           <!-- /.box-header -->
           <!-- form start -->
-
-
-          <?php if ($this->session->flashdata('msg_berhasil')) { ?>
-            <div class="alert alert-success alert-dismissible">
-              <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-              <strong>Success</strong><br> <?php echo $this->session->flashdata('msg_berhasil'); ?>
-            </div>
-          <?php } ?>
-
-          <?php if ($this->session->flashdata('msg_gagal')) { ?>
-            <div class="alert alert-danger alert-dismissible">
-              <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-              <strong>Warning !</strong><br> <?php echo $this->session->flashdata('msg_gagal'); ?>
-            </div>
-          <?php } ?>
 
           <div class="box-body">
             <div class="form-panel">

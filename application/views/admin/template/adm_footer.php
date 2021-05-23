@@ -2,11 +2,11 @@
   <div class="pull-right hidden-xs">
     <b>Version</b> 1.0.0
   </div>
-  <strong>Copyright &copy; <?= date('Y') ?></strong>
+  <strong>Copyright &copy; <?= date('Y') ?>.</strong>
 </footer>
 
-<div class="control-sidebar-bg"></div>
-</div>
+<!-- <div class="control-sidebar-bg"></div>
+</div> -->
 <!-- ./wrapper -->
 <!-- <script src="https://code.jquery.com/jquery-1.8.3.min.js"></script>
 <script src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script> -->
@@ -51,7 +51,86 @@
 
 <script src="<?php echo base_url() ?>assets/web_admin/bower_components/select2/dist/js/select2.full.min.js"></script>
 
+
 <script>
+  function delete_row(url) {
+    // var getLink = $(this).attr('href');
+    swal({
+      title: '',
+      text: 'Yakin Ingin Menghapus Data ?',
+      html: true,
+      confirmButtonColor: '#d9534f',
+      showCancelButton: true,
+    }, function() {
+      // window.location.href = getLink
+      $.ajax({
+        url: url,
+        type: "POST",
+        dataType: 'JSON',
+        success: function(response) {
+          if (response.status == true) {
+            setTimeout(function() {
+              swal({
+                title: "Data berhasil dihapus",
+                // text: "Message!",
+                type: "success",
+                timer: 2000,
+                showConfirmButton: false
+              }, function() {
+                window.location.reload();
+              });
+            }, 300);
+          } else {
+            setTimeout(function() {
+              swal({
+                title: "Data gagal dihapus",
+                // text: "Message!",
+                type: "error",
+                timer: 2000,
+                showConfirmButton: false
+              }, function() {
+                window.location = "<?= base_url('pkp/datapkp'); ?>";
+              });
+            }, 300);
+          }
+
+        }
+      });
+    });
+    return false;
+  }
+
+  function detail_cuti(url) {
+    $.ajax({
+      url: url,
+      type: "POST",
+      dataType: 'JSON',
+      success: function(response) {
+        $('#dc1').text(response.data.nip);
+        $('#dc2').text(response.data.nama);
+        $('#dc3').text(response.data.jabatan);
+        $('#dc4').text(response.data.unit_kerja);
+        $('#dc5').text(response.data.masa_kerja + ' Tahun');
+        $('#dc6').text(response.data.nomor_hp);
+        $('#dc7').text(response.data.tgl_awal);
+        $('#dc8').text(response.data.tgl_akhir);
+        $('#dc9').text(response.data.jenis_cuti);
+        $('#dc10').text(response.data.keterangan);
+        $('#dc11').text(response.data.lama_cuti + ' Hari');
+        $('#dc12').text(response.data.alamat_cuti);
+        $('#dc13').text(response.data.nama1);
+        $('#dc14').text(response.data.nama2);
+        $('#detail-cuti').modal('show');
+
+      }
+    });
+  }
+</script>
+
+
+
+<script>
+  //GRAPH
   var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   $(document).ready(function() {
     var graph = Morris.Line({
@@ -69,6 +148,7 @@
         return month;
       },
     });
+
     $.ajax({
       url: '<?= site_url("pkp/get_data/") . $this->uri->segment(3) ?>',
       dataType: 'JSON',
@@ -79,12 +159,12 @@
       }
     });
   });
-
+  //GRAPH
 
   $('.btn-delete').on('click', function() {
     var getLink = $(this).attr('href');
     swal({
-      title: 'Delete Data',
+      title: '',
       text: 'Yakin Ingin Menghapus Data ?',
       html: true,
       confirmButtonColor: '#d9534f',
@@ -104,10 +184,31 @@
       confirmButtonColor: '#d9534f',
       showCancelButton: true,
     }, function() {
-      window.location.href = getLink
+      // window.location.href = getLink
+      $.ajax({
+        url: getLink,
+        type: "POST",
+        dataType: 'JSON',
+        success: function(response) {
+          if (response.status == true) {
+            setTimeout(function() {
+              swal({
+                title: "Status berhasil diganti",
+                // text: "Message!",
+                type: "success",
+                timer: 2000,
+                showConfirmButton: false
+              }, function() {
+                window.location.reload();
+              });
+            }, 300);
+          }
+        }
+      });
     });
     return false;
   });
+
   $('.btn-accept').on('click', function() {
     var getLink = $(this).attr('href');
     swal({
@@ -117,7 +218,27 @@
       confirmButtonColor: '#00a65a',
       showCancelButton: true,
     }, function() {
-      window.location.href = getLink
+      // window.location.href = getLink
+      $.ajax({
+        url: getLink,
+        type: "POST",
+        dataType: 'JSON',
+        success: function(response) {
+          if (response.status == true) {
+            setTimeout(function() {
+              swal({
+                title: "Status berhasil diganti",
+                // text: "Message!",
+                type: "success",
+                timer: 2000,
+                showConfirmButton: false
+              }, function() {
+                window.location.reload();
+              });
+            }, 300);
+          }
+        }
+      });
     });
     return false;
   });
@@ -130,14 +251,14 @@
     dateFormat: 'dd-mm-yy',
     autoclose: true,
     todayHighlight: true,
-    orientation: "bottom",
+    orientation: "top",
   })
 
   $("#tanggal_akhir").datepicker({
     dateFormat: 'dd-mm-yy',
     autoclose: true,
     todayHighlight: true,
-    orientation: "bottom",
+    orientation: "top",
   })
   // .on("change", function() {
   //   var start = $('#tanggal_awal').datepicker('getDate');
@@ -151,10 +272,15 @@
   //     $('#tanggal_akhir').datepicker("setDate", new Date());
   //   }
   // });
+  $(document).ready(function() {
+    $("li.nav-item a").on("click", function() {
+      $(".nav-item.active").removeClass("active");
+      $(this).parent().addClass("active");
+    }).filter(function() {
+      return window.location.href.indexOf($(this).attr('href').trim()) > -1;
+    }).click();
+  });
 </script>
-
-
-
 </body>
 
 </html>

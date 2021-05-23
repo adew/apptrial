@@ -1,134 +1,278 @@
-<!DOCTYPE html>
-<html lang="id-ID">
+<!doctype html>
+<html>
 
 <head>
-    <title>Dilmil III-18 Ambon || Login</title>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel="shortcut icon" href="<?php echo base_url() ?>favicon.ico" type="image/x-icon">
+    <title>DILMIL III-18 AMBON</title>
+    <link href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css' rel='stylesheet'>
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css' rel='stylesheet'>
+    <style>
+        body {
+            color: #000;
+            overflow-x: hidden;
+            height: 100%;
+            background-color: #B0BEC5;
+            background-repeat: no-repeat
+        }
 
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="<?= base_url() ?>/assets/fontawesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" href="<?= base_url() ?>/login.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        .card0 {
+            box-shadow: 0px 4px 8px 0px #757575;
+            border-radius: 0px
+        }
+
+        .card2 {
+            margin: 0px 110px 0px 0px;
+        }
+
+        .logo {
+            width: 200px;
+            height: 100px;
+            /* margin-top: 20px;
+            margin-left: 35px */
+        }
+
+        .image {
+            width: 360px;
+            height: 280px
+        }
+
+        .border-line {
+            border-right: 1px solid #EEEEEE
+        }
+
+        .facebook {
+            background-color: #3b5998;
+            color: #fff;
+            font-size: 18px;
+            padding-top: 5px;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            cursor: pointer
+        }
+
+        .twitter {
+            background-color: #1DA1F2;
+            color: #fff;
+            font-size: 18px;
+            padding-top: 5px;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            cursor: pointer
+        }
+
+        .linkedin {
+            background-color: #2867B2;
+            color: #fff;
+            font-size: 18px;
+            padding-top: 5px;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            cursor: pointer
+        }
+
+        .line {
+            height: 1px;
+            width: 45%;
+            background-color: #E0E0E0;
+            margin-top: 10px
+        }
+
+        .or {
+            width: 10%;
+            font-weight: bold
+        }
+
+        .text-sm {
+            font-size: 14px !important
+        }
+
+        ::placeholder {
+            color: #BDBDBD;
+            opacity: 1;
+            font-weight: 300
+        }
+
+        :-ms-input-placeholder {
+            color: #BDBDBD;
+            font-weight: 300
+        }
+
+        ::-ms-input-placeholder {
+            color: #BDBDBD;
+            font-weight: 300
+        }
+
+        input,
+        textarea {
+            padding: 10px 12px 10px 12px;
+            border: 1px solid lightgrey;
+            border-radius: 2px;
+            margin-bottom: 5px;
+            margin-top: 2px;
+            width: 100%;
+            box-sizing: border-box;
+            color: #2C3E50;
+            font-size: 14px;
+            letter-spacing: 1px
+        }
+
+        input:focus,
+        textarea:focus {
+            -moz-box-shadow: none !important;
+            -webkit-box-shadow: none !important;
+            box-shadow: none !important;
+            border: 1px solid #304FFE;
+            outline-width: 0
+        }
+
+        button:focus {
+            -moz-box-shadow: none !important;
+            -webkit-box-shadow: none !important;
+            box-shadow: none !important;
+            outline-width: 0
+        }
+
+        a {
+            color: inherit;
+            cursor: pointer
+        }
+
+        .btn-blue {
+            background-color: #1A237E;
+            width: 150px;
+            color: #fff;
+            border-radius: 2px
+        }
+
+        .btn-blue:hover {
+            background-color: #1A237E;
+            cursor: pointer;
+            color: #fff;
+        }
+
+        .bg-blue {
+            color: #fff;
+            background-color: #1A237E;
+            /* height: 50px; */
+        }
+
+        @media screen and (max-width: 991px) {
+            .logo {
+                margin-left: 0px
+            }
+
+            .image {
+                width: 300px;
+                height: 220px
+            }
+
+            .border-line {
+                border-right: none
+            }
+
+            .card2 {
+                border-top: 1px solid #EEEEEE !important;
+                margin: 0px 15px
+            }
+        }
+    </style>
+    <!-- <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+    <script type='text/javascript'
+        src='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js'></script>
+    <script type='text/javascript'></script> -->
 </head>
 
-<body class="login-page">
-    <header class="jumbotron subhead" id="overview" style="margin-bottom: 0px">
-        <div class="container-logo">
-            <img alt="LogoS" class="logo-ma" src="<?= base_url() ?>/dist/img/logo1.png">
-            <div style="text-align: left">
-                <h2 class="logo-text" style="color:#e0b916; text-shadow: black !important;">Pemusatan Data Informasi <br>
-                    Monitoring Cuti dan Kinerja</h2>
-                <p class="logo-sub-text" style="margin-top:10px;">Pengadilan Militer III-18 Ambon</p>
-            </div>
-        </div>
-    </header>
+<!-- <body oncontextmenu='return false' class='snippet-body'> -->
 
-    <div id="cssmenu" style="height:5px;"></div>
+<body class='snippet-body'>
+    <!-- <div class="container-fluid px-1 px-md-5 px-lg-1 px-xl-5 py-5 mx-auto"> -->
+    <div class="container-fluid px-0 py-2 mx-auto">
+        <div class="card card0 border-0">
+            <div class="bg-blue py-4">
+                <div class="row px-3">
+                    <!-- <div class="col-md-3"> -->
+                    <!-- <img src="https://i.imgur.com/CXQmsmF.png" class="logo"> -->
+                    <!-- </div> -->
+                    <div class="col-md-12 text-center">
+                        <h2>PEMUSATAN DATA INFORMASI MONITORING CUTI DAN KINERJA</h2>
+                        <h4>PENGADILAN MILITER III-18 AMBON </h4>
 
-    <div class="wrapper" style="overflow: hidden;">
-        <?php if ($this->session->flashdata('msg')) { ?>
-            <div class="alert alert-warning alert-dismissible text-center">
-                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                <strong>Warning!</strong><br> <?php echo $this->session->flashdata('msg'); ?>
-            </div>
-        <?php } ?>
-
-        <div class="login-box">
-            <div class="login-box-body">
-                <p class="login-box-msg">Masuk untuk menggunakan PATTIMURA</p>
-
-                <form id="login-form" class="form-vertical" action="<?php echo base_url('login/proses_login') ?>" method="post" role="form">
-                    <?php if (isset($token_generate)) { ?>
-                        <input type="hidden" name="token" value="<?php echo $token_generate ?>">
-                    <?php } else {
-                        redirect(base_url());
-                    } ?> <div class="row">
-                        <div class="form-group has-feedback">
-                            <div class="form-group highlight-addon field-loginform-username required">
-                                <input type="text" id="loginform-username" class="form-control" name="nip" placeholder="NIP/NRP" aria-required="true"><span class="fa fa-user-o form-control-feedback"></span>
-                                <div class="help-block"></div>
-                            </div>
-                        </div>
-
-                        <div class="form-group has-feedback">
-                            <div class="form-group highlight-addon field-loginform-password required">
-                                <input type="password" id="loginform-password" class="form-control" name="password" value="" placeholder="Kata Sandi" aria-required="true"><span class="fa fa-lock form-control-feedback"></span>
-                                <div class="help-block"></div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                        </div>
-
-                        <div class="form-group form-bottom">
-                            <div class="checkbox icheck" style="margin-top: 0px; margin-bottom: 0px; float: left;">
-                                <div class="form-group highlight-addon field-loginform-rememberme">
-                                    <!-- <div class="checkbox"><label class="has-star" for="loginform-rememberme">
-<input type="hidden" name="LoginForm[rememberMe]" value="0"><input type="checkbox" id="loginform-rememberme" name="LoginForm[rememberMe]" value="1" checked>
-Ingat akun Saya
-</label> -->
-                                    <div class="help-block"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="pull-right">
-                            <!-- <a class="text-forgot-password hidden-xs" href="/aplikasi/user/form-reset" title="Lupa Kata Sandi" role="modal-remote" oncontextmenu="return false;" style="color:white;">Lupa Kata Sandi?</a>       -->
-                            <div class="btn-group">
-                                <button type="submit" class="btn btn-default btn-block" name="login-button"><i class='fa fa-sign-in' aria-hidden='true'></i> Masuk</button>
-                            </div>
-                        </div>
                     </div>
+                </div>
+            </div>
+            <div class="row d-flex">
+                <?php if ($this->session->flashdata('msg')) { ?>
+                    <div class="alert alert-warning alert-dismissible text-center">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <strong>Warning!</strong><br> <?php echo $this->session->flashdata('msg'); ?>
+                    </div>
+                <?php } ?>
 
+                <div class="col-lg-6">
+                    <div class="card1 pb-5">
+                        <!-- <div class="row">
+                            <div class="col-md-3">
+                                <img src="https://i.imgur.com/CXQmsmF.png" class="logo">
+                            </div>
+                            <div class="col-md-9">
+                                <h4>Pemusatan Data Informasi </h4>
+                                <h4> Monitoring Cuti dan Kinerja </h4>
+
+                            </div>
+                        </div> -->
+                        <div class="row px-3 justify-content-center mt-4 mb-5 border-line"> <img src="<?= base_url() ?>/dist/img/logo1.png" class="image"> </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <form id="login-form" class="form-vertical" action="<?php echo base_url('login/proses_login') ?>" method="post" role="form">
+                        <div class="card2 card border-0 px-4 py-5">
+                            <div class="row px-3 mb-4">
+                                <!-- <div class="line"></div> <small class="text-center">Silahkan Login</small>
+                            <div class="line"></div> -->
+                            </div>
+                            <div class="row px-3"> <label class="mb-1">
+                                    <h6 class="mb-0 text-sm">NIP/NRP</h6>
+                                </label> <input class="mb-4" type="text" name="nip" placeholder="Masukan nip/nrp anda" value="<?php if (isset($_COOKIE["member_nip"])) {
+                                                                                                                                    echo $_COOKIE["member_nip"];
+                                                                                                                                } ?>"> </div>
+                            <div class="row px-3"> <label class="mb-1">
+                                    <h6 class="mb-0 text-sm">Password</h6>
+                                </label> <input type="password" name="password" placeholder="Masukan password" value="<?php if (isset($_COOKIE["member_password"])) {
+                                                                                                                            echo $_COOKIE["member_password"];
+                                                                                                                        } ?>"> </div>
+                            <div class="row px-3 mb-4">
+                                <div class="custom-control custom-checkbox custom-control-inline"> <input id="chk1" type="checkbox" name="remember" class="custom-control-input" <?php if (isset($_COOKIE["member_nip"])) { ?> checked <?php } ?> /> <label for="chk1" class="custom-control-label text-sm">Ingat akun saya</label> </div>
+                                <!-- <a href="#"class="ml-auto mb-0 text-sm">Forgot Password?</a> -->
+                            </div>
+                            <div class="row mb-3 px-3"> <button type="submit" class="btn btn-blue text-center">Login</button> </div>
+                            <!-- <div class="row mb-4 px-3"> <small class="font-weight-bold">Don't have an account? <a
+                                    class="text-danger ">Register</a></small> </div> -->
+                        </div>
+                        <?php if (isset($token_generate)) { ?>
+                            <input type="hidden" name="token" value="<?php echo $token_generate ?>">
+                        <?php } else {
+                            redirect(base_url());
+                        } ?>
+                    </form>
+                </div>
+                <!--col-lg-6 -->
             </div>
-            <div class="row form-group form-bottom visible-xs">
-                <!-- <a class="text-forgot-password pull-right" href="/aplikasi/user/form-reset" title="Lupa Kata Sandi" role="modal-remote" oncontextmenu="return false;" style="color:white;">Lupa Kata Sandi?</a> -->
+            <div class="bg-blue py-2">
+                <div class="row px-3" style="height:55px">
+                    <small class="ml-sm-5 mt-3">Copyright &copy; <?php echo date('Y'); ?>. Agent Of Change.</small>
+                    <!-- <div class="social-contact ml-4 ml-sm-auto"> <span class="fa fa-facebook mr-4 text-sm"></span> <span
+                            class="fa fa-google-plus mr-4 text-sm"></span> <span
+                            class="fa fa-linkedin mr-4 text-sm"></span> <span
+                            class="fa fa-twitter mr-4 mr-sm-5 text-sm"></span> </div> -->
+                </div>
             </div>
-            </form>
         </div>
     </div>
-
-
-    <div id="ajaxCrudModal" class="fade modal" role="dialog" tabindex="-1">
-        <div class="modal-dialog ">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-
-                </div>
-                <div class="modal-body">
-
-                </div>
-                <div class="modal-footer">
-
-                </div>
-            </div>
-        </div>
-    </div>
-    <footer class="footer-login-user" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-        <!-- <strong>SIKEP v.3.1.0. Hak Cipta &copy; 2021 <a href="https://mahkamahagung.go.id" target="_blank">Mahkamah Agung Republik Indonesia</a></strong> -->
-    </footer>
-
-    <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=UA-163838281-1"></script> -->
-    <script>
-        window.dataLayer = window.dataLayer || [];
-
-        function gtag() {
-            dataLayer.push(arguments);
-        }
-        gtag('js', new Date());
-        gtag('config', 'UA-163838281-1');
-    </script>
-
-
-
-    </div>
-
 </body>
 
 </html>

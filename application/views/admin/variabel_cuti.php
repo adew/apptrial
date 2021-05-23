@@ -5,10 +5,10 @@
       Jenis Cuti
       <!-- <small>Human Resource Management System</small> -->
     </h1>
-    <ol class="breadcrumb">
+    <!-- <ol class="breadcrumb">
       <li><a href="<a href=" <?= base_url('admin') ?>"><i class="fa fa-dashboard"></i> Dashboard</a></li>
       <li class="active">Data Jenis Cuti</li>
-    </ol>
+    </ol> -->
   </section>
 
   <!-- Main content -->
@@ -36,7 +36,7 @@
             </div>
           </div><!-- /.box-header -->
           <div class="box-footer clearfix no-border">
-            <a href="<?php echo base_url('cuti/inputvariabelcuti') ?>" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i> Tambah Jenis Cuti</a>
+            <a href="<?php echo base_url('cuti/inputvariabelcuti') ?>" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i> Tambah</a>
           </div>
           <div class="box-body">
             <table id="example" class="table table-responsive table-hover table-bordered">
@@ -67,7 +67,7 @@
 
                       <!-- <div id="thanks"><a href="#" class="btn btn-sm btn-primary" data-placement="bottom" data-toggle="tooltip" title="Edit Cuti"><i class="glyphicon glyphicon-edit"></i></a> -->
 
-                      <a type="button" id="btn-delete" class="btn btn-sm btn-danger btn-delete" data-placement="bottom" data-toggle="tooltip" title="Hapus Cuti" href="<?= base_url('cuti/proses_delete_jeniscuti/' . $value->id) ?>" name="btn_delete" style="margin:auto;"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                      <a type="button" id="btn-delete" class="btn btn-xs btn-danger btn-delete" href="<?= base_url('cuti/proses_delete_jeniscuti/' . $value->id) ?>" name="btn_delete" style="margin:auto;"><i class="fa fa-trash" aria-hidden="true"></i></a>
 
                     </td>
                   </tr>

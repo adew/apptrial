@@ -36,6 +36,7 @@ class Login extends CI_Controller
 			// $username = $this->input->post('username', TRUE);
 			$nip = trim($this->input->post('nip', TRUE));
 			$password = $this->input->post('password', TRUE);
+			$remember = $this->input->post('remember', TRUE);
 
 			if ($this->session->userdata('token_generate') === $this->input->post('token')) {
 				$cek =  $this->M_login->cek_user('user', $nip);
@@ -52,6 +53,7 @@ class Login extends CI_Controller
 							'nama' => $isi->nama,
 							'nip' => $isi->nip,
 							'jabatan' => $isi->jabatan,
+							'unit_kerja' => $isi->unit_kerja,
 							'foto_profil' => $isi->foto_profil,
 							'status' => 'login',
 							'role' => $isi->role,
@@ -61,6 +63,18 @@ class Login extends CI_Controller
 						$this->session->set_userdata($data_session);
 
 						$this->M_login->edit_user(['nip' => $nip], ['last_login' => date('d-m-Y G:i')]);
+
+						if (!empty($remember)) {
+							setcookie("member_nip", $nip, time() + (10 * 365 * 24 * 60 * 60));
+							setcookie("member_password", $password, time() + (10 * 365 * 24 * 60 * 60));
+						} else {
+							if (isset($_COOKIE["member_nip"])) {
+								setcookie("member_nip", "");
+							}
+							if (isset($_COOKIE["member_password"])) {
+								setcookie("member_password", "");
+							}
+						}
 						if ($isi->role == 1) {
 							redirect(base_url('admin/users'));
 						} else if ($isi->role == 0) {

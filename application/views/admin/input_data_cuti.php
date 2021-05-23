@@ -6,10 +6,10 @@
         Pengajuan Cuti
         <!-- <small>Human Resource Management System</small> -->
       </h1>
-      <ol class="breadcrumb">
+      <!-- <ol class="breadcrumb">
         <li><a href="<?= base_url('admin') ?>"><i class="fa fa-dashboard"></i> Dashboard</a></li>
         <li class="active">Pengajuan Cuti</li>
-      </ol>
+      </ol> -->
     </section>
 
     <!-- Main content -->
@@ -26,97 +26,144 @@
               <h3 class="box-title">Input Data Cuti</h3>
             </div><!-- /.box-header -->
             <div class="box-body">
-              <div class="form-panel">
-                <form class="form-horizontal style-form" action="<?= base_url('cuti/pengajuancuti') ?>" method="post" enctype="multipart/form-data" name="form1" id="form1">
-                  <?php if ($this->session->flashdata('msg_gagal')) { ?>
-                    <div class="alert alert-error alert-dismissible">
-                      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                      <strong>Error</strong><br> <?php echo $this->session->flashdata('msg_gagal'); ?>
+              <form class="form-horizontal style-form" action="<?= base_url('cuti/pengajuancuti') ?>" method="post" enctype="multipart/form-data" name="form1" id="form1">
+                <div class="row">
+                  <div class="form-panel">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label class="col-sm-3 control-label">NIP</label>
+                        <div class="col-sm-6">
+                          <?php echo form_error('nip', '<p class="callout callout-warning" style=" role="alert">', '</p>'); ?>
+                          <input name="nip" type="text" id="kode" class="form-control" value="<?= $this->session->userdata('nip') ?>" autofocus="on" readonly />
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-sm-3 control-label">Nama Pegawai</label>
+                        <div class="col-sm-6">
+                          <input name="nama" type="text" id="kode" class="form-control" value="<?= $this->session->userdata('nama') ?>" autofocus="on" readonly />
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-sm-3 control-label">Jabatan</label>
+                        <div class="col-sm-6">
+                          <input name="jabatan" type="text" id="jabatan" class="form-control" value="<?= $this->session->userdata('jabatan') ?>" autofocus="on" readonly />
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-sm-3 control-label">Unit Kerja</label>
+                        <div class="col-sm-6">
+                          <textarea style="align-content:center; overflow:auto;" name="unit_kerja" type="text" id="keterangan" class="form-control" readonly>
+                          <?= $this->session->userdata('unit_kerja') ?>
+                          </textarea>
+                          <!-- <input name="unit_kerja" type="text" style="height:50px;" id="kode" class="form-control" value="<?= $this->session->userdata('unit_kerja') ?>" autofocus="on" readonly /> -->
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-sm-3 control-label">Masa Kerja</label>
+                        <div class="col-sm-2">
+                          <?php echo form_error('masa_kera', '<p class="callout callout-warning" style=" role="alert">', '</p>'); ?>
+                          <input name="masa_kerja" type="text" id="kode" class="form-control" value="" autofocus="on" placeholder="" />
+                        </div>
+                        <label class="col-sm-4 control-label" style="text-align:left !important; font-weight: normal !important; padding-left: 0px;">tahun</label>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-sm-3 control-label">Nomor HP</label>
+                        <div class="col-sm-6">
+                          <?php echo form_error('nomor_hp', '<p class="callout callout-warning" style=" role="alert">', '</p>'); ?>
+                          <input name="nomor_hp" type="text" id="nomor_hp" class="form-control" value="" autofocus="on" placeholder="Nomor hp aktif" />
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-sm-3 control-label">Tanggal Mulai Cuti</label>
+                        <div class="col-sm-6">
+                          <?php echo form_error('tanggal_awal', '<p class="callout callout-warning" style=" role="alert">', '</p>'); ?>
+                          <input type='text' class="input-group date form-control" data-date="" data-date-format="yyyy-mm-dd" name='tanggal_awal' id="tanggal_awal" placeholder='Pilih tanggal mulai cuti' autocomplete='off' required='required' />
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-sm-3 control-label">Tanggal akhir Cuti</label>
+                        <div class="col-sm-6">
+                          <?php echo form_error('tanggal_akhir', '<p class="callout callout-warning" style=" role="alert">', '</p>'); ?>
+                          <input type='text' class="input-group date form-control" data-date="" data-date-format="yyyy-mm-dd" name='tanggal_akhir' id="tanggal_akhir" placeholder='Pilih tanggal akhir cuti' autocomplete='off' required='required' />
+                        </div>
+                      </div>
                     </div>
-                  <?php } ?>
-                  <?php if ($this->session->flashdata('msg_berhasil')) { ?>
-                    <div class="alert alert-success alert-dismissible">
-                      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                      <strong>Berhasil</strong><br> <?php echo $this->session->flashdata('msg_berhasil'); ?>
-                    </div>
-                  <?php } ?>
-                  <div class="form-group">
-                    <label class="col-sm-2 col-sm-2 control-label">NIP</label>
-                    <div class="col-sm-4">
-                      <input name="nip" type="text" id="kode" class="form-control" placeholder="NIP" value="<?= $this->session->userdata('nip') ?>" autofocus="on" readonly />
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label class="col-sm-3 control-label">Jenis Cuti</label>
+                        <div class="col-sm-6">
+                          <?php echo form_error('jenis_cuti', '<p class="callout callout-warning" style=" role="alert">', '</p>'); ?>
+                          <select name="jenis_cuti" id="jenis_cuti" class="form-control select2" required>
+                            <!-- <option value=""> Pilih Jenis Cuti </option> -->
+                            <?php foreach ($jenis_cuti as $value) : ?>
+                              <option value="<?= $value->jenis_cuti ?>"> <?= $value->jenis_cuti; ?> </option>
+                            <?php endforeach; ?>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-sm-3 control-label">Alasan Cuti</label>
+                        <div class="col-sm-6">
+                          <?php echo form_error('keterangan', '<p class="callout callout-warning" style=" role="alert">', '</p>'); ?>
+                          <textarea name="keterangan" type="text" id="keterangan" class="form-control" placeholder="Keterangan" autocomplete="off" required></textarea>
+                          <!--<span class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-sm-3 control-label">Lama Cuti</label>
+                        <div class="col-sm-2">
+                          <?php echo form_error('lama_cuti', '<p class="callout callout-warning" style=" role="alert">', '</p>'); ?>
+                          <input name="lama_cuti" type="text" id="lama_cuti" class="form-control" placeholder="" value="" autocomplete="off" />
+                        </div>
+                        <label class="col-sm-4 control-label" style="text-align:left !important; font-weight: normal !important; padding-left: 0px;">hari</label>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-sm-3 control-label">Alamat Selama Menjanlankan cuti</label>
+                        <div class="col-sm-6">
+                          <?php echo form_error('alamat_cuti', '<p class="callout callout-warning" style=" role="alert">', '</p>'); ?>
+                          <textarea name="alamat_cuti" type="text" id="alamat_cuti" class="form-control" required></textarea>
+                          <!--<span class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-sm-3 control-label">Pertimbangan Atasan Langsung</label>
+                        <div class="col-sm-6">
+                          <?php echo form_error('atasan__langsung', '<p class="callout callout-warning" style=" role="alert">', '</p>'); ?>
+                          <select name="atasan_langsung" id="atasan_langsung" class="form-control select2" required>
+                            <option value=""> Pilih Atasan Langsung </option>
+                            <?php foreach ($data_user as $value) : ?>
+                              <option value="<?= $value->nip ?>"> <?= $value->nama; ?> </option>
+                            <?php endforeach; ?>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-sm-3 control-label">Pejabat Yang Berwenang</label>
+                        <div class="col-sm-6">
+                          <?php echo form_error('pejabat_berwenang', '<p class="callout callout-warning" style=" role="alert">', '</p>'); ?>
+                          <select name="pejabat_berwenang" id="pejabat_berwenang" class="form-control select2" required>
+                            <option value=""> Pilih Pejabat Berwenang</option>
+                            <?php foreach ($data_user as $value) : ?>
+                              <option value="<?= $value->nip ?>"> <?= $value->nama; ?> </option>
+                            <?php endforeach; ?>
+                          </select>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                  <div class="form-group">
-                    <label class="col-sm-2 col-sm-2 control-label">Nama Pegawai</label>
-                    <div class="col-sm-4">
-                      <input name="nama" type="text" id="kode" class="form-control" placeholder="Nama Pegawai" value="<?= $this->session->userdata('nama') ?>" autofocus="on" readonly />
-                    </div>
-                  </div>
-
-                  <div class="form-group">
-                    <label class="col-sm-2 col-sm-2 control-label">Tanggal Awal Cuti</label>
-                    <div class="col-sm-4">
-                      <input type='text' class="input-group date form-control" data-date="" data-date-format="yyyy-mm-dd" name='tanggal_awal' id="tanggal_awal" placeholder='Tanggal Awal Cuti' autocomplete='off' required='required' />
-
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label class="col-sm-2 col-sm-2 control-label">Tanggal akhir Cuti</label>
-                    <div class="col-sm-4">
-                      <input type='text' class="input-group date form-control" data-date="" data-date-format="yyyy-mm-dd" name='tanggal_akhir' id="tanggal_akhir" placeholder='Tanggal Akhir Cuti' autocomplete='off' required='required' />
-
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label class="col-sm-2 col-sm-2 control-label">Lama Cuti</label>
-                    <div class="col-sm-1">
-                      <input name="lama_cuti" type="text" id="lama_cuti" class="form-control" placeholder="Jumlah" value="0" autocomplete="off" />
-                      <!--<span class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
-                    </div>
-                    <label class="col-sm-2 col-sm-2 control-label" style="text-align: left !important;">Hari</label>
-                  </div>
-                  <div class="form-group">
-                    <label class="col-sm-2 col-sm-2 control-label">Jenis Cuti</label>
-                    <div class="col-sm-3">
-                      <select name="jenis_cuti" id="jenis_cuti" class="form-control select2" required>
-                        <!-- <option value=""> Pilih Jenis Cuti </option> -->
-                        <?php foreach ($jenis_cuti as $value) : ?>
-                          <option value="<?= $value->jenis_cuti ?>"> <?= $value->jenis_cuti; ?> </option>
-                        <?php endforeach; ?>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label class="col-sm-2 col-sm-2 control-label">Keterangan</label>
-                    <div class="col-sm-4">
-                      <textarea name="keterangan" type="text" id="keterangan" class="form-control" placeholder="Keterangan" autocomplete="off" required></textarea>
-                      <!--<span class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
-                    </div>
-                  </div>
-                  <!-- <div class="form-group">
-                    <label class="col-sm-2 col-sm-2 control-label">Status</label>
-                    <div class="col-sm-4">
-                      <select name='status' id='status' class='form-control' required>
-                        <option value="">-- Pilih Status --</option>
-                        <option value="Approved">Approved</option>
-                        <option value="Rejected">Rejected</option>
-                        <option value="Pending">Pending</option>
-                      </select>
-                    </div>
-                  </div> -->
-                  <div class="form-group">
-                    <label class="col-sm-2 col-sm-2 control-label"></label>
-                    <div class="col-sm-10">
+                </div>
+                <div class="row">
+                  <div class="d-flex justify-content-center">
+                    <div class="col-sm-5"></div>
+                    <div class="col-sm-2">
                       <a type="button" onclick="history.back(-1)" class="btn btn-sm btn-danger">Batal </a>
                       <input type="submit" name="simpan" value="Simpan" class="btn btn-sm btn-primary" />&nbsp;
                     </div>
+                    <div class="col-sm-5"></div>
                   </div>
-                </form>
-              </div>
+                </div>
+              </form>
             </div><!-- /.box-body -->
-            <!-- <div class="box-footer clearfix no-border">
-      <a href="#" class="btn btn-default pull-right"><i class="fa fa-plus"></i> Tambah Admin</a>
-    </div> -->
           </div><!-- /.box -->
 
         </section><!-- /.Left col -->

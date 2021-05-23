@@ -6,10 +6,10 @@
         Jenis Cuti
         <!-- <small>Human Resource Management System</small> -->
       </h1>
-      <ol class="breadcrumb">
+      <!-- <ol class="breadcrumb">
         <li><a href="<?= base_url('admin') ?>"><i class="fa fa-dashboard"></i> Dashboard</a></li>
         <li class="active">Jenis Cuti</li>
-      </ol>
+      </ol> -->
     </section>
 
     <!-- Main content -->

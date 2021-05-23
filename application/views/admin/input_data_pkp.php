@@ -6,10 +6,10 @@
         PKP
         <!-- <small>Human Resource Management System</small> -->
       </h1>
-      <ol class="breadcrumb">
+      <!-- <ol class="breadcrumb">
         <li><a href="<?= base_url('admin') ?>"><i class="fa fa-dashboard"></i> Dashboard</a></li>
         <li class="active">PKP</li>
-      </ol>
+      </ol> -->
     </section>
 
     <!-- Main content -->
@@ -27,7 +27,7 @@
             </div><!-- /.box-header -->
             <div class="box-body">
               <div class="form-panel">
-                <form class="form-horizontal style-form" action="<?= base_url('admin/savedatapkp') ?>" method="post" enctype="multipart/form-data" name="form3" id="form3">
+                <form class="form-horizontal style-form" action="<?= base_url('pkp/savedatapkp') ?>" method="post" enctype="multipart/form-data" name="form3" id="form3">
                   <div class="form-group">
                     <label class="col-sm-2 col-sm-2 control-label">NIP/NRP</label>
                     <div class="col-sm-4">
@@ -48,10 +48,10 @@
                     </div>
                   </div>
                   <div class="form-group">
-                    <label class="col-sm-2 col-sm-2 control-label">File PKP (.xslx)</label>
+                    <label class="col-sm-2 col-sm-2 control-label">File PKP (.xlsx)</label>
                     <div class="col-sm-4">
                       <?php echo form_error('file_pkp', '<p class="callout callout-warning" style=" role="alert">', '</p>'); ?>
-                      <input name="file_pkp" type="file" value="" id="file_pkp" class="form-control" placeholder="File Pkp" autocomplete="off" />
+                      <input name="file_pkp" type="file" value="" id="file_pkp" class="form-control " placeholder="File Pkp" autocomplete="off" />
                     </div>
                   </div>
                   <div class="form-group">
@@ -65,7 +65,7 @@
                     <label class="col-sm-2 col-sm-2 control-label"></label>
                     <div class="col-sm-8">
                       <input type="submit" name="simpan" value="Simpan" class="btn btn-sm btn-primary" />&nbsp;
-                      <a href="<?= base_url('cuti/variabelcuti') ?>" class="btn btn-sm btn-danger">Batal </a>
+                      <a href="<?= base_url('pkp/datapkp') ?>" class="btn btn-sm btn-danger">Batal </a>
                     </div>
                   </div>
                 </form>

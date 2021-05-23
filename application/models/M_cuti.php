@@ -20,6 +20,22 @@ class M_cuti extends CI_Model
     return $query->result();
   }
 
+  public function get_data_row($tabel, $id)
+  {
+    $query = $this->db->query("SELECT*FROM $tabel WHERE id = $id");
+    return $query->row();
+  }
+  public function get_detail($id)
+  {
+    // $query = $this->db->query("SELECT*FROM user u, tb_pengajuan_cuti tpc WHERE u.nip = tpc.nip AND tpc.id = $id");
+    $query = $this->db->query("select i.*,a.jabatan,a.unit_kerja, b.nama as nama1, c.nama as nama2
+    from tb_pengajuan_cuti i
+    left join user a on a.nip = i.nip
+    left join user b on b.nip = i.atasan_langsung
+    left join user c on c.nip = i.pejabat_berwenang WHERE i.id = $id");
+    return $query->row();
+  }
+
   public function get_data_array($tabel, $id_transaksi)
   {
     $query = $this->db->select()

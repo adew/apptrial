@@ -52,26 +52,16 @@ class M_admin extends CI_Model
     $this->db->delete($tabel);
   }
 
-  public function mengurangi($tabel, $id_transaksi, $jumlah)
-  {
-    $this->db->set("jumlah", "jumlah - $jumlah");
-    $this->db->where('id_transaksi', $id_transaksi);
-    $this->db->update($tabel);
-  }
-
   public function update_password($tabel, $where, $data)
   {
     $this->db->where($where);
     $this->db->update($tabel, $data);
   }
 
-  public function get_data_gambar($tabel, $username)
+  public function get_data_row($tabel, $id)
   {
-    $query = $this->db->select()
-      ->from($tabel)
-      ->where('username_user', $username)
-      ->get();
-    return $query->result();
+    $query = $this->db->query("SELECT*FROM $tabel WHERE id = $id");
+    return $query->row();
   }
 
   public function sum($tabel, $field)

@@ -4,18 +4,18 @@
     <h1>
       Details
     </h1>
-    <ol class="breadcrumb">
+    <!-- <ol class="breadcrumb">
       <li><a href="<?= base_url('admin') ?>"><i class="fa fa-dashboard"></i> Home</a></li>
-      <li>Details</li>
-      <!-- <li><a href="<?= base_url('admin/details/') . $this->uri->segment(3) ?>" class="active">Details</a></li> -->
-    </ol>
+      <li>Details</li> -->
+    <!-- <li><a href="<?= base_url('admin/details/') . $this->uri->segment(3) ?>" class="active">Details</a></li> -->
+    <!-- </ol> -->
   </section>
   <!-- Main content -->
   <section class="content">
     <div class="row d-flex align-items-stretch">
       <div class="col-md-6">
         <!-- /.box -->
-        <div class="box box-primary" style="height:350px;">
+        <div class="box box-warning" style="height:350px;">
           <!-- /.box-header -->
           <div class="box-body">
             <div class="row">
@@ -56,7 +56,7 @@
       </div>
       <div class="col-md-6">
         <!-- /.box -->
-        <div class="scroller box box-primary" style="height:350px;">
+        <div class="scroller box box-warning" style="height:350px;">
           <div class="table-responsive">
             <table class="table no-margin">
               <thead>
@@ -90,7 +90,7 @@
 
     <div class="row">
       <div class="col-md-12">
-        <div class="box box-primary">
+        <div class="box box-warning">
           <div class="box-body box-profile">
             <h3 class="box-title">Grafik</h3>
             <div class="graph-container">

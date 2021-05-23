@@ -1,3 +1,19 @@
+<style>
+  .orange {
+    text-align: left;
+    font-size: 15px;
+    line-height: 11px;
+    /* font-weight: bold; */
+    width: 280px;
+    background-color: #d6eae9;
+  }
+
+  /* .control-label {
+    color: blue;
+  } */
+</style>
+
+
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
   <section class="content-header">
@@ -5,10 +21,10 @@
       Cuti Pegawai
       <!-- <small>Human Resource Management System</small> -->
     </h1>
-    <ol class="breadcrumb">
+    <!-- <ol class="breadcrumb">
       <li><a href="<?= base_url('admin') ?>"><i class="fa fa-dashboard"></i> Dashboard</a></li>
       <li class="active">Data Cuti</li>
-    </ol>
+    </ol> -->
   </section>
 
   <!-- Main content -->
@@ -76,7 +92,7 @@
                 <?php foreach ($list_data as $list => $value) : ?>
                   <tr>
                     <td><?= $list + 1 ?></td>
-                    <td><?= $value->creat_at ?></td>
+                    <td><a href="#" onclick="detail_cuti('<?= base_url() . 'cuti/get_data/' . $value->id ?>')"><?= $value->creat_at ?></a></td>
                     <td><?= $value->nama ?></td>
                     <td><?= $value->tgl_awal ?></td>
                     <td><?= $value->tgl_akhir ?></td>
@@ -92,17 +108,9 @@
                     } ?>
                     <td><?= $status_cuti ?></td>
 
-
-
-                    <!-- <td><?= $list + 1 ?></td>
-                    <td><?= $value->bulan ?></td>
-                    <td><a href="<?= base_url('uploads/') . $value->file_pkp ?>"><?= $value->file_pkp ?></a></td>
-                    <td><?= $value->skor ?></td>
-                    <td><?= $value->creat_at ?></td> -->
-
                     <td style="display:inline-flex;">
-                      <a style="margin-right: 5px;" href="<?= base_url('cuti/cutiditolak/' . $value->id) ?>" type="button" class="btn btn-xs btn-danger btn-reject" data-placement="bottom" data-toggle="tooltip" title="Ditolak" name="btn_delete"><i class="fa fa-times-circle" aria-hidden="true"></i></a>
-                      <a href="<?= base_url('cuti/cutidisetujui/' . $value->id) ?>" class="btn btn-xs btn-success btn-accept" data-placement="bottom" data-toggle="tooltip" title="Disetujui"><span class="fa fa-check-circle"></span></a>
+                      <a style="margin-right: 5px;" href="<?= base_url('cuti/cutiditolak/' . $value->id) ?>" type="button" class="btn btn-xs btn-danger btn-reject" name="btn_delete"><i class="fa fa-times-circle"></i>Ditolak</a>
+                      <a href="<?= base_url('cuti/cutidisetujui/' . $value->id) ?>" class="btn btn-xs btn-success btn-accept"><span class="fa fa-check-circle"></span>Disetujui</a>
                     </td>
                   </tr>
                 <?php endforeach; ?>
@@ -117,3 +125,173 @@
 
   </section><!-- /.content -->
 </div><!-- /.content-wrapper -->
+
+<div id="detail-cuti" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+          ×
+        </button>
+        <h4 class="modal-title" id="classModalLabel">
+          Details Cuti
+        </h4>
+      </div>
+      <!-- <div class="row" style="padding:0px 30px"> -->
+      <div class="box box-body box-warning" style="margin-bottom: 2px;">
+        <table class="table table-bordered table-striped">
+          <tbody>
+            <tr>
+              <td class=" orange">NIP</td>
+              <td>
+                <div class="form-group">
+                  <label id="dc1" class="col-sm-5 control-label"></label>
+                  <div class="col-sm-6">
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="orange">Nama Pegawai </td>
+              <td>
+                <div class="form-group">
+                  <label id="dc2" class="col-sm-5 control-label"></label>
+                  <div class="col-sm-6">
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="orange">Jabatan</td>
+              <td>
+                <div class="form-group">
+                  <label id="dc3" class="col-sm-5 control-label"></label>
+                  <div class="col-sm-6">
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="orange">Unit Kerja</td>
+              <td>
+                <div class="form-group">
+                  <label id="dc4" class="col-sm-5 control-label"></label>
+                  <div class="col-sm-6">
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="orange">Masa Kerja</td>
+              <td>
+                <div class="form-group">
+                  <label id="dc5" class="col-sm-5 control-label"></label>
+                  <div class="col-sm-6">
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="orange">Nomor HP </td>
+              <td>
+                <div class="form-group">
+                  <label id="dc6" class="col-sm-5 control-label"></label>
+                  <div class="col-sm-6">
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="orange">Tanggal Awal Cuti</td>
+              <td>
+                <div class="form-group">
+                  <label id="dc7" class="col-sm-5 control-label"></label>
+                  <div class="col-sm-6">
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="orange">Tanggal Akhir Cuti</td>
+              <td>
+                <div class="form-group">
+                  <label id="dc8" class="col-sm-5 control-label"></label>
+                  <div class="col-sm-6">
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="orange">Jenis Cuti</td>
+              <td>
+                <div class="form-group">
+                  <label id="dc9" class="col-sm-5 control-label"></label>
+                  <div class="col-sm-6">
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="orange">Alasan Cuti</td>
+              <td>
+                <div class="form-group">
+                  <label id="dc10" class="col-sm-5 control-label"></label>
+                  <div class="col-sm-6">
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="orange">Lama Cuti</td>
+              <td>
+                <div class="form-group">
+                  <label id="dc11" class="col-sm-5 control-label">
+                  </label>
+                  <div class="col-sm-6">
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="orange">Pertimbangan Atasan Langsung</td>
+              <td>
+                <div class="form-group" style="color:blue">
+                  <label id="dc13" class="col-sm-6 control-label"></label>
+                  <div class="col-sm-6">
+                    <a style="margin-right: 5px;" href="<?= base_url('cuti/cutiditolak/' . $value->id) ?>" type="button" class="btn btn-sm btn-danger btn-reject" name="btn_delete"><i class="fa fa-times-circle"></i>Ditolak</a>
+                    <a href="<?= base_url('cuti/cutidisetujui/' . $value->id) ?>" class="btn btn-sm btn-success btn-accept"><span class="fa fa-check-circle"></span>Disetujui</a>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="orange">Pejabat Yang Berwenang</td>
+              <td>
+                <div class="form-group" style="color:blue">
+                  <label id="dc14" class="col-sm-6 control-label"></label>
+                  <div class="col-sm-6">
+                    <a style="margin-right: 5px;" href="<?= base_url('cuti/cutiditolak/' . $value->id) ?>" type="button" class="btn btn-sm btn-danger btn-reject" name="btn_delete"><i class="fa fa-times-circle"></i>Ditolak</a>
+                    <a href="<?= base_url('cuti/cutidisetujui/' . $value->id) ?>" class="btn btn-sm btn-success btn-accept"><span class="fa fa-check-circle"></span>Disetujui</a>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="orange">Alamat Selama Menjalankan Cuti</td>
+              <td>
+                <div class="form-group">
+                  <label id="dc12" class="col-sm-5 control-label"></label>
+                  <div class="col-sm-6">
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer" style="padding:4px;">
+        <button type="button" class="btn btn-info btn-flat col-md-4 col-md-offset-4"><i class="fa fa-download"></i> Export to Word</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -2,13 +2,14 @@
   <div class="wrapper">
 
     <header class="main-header">
-      <!-- Logo -->
+      <!-- Logo e0b916 -->
       <li href="<?= base_url('admin') ?>" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
         <span class="logo-mini">PTM</span>
         <!-- logo for regular state and mobile devices -->
         <span class="logo-lg" style="font-family :Courier New, Courier, monospace; font-size:35px; color:
-#e0b916"><b>PATTIMURA</b></span>
+#fff">
+          <b>PATTIMURA</b></span>
       </li>
       <!-- Header Navbar: style can be found in header.less -->
       <nav class="navbar navbar-static-top">
