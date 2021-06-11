@@ -24,7 +24,7 @@ class Pkp extends CI_Controller
 
       $data['list_data'] = $this->M_admin->select('user');
       $data['active'] = '';
-      $data['title'] = 'DILMIL III-18 Ambon';
+      $data['title'] = 'PATTIMURA';
       $this->load->view('admin/template/adm_header', $data);
       $this->load->view('admin/template/adm_navbar', $data);
       $this->load->view('admin/template/adm_sidebar', $data);
@@ -45,7 +45,7 @@ class Pkp extends CI_Controller
     $data['avatar'] = $this->session->userdata('foto_profil');
     $this->session->set_userdata($data);
 
-    $data['title'] = 'DILMIL III-18 Ambon';
+    $data['title'] = 'PATTIMURA';
     $this->load->view('admin/template/adm_header', $data);
     $this->load->view('admin/template/adm_navbar', $data);
     $this->load->view('admin/template/adm_sidebar', $data);
@@ -81,7 +81,7 @@ class Pkp extends CI_Controller
     $data['list_data'] = $this->M_admin->get_data('tb_pkp', $where);
     $data['alert'] = 'success';
 
-    $data['title'] = 'DILMIL III-18 Ambon';
+    $data['title'] = 'PATTIMURA';
     $this->load->view('admin/template/adm_header', $data);
     $this->load->view('admin/template/adm_navbar', $data);
     $this->load->view('admin/template/adm_sidebar', $data);
@@ -96,7 +96,7 @@ class Pkp extends CI_Controller
 
     $data['bulan'] = $this->load_bulan();
 
-    $data['title'] = 'DILMIL III-18 Ambon';
+    $data['title'] = 'PATTIMURA';
     $this->load->view('admin/template/adm_header', $data);
     $this->load->view('admin/template/adm_navbar', $data);
     $this->load->view('admin/template/adm_sidebar', $data);
@@ -135,7 +135,7 @@ class Pkp extends CI_Controller
       $data['nip'] = $this->session->userdata('nip');
       $data['bulan'] = $this->load_bulan();
 
-      $data['title'] = 'DILMIL III-18 Ambon';
+      $data['title'] = 'PATTIMURA';
       $this->load->view('admin/template/adm_header', $data);
       $this->load->view('admin/template/adm_navbar', $data);
       $this->load->view('admin/template/adm_sidebar', $data);

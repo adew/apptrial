@@ -20,11 +20,39 @@ class M_cuti extends CI_Model
     return $query->result();
   }
 
+  public function count_cuti_nip($id)
+  {
+    $query = $this->db->query('select count(*) as jumlah from tb_pengajuan_cuti WHERE (atasan_langsung="' . $id . '" AND status_al=0) OR (pejabat_berwenang="' . $id . '" AND status_pb=0)');
+    return $query->row();
+  }
+
+
   public function get_data_row($tabel, $id)
   {
     $query = $this->db->query("SELECT*FROM $tabel WHERE id = $id");
     return $query->row();
   }
+
+  public function list_data_cuti($nip, $role)
+  {
+    // $where = '';
+    // if ($role == 0) {
+    //   $where = 'WHERE i.nip =' . $nip . ' OR (atasan_langsung="' . $nip . '" OR pejabat_berwenang="' . $nip . '")';
+    // }
+    // } else if ($role == 1) {
+    //   $where = 'WHERE i.nip =' . $nip . ' OR (atasan_langsung="' . $nip . '" OR pejabat_berwenang="' . $nip . '")';
+    // }
+
+    $where = 'WHERE i.nip =' . $nip . ' OR (atasan_langsung="' . $nip . '" OR pejabat_berwenang="' . $nip . '")';
+
+    $query = $this->db->query("select i.*,a.jabatan,a.unit_kerja, b.nama as nama1, c.nama as nama2
+    from tb_pengajuan_cuti i
+    left join user a on a.nip = i.nip
+    left join user b on b.nip = i.atasan_langsung
+    left join user c on c.nip = i.pejabat_berwenang $where");
+    return $query->result();
+  }
+
   public function get_detail($id)
   {
     // $query = $this->db->query("SELECT*FROM user u, tb_pengajuan_cuti tpc WHERE u.nip = tpc.nip AND tpc.id = $id");
@@ -34,6 +62,17 @@ class M_cuti extends CI_Model
     left join user b on b.nip = i.atasan_langsung
     left join user c on c.nip = i.pejabat_berwenang WHERE i.id = $id");
     return $query->row();
+  }
+
+  public function get_export_word($id)
+  {
+    // $query = $this->db->query("SELECT*FROM user u, tb_pengajuan_cuti tpc WHERE u.nip = tpc.nip AND tpc.id = $id");
+    $query = $this->db->query("select i.*,a.jabatan,a.unit_kerja, b.nama as nama1, c.nama as nama2
+    from tb_pengajuan_cuti i
+    left join user a on a.nip = i.nip
+    left join user b on b.nip = i.atasan_langsung
+    left join user c on c.nip = i.pejabat_berwenang WHERE i.id = $id");
+    return $query->row_array();
   }
 
   public function get_data_array($tabel, $id_transaksi)

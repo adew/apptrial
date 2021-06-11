@@ -1,6 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 define('JATAH_CUTI', 12);
+require_once './application/libraries/phpword/bootstrap.php';
 
 class Cuti extends CI_Controller
 {
@@ -19,16 +20,65 @@ class Cuti extends CI_Controller
     }
   }
 
+  public function exportword()
+  {
+    $id = $this->uri->segment(3);
+    $phpWord = new \PhpOffice\PhpWord\PhpWord();
+    $template = $phpWord->loadTemplate('./template.docx');
+    $data = $this->M_cuti->get_export_word($id);
+
+    $key_jenis_cuti = $data['jenis_cuti'];
+
+    $data['cuti_tahunan'] = '-';
+    $data['cuti_besar'] = '-';
+    $data['cuti_sakit'] = '-';
+    $data['cuti_lahir'] = '-';
+    $data['cuti_alpen'] = '-';
+    $data['cuti_dtn'] = '-';
+    $data[$key_jenis_cuti] = 'V';
+
+    if ($data['status_al'] == 1) {
+      $data['setuju_al'] = 'V';
+      $data['tidak_setuju_al'] = '-';
+    } else {
+      $data['setuju_al'] = '-';
+      $data['tidak_setuju_al'] = 'V';
+    }
+
+    if ($data['status_pb'] == 1) {
+      $data['setuju_pb'] = 'V';
+      $data['tidak_setuju_pb'] = '-';
+    } else {
+      $data['setuju_pb'] = '-';
+      $data['tidak_setuju_pb'] = 'V';
+    }
+
+
+    $temp_filename = 'Cuti-' . $data['nama'] . date('Y-m-d') . '.docx';
+    $template->setValues($data);
+    header("Content-Disposition: attachment; filename=$temp_filename");
+    // $template->saveAs($temp_filename);
+    $template->saveAs('php://output');
+    // unlink($temp_filename);
+    // exit;
+  }
+
   public function index()
   {
     if ($this->session->userdata('status') == 'login') {
       $data['avatar'] = $this->session->userdata('foto_profil');
-      $now = date('Y-m-d');
-      $query = $this->db->query("SELECT * FROM tb_pengajuan_cuti WHERE tgl_awal <= '" . $now . "' AND tgl_akhir >= '" . $now . "'");
+      $now = date('d-m-Y');
+
+      // print_r($now);
+      // die;
+
+      // print_r("SELECT * FROM tb_pengajuan_cuti WHERE tgl_awal <= '" . $now . "' AND tgl_akhir >= '" . $now . "'");
+      $query = $this->db->query("SELECT * FROM tb_pengajuan_cuti WHERE creat_at LIKE '%" . $now . "%'");
+      // print_r("SELECT * FROM tb_pengajuan_cuti WHERE creat_at like '%" . $now . "'");
 
       $data['list_data'] = $query->result();
 
-      $data['title'] = 'DILMIL III-18 Ambon';
+      $data['title'] = 'PATTIMURA';
       $this->load->view('admin/template/adm_header', $data);
       $this->load->view('admin/template/adm_navbar', $data);
       $this->load->view('admin/template/adm_sidebar', $data);
@@ -41,10 +91,14 @@ class Cuti extends CI_Controller
 
   public function datacuti()
   {
+    $role = $this->session->userdata('role');
+    $nip = $this->session->userdata('nip');
     $data['avatar'] = $this->session->userdata('foto_profil');
-    $data['list_data'] = $this->M_admin->select('tb_pengajuan_cuti');
-
-    $data['title'] = 'DILMIL III-18 Ambon';
+    $data['list_data'] = $this->M_cuti->list_data_cuti($nip, $role);
+    $data['notif_data'] = $this->M_cuti->count_cuti_nip($this->session->userdata('nip'));
+    // print_r($data);
+    // die;
+    $data['title'] = 'PATTIMURA';
     $this->load->view('admin/template/adm_header', $data);
     $this->load->view('admin/template/adm_navbar', $data);
     $this->load->view('admin/template/adm_sidebar', $data);
@@ -65,13 +119,119 @@ class Cuti extends CI_Controller
     }
   }
 
+  public function notif_cuti()
+  {
+    $data = $this->M_cuti->count_cuti_nip($this->session->userdata('nip'));
+    if ($data) {
+      echo json_encode(array('status' => true, 'data' => $data));
+    } else {
+      echo json_encode(array('status' => false));
+    }
+  }
+
+  //SALDO CUTI
+  public function inputjatahcuti()
+  {
+    $data['avatar'] = $this->session->userdata('foto_profil');
+    $data['jenis_cuti'] = $this->M_admin->select('tb_cuti');
+    $data['data_user'] = $this->M_admin->select('user');
+
+    $data['title'] = 'PATTIMURA';
+    $this->load->view('admin/template/adm_header', $data);
+    $this->load->view('admin/template/adm_navbar', $data);
+    $this->load->view('admin/template/adm_sidebar', $data);
+    $this->load->view('admin/input_jatah_cuti', $data);
+    $this->load->view('admin/template/adm_footer', $data);
+  }
+
+  public function savejatahcuti()
+  {
+    $this->form_validation->set_rules('nip', 'NIP', 'required', array('required' => 'Wajib diisi'));
+    $this->form_validation->set_rules('tahun', 'tahun', 'required', array('required' => 'Wajib diisi'));
+    $this->form_validation->set_rules('cuti_tahunan_pakai', 'cuti_tahunan_pakai', 'required', array('required' => 'Wajib diisi'));
+    $this->form_validation->set_rules('cuti_tahunan_kuota', 'cuti_tahunan_kuota', 'required', array('required' => 'Wajib diisi'));
+    $this->form_validation->set_rules('cuti_besar_pakai', 'cuti_besar_pakai', 'required', array('required' => 'Wajib diisi'));
+    $this->form_validation->set_rules('cuti_besar_kuota', 'cuti_besar_kuota', 'required', array('required' => 'Wajib diisi'));
+    $this->form_validation->set_rules('cuti_sakit_pakai', 'cuti_sakit_pakai', 'required', array('required' => 'Wajib diisi'));
+    $this->form_validation->set_rules('cuti_sakit_kuota', 'cuti_sakit_kuota', 'required', array('required' => 'Wajib diisi'));
+    $this->form_validation->set_rules('cuti_lahir_pakai', 'cuti_lahir_pakai', 'required', array('required' => 'Wajib diisi'));
+    $this->form_validation->set_rules('cuti_lahir_kuota', 'cuti_lahir_kuota', 'required', array('required' => 'Wajib diisi'));
+    $this->form_validation->set_rules('cuti_alpen_pakai', 'cuti_alpen_pakai', 'required', array('required' => 'Wajib diisi'));
+    $this->form_validation->set_rules('cuti_alpen_kuota', 'cuti_alpen_kuota', 'required', array('required' => 'Wajib diisi'));
+    $this->form_validation->set_rules('cuti_dtn_pakai', 'cuti_dtn_pakai', 'required', array('required' => 'Wajib diisi'));
+    $this->form_validation->set_rules('cuti_dtn_kuota', 'cuti_dtn_kuota', 'required', array('required' => 'Wajib diisi'));
+
+    if ($this->form_validation->run() == FALSE) {
+
+      $data['avatar'] = $this->session->userdata('foto_profil');
+      $data['jenis_cuti'] = $this->M_admin->select('tb_cuti');
+      $data['data_user'] = $this->M_admin->select('user');
+
+      $this->session->set_flashdata('msg_gagal', 'Input Jatah Cuti Gagal');
+
+      // redirect(base_url('cuti/inputdatacuti'));
+      $data['title'] = 'PATTIMURA';
+      $this->load->view('admin/template/adm_header', $data);
+      $this->load->view('admin/template/adm_navbar', $data);
+      $this->load->view('admin/template/adm_sidebar', $data);
+      $this->load->view('admin/input_jatah_cuti', $data);
+      $this->load->view('admin/template/adm_footer', $data);
+    } else {
+
+      $nip       = $this->input->post('nip', TRUE);
+      $tahun       = $this->input->post('tahun', TRUE);
+      $cuti_tahunan_pakai       = $this->input->post('cuti_tahunan_pakai', TRUE);
+      $cuti_tahunan_kuota       = $this->input->post('cuti_tahunan_kuota', TRUE);
+      $cuti_besar_pakai       = $this->input->post('cuti_besar_pakai', TRUE);
+      $cuti_besar_kuota       = $this->input->post('cuti_besar_kuota', TRUE);
+      $cuti_sakit_pakai       = $this->input->post('cuti_sakit_pakai', TRUE);
+      $cuti_sakit_kuota    = $this->input->post('cuti_sakit_kuota', TRUE);
+      $cuti_lahir_pakai       = $this->input->post('cuti_lahir_pakai', TRUE);
+      $cuti_lahir_kuota       = $this->input->post('cuti_lahir_kuota', TRUE);
+      $cuti_alpen_pakai       = $this->input->post('cuti_alpen_pakai');
+      $cuti_alpen_kuota       = $this->input->post('cuti_alpen_kuota', TRUE);
+      $cuti_dtn_pakai       = $this->input->post('cuti_dtn_pakai', TRUE);
+      $cuti_dtn_kuota       = $this->input->post('cuti_dtn_kuota', TRUE);
+
+      $data = array(
+        'c_nip'     => $nip,
+        'c_tahun'     => $tahun,
+        'c_tahunan_pakai'     => $cuti_tahunan_pakai,
+        'c_tahunan_kuota'     => $cuti_tahunan_kuota,
+        'c_besar_pakai'     => $cuti_besar_pakai,
+        'c_besar_kuota'     => $cuti_besar_kuota,
+        'c_sakit_pakai'     => $cuti_sakit_pakai,
+        'c_sakit_kuota'     => $cuti_sakit_kuota,
+        'c_lahir_pakai'     => $cuti_lahir_pakai,
+        'c_lahir_kuota'        => $cuti_lahir_kuota,
+        'c_alpen_pakai'        => $cuti_alpen_pakai,
+        'c_alpen_kuota'        => $cuti_alpen_kuota,
+        'c_dtn_pakai'        => $cuti_dtn_pakai,
+        'c_dtn_kuota'        => $cuti_dtn_kuota,
+        'creat_at'        => date('d-m-Y H:i:s'),
+      );
+
+      $execute = $this->M_admin->insert('tb_jatah_cuti', $data);
+      print_r( $execute);
+      die;
+
+    
+        echo json_encode(array('status' => true, 'message' =>'Data berhasil disimpan'));
+      // }else{
+      //   echo json_encode(array('status' => false,  'message' =>'Data gagal disimpan'));
+      // }
+      // redirect(base_url('cuti/datacuti'));
+    }
+  }
+  //SALDO CUTI
+
   public function inputdatacuti()
   {
     $data['avatar'] = $this->session->userdata('foto_profil');
     $data['jenis_cuti'] = $this->M_admin->select('tb_cuti');
     $data['data_user'] = $this->M_admin->select('user');
 
-    $data['title'] = 'DILMIL III-18 Ambon';
+    $data['title'] = 'PATTIMURA';
     $this->load->view('admin/template/adm_header', $data);
     $this->load->view('admin/template/adm_navbar', $data);
     $this->load->view('admin/template/adm_sidebar', $data);
@@ -91,7 +251,7 @@ class Cuti extends CI_Controller
     $this->form_validation->set_rules('jenis_cuti', 'Jenis Cuti', 'required', array('required' => 'Wajib diisi'));
     $this->form_validation->set_rules('keterangan', 'Keterangan', 'required', array('required' => 'Wajib diisi'));
     $this->form_validation->set_rules('alamat_cuti', 'Alamat Cuti', 'required', array('required' => 'Wajib diisi'));
-    $this->form_validation->set_rules('atasan_langsung', 'Atasan Langsung', 'required', array('required' => 'Wajib diisi'));
+    // $this->form_validation->set_rules('atasan_langsung', 'Atasan Langsung', 'required', array('required' => 'Wajib diisi'));
     $this->form_validation->set_rules('pejabat_berwenang', 'Pejabat Berwenang', 'required', array('required' => 'Wajib diisi'));
 
     if ($this->form_validation->run() == FALSE) {
@@ -101,7 +261,7 @@ class Cuti extends CI_Controller
       $this->session->set_flashdata('msg_gagal', 'Pengajuan Cuti Gagal dikirim');
 
       // redirect(base_url('cuti/inputdatacuti'));
-      $data['title'] = 'DILMIL III-18 Ambon';
+      $data['title'] = 'PATTIMURA';
       $this->load->view('admin/template/adm_header', $data);
       $this->load->view('admin/template/adm_navbar', $data);
       $this->load->view('admin/template/adm_sidebar', $data);
@@ -119,7 +279,7 @@ class Cuti extends CI_Controller
       $jenis_cuti    = $this->input->post('jenis_cuti', TRUE);
       $keterangan       = $this->input->post('keterangan', TRUE);
       $alamat_cuti       = $this->input->post('alamat_cuti', TRUE);
-      $atasan_langsung       = $this->input->post('atasan_langsung', TRUE);
+      $atasan_langsung       = $this->input->post('atasan_langsung');
       $pejabat_berwenang       = $this->input->post('pejabat_berwenang', TRUE);
 
       $id = $this->session->userdata('nip');
@@ -158,7 +318,7 @@ class Cuti extends CI_Controller
 
       // print_r($data);
       // die;
-      $this->M_admin->insert('tb_pengajuan_cuti', $data);
+      $execute = $this->M_admin->insert('tb_pengajuan_cuti', $data);
 
       $this->session->set_flashdata('msg_berhasil', 'Pengajuan Cuti Berhasil dikirim');
       redirect(base_url('cuti/datacuti'));
@@ -167,26 +327,39 @@ class Cuti extends CI_Controller
 
   public function cutiditolak()
   {
-    $id = $this->uri->segment(3);
+    $id = $this->uri->segment(4);
+    $pihak = $this->uri->segment(3);
     $where = array('id' => $id);
-
-    $data = array(
-      'status_cuti'     => 2,
-    );
+    if ($pihak == 'al') {
+      $data = array(
+        'status_al'     => 2,
+      );
+    } else {
+      $data = array(
+        'status_pb'     => 2,
+      );
+    }
     $this->M_admin->update('tb_pengajuan_cuti', $data, $where);
-    echo json_encode(array('status' => true));
+    echo json_encode(array('status' => true, 'pihak' => $pihak));
     // redirect(base_url('cuti/datacuti'));
   }
   public function cutidisetujui()
   {
-    $id = $this->uri->segment(3);
+    $id = $this->uri->segment(4);
+    $pihak = $this->uri->segment(3);
     $where = array('id' => $id);
 
-    $data = array(
-      'status_cuti'     => 1,
-    );
+    if ($pihak == 'al') {
+      $data = array(
+        'status_al'     => 1,
+      );
+    } else {
+      $data = array(
+        'status_pb'     => 1,
+      );
+    }
     $this->M_admin->update('tb_pengajuan_cuti', $data, $where);
-    echo json_encode(array('status' => true));
+    echo json_encode(array('status' => true, 'pihak' => $pihak));
   }
 
   public function jabatan()
@@ -194,7 +367,7 @@ class Cuti extends CI_Controller
     if ($this->session->userdata('status') == 'login' && $this->session->userdata('role') == 1) {
       $data['avatar'] = $this->session->userdata('foto_profil');
       $data['list_data'] = $this->M_admin->select('tb_jabatan');
-      $data['title'] = 'DILMIL III-18 Ambon';
+      $data['title'] = 'PATTIMURA';
       $this->load->view('admin/template/adm_header', $data);
       $this->load->view('admin/template/adm_navbar', $data);
       $this->load->view('admin/template/adm_sidebar', $data);
@@ -211,7 +384,7 @@ class Cuti extends CI_Controller
       $data['avatar'] = $this->session->userdata('foto_profil');
       $data['token_generate'] = $this->token_generate();
       $data['active'] = '';
-      $data['title'] = 'DILMIL III-18 Ambon';
+      $data['title'] = 'PATTIMURA';
       $this->load->view('admin/template/adm_header', $data);
       $this->load->view('admin/template/adm_navbar', $data);
       $this->load->view('admin/template/adm_sidebar', $data);
@@ -232,7 +405,7 @@ class Cuti extends CI_Controller
       $data['token_generate'] = $this->token_generate();
       $data['avatar'] = $this->session->userdata('foto_profil');
 
-      $data['title'] = 'DILMIL III-18 Ambon';
+      $data['title'] = 'PATTIMURA';
       $this->load->view('admin/template/adm_header', $data);
       $this->load->view('admin/template/adm_navbar', $data);
       $this->load->view('admin/template/adm_sidebar', $data);
@@ -271,7 +444,7 @@ class Cuti extends CI_Controller
       $data['avatar'] = $this->session->userdata('foto_profil');
       $data['list_data'] = $this->M_admin->select('tb_cuti');
       $data['active'] = '';
-      $data['title'] = 'DILMIL III-18 Ambon';
+      $data['title'] = 'PATTIMURA';
       $this->load->view('admin/template/adm_header', $data);
       $this->load->view('admin/template/adm_navbar', $data);
       $this->load->view('admin/template/adm_sidebar', $data);
@@ -287,7 +460,7 @@ class Cuti extends CI_Controller
       $data['avatar'] = $this->session->userdata('foto_profil');
       $data['token_generate'] = $this->token_generate();
       $data['active'] = '';
-      $data['title'] = 'DILMIL III-18 Ambon';
+      $data['title'] = 'PATTIMURA';
       $this->load->view('admin/template/adm_header', $data);
       $this->load->view('admin/template/adm_navbar', $data);
       $this->load->view('admin/template/adm_sidebar', $data);
@@ -308,7 +481,7 @@ class Cuti extends CI_Controller
       $data['token_generate'] = $this->token_generate();
       $data['avatar'] = $this->session->userdata('foto_profil');
 
-      $data['title'] = 'DILMIL III-18 Ambon';
+      $data['title'] = 'PATTIMURA';
       $this->load->view('admin/template/adm_header', $data);
       $this->load->view('admin/template/adm_navbar', $data);
       $this->load->view('admin/template/adm_sidebar', $data);

@@ -58,7 +58,7 @@ class Admin extends CI_Controller
       $data['nip'] = $this->session->userdata('nip');
       $data['bulan'] = $this->load_bulan();
 
-      $data['title'] = 'DILMIL III-18 Ambon';
+      $data['title'] = 'PATTIMURA';
       $this->load->view('admin/template/adm_header', $data);
       $this->load->view('admin/template/adm_navbar', $data);
       $this->load->view('admin/template/adm_sidebar', $data);
@@ -144,7 +144,7 @@ class Admin extends CI_Controller
     $data['avatar'] = $this->session->userdata('foto_profil');
     // $this->session->set_userdata($data);
 
-    $data['title'] = 'DILMIL III-18 Ambon';
+    $data['title'] = 'PATTIMURA';
     $this->load->view('admin/template/adm_header', $data);
     $this->load->view('admin/template/adm_navbar', $data);
     $this->load->view('admin/template/adm_sidebar', $data);
@@ -236,10 +236,13 @@ class Admin extends CI_Controller
         $this->session->set_flashdata('msg_gagal', $this->image_lib->display_errors());
         // $this->load->view('admin/profile', $data)
         redirect(base_url('admin/profile'));
+      } else {
+        //Hapus file foto
+        if ($this->session->userdata('foto_profil') != 'nopic.png') {
+          unlink('./uploads/profile/' . $this->session->userdata('foto_profil'));
+        }
       }
 
-      //Hapus file foto
-      unlink('./uploads/profile/' . $this->session->userdata('foto_profil'));
 
       $where = array(
         'nip' => $this->session->userdata('nip')
@@ -267,8 +270,8 @@ class Admin extends CI_Controller
   ####################################
   public function users()
   {
-    $data['title'] = 'DILMIL III-18 Ambon';
-    $data['list_users'] = $this->M_admin->kecuali('user', $this->session->userdata('nip'));
+    $data['title'] = 'PATTIMURA';
+    $data['list_users'] = $this->M_admin->select('user');
 
     $data['avatar'] = $this->session->userdata('foto_profil');
     $this->session->set_userdata($data);
@@ -281,7 +284,7 @@ class Admin extends CI_Controller
   public function form_user()
   {
     $data['avatar'] = $this->session->userdata('foto_profil');
-    $data['title'] = 'DILMIL III-18 Ambon';
+    $data['title'] = 'PATTIMURA';
     $this->load->view('admin/template/adm_header', $data);
     $this->load->view('admin/template/adm_navbar', $data);
     $this->load->view('admin/template/adm_sidebar', $data);
@@ -298,7 +301,7 @@ class Admin extends CI_Controller
 
     $data['avatar'] = $this->session->userdata('foto_profil');
     $this->session->set_userdata($data);
-    $data['title'] = 'DILMIL III-18 Ambon';
+    $data['title'] = 'PATTIMURA';
     $this->load->view('admin/template/adm_header', $data);
     $this->load->view('admin/template/adm_navbar', $data);
     $this->load->view('admin/template/adm_sidebar', $data);
@@ -327,7 +330,7 @@ class Admin extends CI_Controller
       $data['token_generate'] = $this->token_generate();
       $data['avatar'] = $this->session->userdata('foto_profil');
 
-      $data['title'] = 'DILMIL III-18 Ambon';
+      $data['title'] = 'PATTIMURA';
       $this->load->view('admin/template/adm_header', $data);
       $this->load->view('admin/template/adm_navbar', $data);
       $this->load->view('admin/template/adm_sidebar', $data);
@@ -375,7 +378,7 @@ class Admin extends CI_Controller
       $data['token_generate'] = $this->token_generate();
       $data['list_data'] = $this->M_admin->get_data('user', $this->session->userdata('nip'));
 
-      $data['title'] = 'DILMIL III-18 Ambon';
+      $data['title'] = 'PATTIMURA';
       $this->load->view('admin/template/adm_header', $data);
       $this->load->view('admin/template/adm_navbar', $data);
       $this->load->view('admin/template/adm_sidebar', $data);

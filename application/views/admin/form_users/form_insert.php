@@ -18,7 +18,7 @@
       <div class="col-md-12">
 
         <!-- general form elements -->
-        <div class="box box-primary">
+        <div class="box box-warning">
           <div class="box-header with-border">
             <h3 class="box-title"><i class="fa fa-fw fa-user" aria-hidden="true"></i> Tambah Data Pegawai</h3>
           </div>

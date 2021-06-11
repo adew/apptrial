@@ -4,8 +4,9 @@
 <head>
     <meta charset='utf-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel="shortcut icon" href="<?php echo base_url() ?>favicon.ico" type="image/x-icon">
-    <title>DILMIL III-18 AMBON</title>
+    <!-- <link rel="shortcut icon" href="<?php echo base_url() ?>favicon.ico" type="image/x-icon"> -->
+    <link rel="icon" type="image/png" sizes="300x300" href="<?php echo base_url() ?>favicon-96x96.png">
+    <title>Pattimura</title>
     <link href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css' rel='stylesheet'>
     <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css' rel='stylesheet'>
     <style>
@@ -14,7 +15,8 @@
             overflow-x: hidden;
             height: 100%;
             background-color: #B0BEC5;
-            background-repeat: no-repeat
+            background-repeat: no-repeat;
+
         }
 
         .card0 {
@@ -34,8 +36,8 @@
         }
 
         .image {
-            width: 360px;
-            height: 280px
+            width: 450px;
+            height: 348px
         }
 
         .border-line {
@@ -161,6 +163,11 @@
             /* height: 50px; */
         }
 
+        #header-text {
+            color: #e0b916;
+            text-shadow: 3px 2px 2px #000000;
+        }
+
         @media screen and (max-width: 991px) {
             .logo {
                 margin-left: 0px
@@ -181,10 +188,9 @@
             }
         }
     </style>
-    <!-- <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
-    <script type='text/javascript'
-        src='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js'></script>
-    <script type='text/javascript'></script> -->
+    <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+    <script type='text/javascript' src='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js'></script>
+    <script type='text/javascript'></script>
 </head>
 
 <!-- <body oncontextmenu='return false' class='snippet-body'> -->
@@ -199,20 +205,21 @@
                     <!-- <img src="https://i.imgur.com/CXQmsmF.png" class="logo"> -->
                     <!-- </div> -->
                     <div class="col-md-12 text-center">
-                        <h2>PEMUSATAN DATA INFORMASI MONITORING CUTI DAN KINERJA</h2>
-                        <h4>PENGADILAN MILITER III-18 AMBON </h4>
+                        <h2 id="header-text"><b>PEMUSATAN DATA INFORMASI MONITORING CUTI DAN KINERJA</b></h2>
+                        <h4><b>PENGADILAN MILITER III-18 AMBON </b></h4>
 
                     </div>
                 </div>
             </div>
-            <div class="row d-flex">
+            <div class="">
                 <?php if ($this->session->flashdata('msg')) { ?>
                     <div class="alert alert-warning alert-dismissible text-center">
                         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                         <strong>Warning!</strong><br> <?php echo $this->session->flashdata('msg'); ?>
                     </div>
                 <?php } ?>
-
+            </div>
+            <div class="row" style="background-image: url('<?php echo base_url(); ?>/dist/img/background1.jpg'); min-height: 100%;">
                 <div class="col-lg-6">
                     <div class="card1 pb-5">
                         <!-- <div class="row">
@@ -225,7 +232,7 @@
 
                             </div>
                         </div> -->
-                        <div class="row px-3 justify-content-center mt-4 mb-5 border-line"> <img src="<?= base_url() ?>/dist/img/logo1.png" class="image"> </div>
+                        <div class="row px-3 justify-content-center mt-4 mb-5"> <img src="<?= base_url() ?>/dist/img/logo1.png" class="image"> </div>
                     </div>
                 </div>
                 <div class="col-lg-6">
@@ -262,9 +269,9 @@
                 </div>
                 <!--col-lg-6 -->
             </div>
-            <div class="bg-blue py-2">
+            <div class="bg-blue py-2 fixed-bottom">
                 <div class="row px-3" style="height:55px">
-                    <small class="ml-sm-5 mt-3">Copyright &copy; <?php echo date('Y'); ?>. Agent Of Change.</small>
+                    <small class="ml-sm-5 mt-3">Copyright &copy; <?php echo date('Y'); ?>.<b> Agent Of Change</b>.</small>
                     <!-- <div class="social-contact ml-4 ml-sm-auto"> <span class="fa fa-facebook mr-4 text-sm"></span> <span
                             class="fa fa-google-plus mr-4 text-sm"></span> <span
                             class="fa fa-linkedin mr-4 text-sm"></span> <span

@@ -66,11 +66,11 @@
                     Nama
                   </th>
                   <th>
-                    Dari Tanggal
+                    Waktu Pelaksanaan
                   </th>
-                  <th>
+                  <!-- <th>
                     Sampai Tanggal
-                  </th>
+                  </th> -->
                   <th>
                     Lama Cuti
                   </th>
@@ -83,35 +83,56 @@
                   <th>
                     Status
                   </th>
-                  <th>
-                    <!-- Tools -->
-                  </th>
+                  <!-- <th>
+                 Tools 
+                  </th>-->
                 </tr>
               </thead>
               <tbody>
                 <?php foreach ($list_data as $list => $value) : ?>
                   <tr>
                     <td><?= $list + 1 ?></td>
-                    <td><a href="#" onclick="detail_cuti('<?= base_url() . 'cuti/get_data/' . $value->id ?>')"><?= $value->creat_at ?></a></td>
-                    <td><?= $value->nama ?></td>
-                    <td><?= $value->tgl_awal ?></td>
-                    <td><?= $value->tgl_akhir ?></td>
+                    <td><?= $value->creat_at ?></td>
+                    <td><a style="background-color: #bbff00;" href="#" onclick="detail_cuti('<?= base_url() . 'cuti/get_data/' . $value->id ?>','<?= $this->session->userdata('nip') ?>')"><?= $value->nama ?></a></td>
+                    <td><?= $value->tgl_awal . ' s/d ' . $value->tgl_akhir ?></td>
+                    <!-- <td><?= $value->tgl_akhir ?></td> -->
                     <td><?= $value->lama_cuti ?>&nbsp;Hari</td>
-                    <td><?= $value->jenis_cuti ?></td>
+                    <?php switch ($value->jenis_cuti) {
+                      case 'cuti_tahunan':
+                        $j_cuti = 'Cuti Tahunan';
+                        break;
+                      case 'cuti_besar':
+                        $j_cuti = 'Cuti Besar';
+                        break;
+                      case 'cuti_sakit':
+                        $j_cuti = 'Cuti Sakit';
+                        break;
+                      case 'cuti_lahir':
+                        $j_cuti = 'Cuti Lahir';
+                        break;
+                      case 'cuti_alpen':
+                        $j_cuti = 'Cuti Alasan Penting';
+                        break;
+                      case 'cuti_dtn':
+                        $j_cuti = 'Cuti Diluar Tanggunggan Negara';
+                        break;
+                    } ?>
+                    <td><?= $j_cuti ?></td>
                     <td><?= $value->keterangan ?></td>
-                    <?php if ($value->status_cuti == 0) {
+                    <?php if ($value->status_al == 0 || $value->status_pb == 0) {
                       $status_cuti = '<span class="label label-warning">Menunggu</span>';
-                    } elseif ($value->status_cuti == 1) {
-                      $status_cuti = '<span class="label label-success">Disetujui</span>';
+                    } elseif ($value->status_al != 0 && $value->status_pb == 1) {
+                      $status_cuti = '<span class="label label-success">Disetujui</span>&nbsp;';
+                      $status_cuti .= '<a href="' . base_url() . 'cuti/exportword/' . $value->id . '" class="label label-default export-word"><i class="fa fa-download"></i> Export</a>';
                     } else {
                       $status_cuti = '<span class="label label-danger">Ditolak</span>';
                     } ?>
                     <td><?= $status_cuti ?></td>
 
-                    <td style="display:inline-flex;">
+                    <!-- <td style="display:inline-flex;">
                       <a style="margin-right: 5px;" href="<?= base_url('cuti/cutiditolak/' . $value->id) ?>" type="button" class="btn btn-xs btn-danger btn-reject" name="btn_delete"><i class="fa fa-times-circle"></i>Ditolak</a>
                       <a href="<?= base_url('cuti/cutidisetujui/' . $value->id) ?>" class="btn btn-xs btn-success btn-accept"><span class="fa fa-check-circle"></span>Disetujui</a>
-                    </td>
+                    </td> -->
                   </tr>
                 <?php endforeach; ?>
 
@@ -126,7 +147,7 @@
   </section><!-- /.content -->
 </div><!-- /.content-wrapper -->
 
-<div id="detail-cuti" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<div id="detail-cuti" data-id="" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
@@ -145,7 +166,7 @@
               <td class=" orange">NIP</td>
               <td>
                 <div class="form-group">
-                  <label id="dc1" class="col-sm-5 control-label"></label>
+                  <label id="dc1" class="col-sm-8 control-label"></label>
                   <div class="col-sm-6">
                   </div>
                 </div>
@@ -155,7 +176,7 @@
               <td class="orange">Nama Pegawai </td>
               <td>
                 <div class="form-group">
-                  <label id="dc2" class="col-sm-5 control-label"></label>
+                  <label id="dc2" class="col-sm-8 control-label"></label>
                   <div class="col-sm-6">
                   </div>
                 </div>
@@ -165,7 +186,7 @@
               <td class="orange">Jabatan</td>
               <td>
                 <div class="form-group">
-                  <label id="dc3" class="col-sm-5 control-label"></label>
+                  <label id="dc3" class="col-sm-8 control-label"></label>
                   <div class="col-sm-6">
                   </div>
                 </div>
@@ -175,9 +196,9 @@
               <td class="orange">Unit Kerja</td>
               <td>
                 <div class="form-group">
-                  <label id="dc4" class="col-sm-5 control-label"></label>
-                  <div class="col-sm-6">
-                  </div>
+                  <label id="dc4" class="col-sm-8 control-label"></label>
+                  <!-- <div class="col-sm-6">
+                  </div> -->
                 </div>
               </td>
             </tr>
@@ -185,7 +206,7 @@
               <td class="orange">Masa Kerja</td>
               <td>
                 <div class="form-group">
-                  <label id="dc5" class="col-sm-5 control-label"></label>
+                  <label id="dc5" class="col-sm-8 control-label"></label>
                   <div class="col-sm-6">
                   </div>
                 </div>
@@ -195,17 +216,17 @@
               <td class="orange">Nomor HP </td>
               <td>
                 <div class="form-group">
-                  <label id="dc6" class="col-sm-5 control-label"></label>
+                  <label id="dc6" class="col-sm-8 control-label"></label>
                   <div class="col-sm-6">
                   </div>
                 </div>
               </td>
             </tr>
             <tr>
-              <td class="orange">Tanggal Awal Cuti</td>
+              <td class="orange">Waktu Cuti</td>
               <td>
                 <div class="form-group">
-                  <label id="dc7" class="col-sm-5 control-label"></label>
+                  <label id="dc7" class="col-sm-8 control-label"></label>
                   <div class="col-sm-6">
                   </div>
                 </div>
@@ -215,7 +236,7 @@
               <td class="orange">Tanggal Akhir Cuti</td>
               <td>
                 <div class="form-group">
-                  <label id="dc8" class="col-sm-5 control-label"></label>
+                  <label id="dc8" class="col-sm-8 control-label"></label>
                   <div class="col-sm-6">
                   </div>
                 </div>
@@ -225,7 +246,7 @@
               <td class="orange">Jenis Cuti</td>
               <td>
                 <div class="form-group">
-                  <label id="dc9" class="col-sm-5 control-label"></label>
+                  <label id="dc9" class="col-sm-8 control-label"></label>
                   <div class="col-sm-6">
                   </div>
                 </div>
@@ -235,7 +256,7 @@
               <td class="orange">Alasan Cuti</td>
               <td>
                 <div class="form-group">
-                  <label id="dc10" class="col-sm-5 control-label"></label>
+                  <label id="dc10" class="col-sm-8 control-label"></label>
                   <div class="col-sm-6">
                   </div>
                 </div>
@@ -245,7 +266,7 @@
               <td class="orange">Lama Cuti</td>
               <td>
                 <div class="form-group">
-                  <label id="dc11" class="col-sm-5 control-label">
+                  <label id="dc11" class="col-sm-8 control-label">
                   </label>
                   <div class="col-sm-6">
                   </div>
@@ -257,9 +278,9 @@
               <td>
                 <div class="form-group" style="color:blue">
                   <label id="dc13" class="col-sm-6 control-label"></label>
-                  <div class="col-sm-6">
-                    <a style="margin-right: 5px;" href="<?= base_url('cuti/cutiditolak/' . $value->id) ?>" type="button" class="btn btn-sm btn-danger btn-reject" name="btn_delete"><i class="fa fa-times-circle"></i>Ditolak</a>
-                    <a href="<?= base_url('cuti/cutidisetujui/' . $value->id) ?>" class="btn btn-sm btn-success btn-accept"><span class="fa fa-check-circle"></span>Disetujui</a>
+                  <div id="approve_al" class="col-sm-6">
+                    <a id="approve_al1" style="margin-right: 5px;" href="<?= base_url('cuti/cutiditolak/al') ?>" type="button" class="btn btn-sm btn-danger btn-reject" name="btn_delete"><i class="fa fa-times-circle"></i>Ditolak</a>
+                    <a id="approve_al2" href="<?= base_url('cuti/cutidisetujui/al') ?>" class="btn btn-sm btn-success btn-accept"><span class="fa fa-check-circle"></span>Disetujui</a>
                   </div>
                 </div>
               </td>
@@ -269,10 +290,13 @@
               <td>
                 <div class="form-group" style="color:blue">
                   <label id="dc14" class="col-sm-6 control-label"></label>
-                  <div class="col-sm-6">
-                    <a style="margin-right: 5px;" href="<?= base_url('cuti/cutiditolak/' . $value->id) ?>" type="button" class="btn btn-sm btn-danger btn-reject" name="btn_delete"><i class="fa fa-times-circle"></i>Ditolak</a>
-                    <a href="<?= base_url('cuti/cutidisetujui/' . $value->id) ?>" class="btn btn-sm btn-success btn-accept"><span class="fa fa-check-circle"></span>Disetujui</a>
+                  <div id="approve_pb" class="col-sm-6">
+                    <a id="approve_pb1" style="margin-right: 5px;" href="<?= base_url('cuti/cutiditolak/pb') ?>" type="button" class="btn btn-sm btn-danger btn-reject"><i class="fa fa-times-circle"></i>Ditolak</a>
+                    <a id="approve_pb2" href="<?= base_url('cuti/cutidisetujui/pb') ?>" class="btn btn-sm btn-success btn-accept"><span class="fa fa-check-circle"></span>Disetujui</a>
                   </div>
+                  <!-- <div id="status_pengajuanpb" class="col-sm-6">
+                    <label style="padding:8px;" class="label label-success"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbspPengajuan cuti diterima</label>'
+                  </div> -->
                 </div>
               </td>
             </tr>
@@ -280,7 +304,7 @@
               <td class="orange">Alamat Selama Menjalankan Cuti</td>
               <td>
                 <div class="form-group">
-                  <label id="dc12" class="col-sm-5 control-label"></label>
+                  <label id="dc12" class="col-sm-8 control-label"></label>
                   <div class="col-sm-6">
                   </div>
                 </div>
@@ -290,7 +314,7 @@
         </table>
       </div>
       <div class="modal-footer" style="padding:4px;">
-        <button type="button" class="btn btn-info btn-flat col-md-4 col-md-offset-4"><i class="fa fa-download"></i> Export to Word</button>
+        <!-- <a id="export-word" href="#" class="btn btn-info btn-flat col-md-4 col-md-offset-4" disabled><i class="fa fa-download"></i> Export to Word</a> -->
       </div>
     </div>
   </div>

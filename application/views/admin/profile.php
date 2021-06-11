@@ -87,14 +87,14 @@
                   <label for="new_password" class="col-sm-2 control-label">Password Baru</label>
 
                   <div class="col-sm-6">
-                    <input type="password" name="new_password" class="form-control" id="new_password" placeholder="New Password">
+                    <input type="password" name="new_password" class="form-control" id="new_password" placeholder="New Password" required>
                   </div>
                 </div>
                 <div class="form-group">
                   <label for="confirm_new_password" class="col-sm-2 control-label">Konrirmasi Password Baru</label>
 
                   <div class="col-sm-6">
-                    <input type="password" name="confirm_new_password" class="form-control" id="confirm_new_password" placeholder="Confirm New Password">
+                    <input type="password" name="confirm_new_password" class="form-control" id="confirm_new_password" placeholder="Confirm New Password" required>
                   </div>
                 </div>
                 <?php if (isset($token_generate)) { ?>
@@ -105,7 +105,7 @@
 
                 <div class="form-group">
                   <div class="col-sm-offset-2 col-sm-6">
-                    <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-save"></i>Simpan </button>
+                    <button type="submit" class="btn btn-sm btn-primary">Simpan </button>
                   </div>
                 </div>
               </form>

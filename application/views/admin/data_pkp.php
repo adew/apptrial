@@ -76,7 +76,7 @@
 
                       <!-- <td><?= $list + 1 ?></td> -->
                       <td><?= $value->bulan ?></td>
-                      <td><a href="<?= base_url('uploads/') . $value->file_pkp ?>"><b><?= $value->file_pkp ?></b></a></td>
+                      <td><a style="background-color: #bbff00;" href="<?= base_url('uploads/') . $value->file_pkp ?>"><b><?= $value->file_pkp ?></b></a></td>
                       <td><?= $value->skor ?></td>
                       <td><?= $value->creat_at ?></td>
                       <td>
@@ -85,7 +85,6 @@
                     </tr>
                 <?php endforeach;
                 } ?>
-
               </tbody>
             </table>
           </div><!-- /.box-body -->

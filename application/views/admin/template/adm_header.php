@@ -5,8 +5,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title><?= $title ?></title>
-  <link rel="shortcut icon" href="<?php echo base_url() ?>favicon.ico" type="image/x-icon">
-  <!-- <link rel="icon" href="/favicon.ico" type="image/x-icon"> -->
+  <!-- <link rel="shortcut icon" href="<?php echo base_url() ?>favicon.ico" type="image/x-icon"> -->
+  <link rel="icon" type="image/png" sizes="240x240" href="<?php echo base_url() ?>favicon-96x96.png">
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->

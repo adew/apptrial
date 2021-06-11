@@ -43,7 +43,12 @@
       </li>
       <li class="nav-item">
         <a href="<?php echo base_url('cuti/datacuti') ?>">
-          <i class="fa fa-database" aria-hidden="true"></i> <span>Data Cuti</span></a>
+          <i class="fa fa-database" aria-hidden="true"></i>
+          <span>Data Cuti</span>
+          <span class="pull-right-container" id="notif_cuti">
+            <span class="label bg-red pull-right"></span>
+          </span>
+        </a>
       </li>
       <li class="nav-item">
         <a href="<?php echo base_url('cuti/inputdatacuti') ?>">
@@ -51,9 +56,13 @@
       </li>
       <?php if ($this->session->userdata('role') == 1) { ?>
         <li class="nav-item">
+          <a href="<?php echo base_url('cuti/inputjatahcuti') ?>">
+            <i class="fa fa-calendar-minus-o" aria-hidden="true"></i> <span>Jatah Cuti</span></a>
+        </li>
+        <!-- <li class="nav-item">
           <a href="<?php echo base_url('cuti/variabelcuti') ?>">
             <i class="fa fa-circle-o-notch" aria-hidden="true"></i> <span>Jenis Cuti</span></a>
-        </li>
+        </li> -->
       <?php } ?>
       <li class="header">MANAJEMEN USER</li>
       <li class="nav-item">

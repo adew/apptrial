@@ -1,3 +1,9 @@
+<style>
+  .bhead {
+    font-weight: bold;
+    font-style: italic;
+  }
+</style>
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
   <section class="content-header">
@@ -22,12 +28,69 @@
         <div class="box box-warning">
           <div class="box-header">
             <i class="ion ion-clipboard"></i>
-            <h3 class="box-title">Cuti Pegawai Yang Habis / Kurang</h3>
+            <h3 class="box-title">Jatah Cuti Anda</h3>
             <div class="box-tools pull-right">
             </div>
           </div><!-- /.box-header -->
-          <div class="scroller box-body" style="height: 300px; overflow-y: scroll;">
-
+          <!-- <div class="scroller box-body" style="height: 300px; overflow-y: scroll;"> -->
+          <div class="scroller box-body">
+            <div class="col-xs-12 table-responsive">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>No</th>
+                    <th>Jenis Cuti</th>
+                    <th>Cuti Terpakai</th>
+                    <th>Jatah Cuti</th>
+                    <th>Sisa Cuti</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>1</td>
+                    <td class="bhead">Cuti Tahunan</td>
+                    <td>0</td>
+                    <td>12</td>
+                    <td>0</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td class="bhead">Cuti Besar</td>
+                    <td>0</td>
+                    <td>30</td>
+                    <td>0</td>
+                  </tr>
+                  <tr>
+                    <td>3</td>
+                    <td class="bhead">Cuti Sakit</td>
+                    <td>0</td>
+                    <td>14</td>
+                    <td>0</td>
+                  </tr>
+                  <tr>
+                    <td>4</td>
+                    <td class="bhead">Cuti Lahir</td>
+                    <td>0</td>
+                    <td>90</td>
+                    <td>0</td>
+                  </tr>
+                  <tr>
+                    <td>5</td>
+                    <td class="bhead">Cuti Alasan Penting</td>
+                    <td>0</td>
+                    <td>30</td>
+                    <td>0</td>
+                  </tr>
+                  <tr>
+                    <td>6</td>
+                    <td class="bhead">Cuti Diluar Tanggungan Negara</td>
+                    <td>0</td>
+                    <td>60</td>
+                    <td>0</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div><!-- /.box -->
 
       </section><!-- /.Left col -->
@@ -37,7 +100,7 @@
         <div class="box box-warning">
           <div class="box-header">
             <i class="ion ion-clipboard"></i>
-            <h3 class="box-title">Cuti Hari Ini</h3>
+            <h3 class="box-title">Riwayat Cuti</h3>
             <div class="box-tools pull-right">
 
             </div>
@@ -47,8 +110,8 @@
             <table id="example" class="table table-responsive table-hover table-bordered">
               <thead>
                 <tr>
-                  <th>NIP</th>
-                  <th>Nama</th>
+                  <th>Waktu Pelaksanaan</th>
+                  <th>Jenis Cuti</th>
                   <th>Jumlah Cuti </th>
                   <th>Keterangan </th>
                 </tr>
@@ -57,8 +120,8 @@
                 <?php foreach ($list_data as $value) : ?>
                   <tr>
                   <tr>
-                    <td><?= $value->nip ?></td>
-                    <td><?= $value->nama ?></td>
+                    <td><?= $value->tgl_awal . ' s/d ' . $value->tgl_akhir ?></td>
+                    <td><?= $value->jenis_cuti ?></td>
                     <td><?= $value->lama_cuti ?></td>
                     <td><?= $value->keterangan ?></td>
                   </tr>
@@ -78,6 +141,5 @@
 
       </section><!-- right col -->
     </div><!-- /.row (main row) -->
-
   </section><!-- /.content -->
 </div><!-- /.content-wrapper -->

@@ -2,7 +2,7 @@
   <div class="pull-right hidden-xs">
     <b>Version</b> 1.0.0
   </div>
-  <strong>Copyright &copy; <?= date('Y') ?>.</strong>
+  <span>Copyright &copy; <?= date('Y') ?>.<b> Agent Of Change</b>.</span>
 </footer>
 
 <!-- <div class="control-sidebar-bg"></div>
@@ -100,12 +100,33 @@
     return false;
   }
 
-  function detail_cuti(url) {
+  function detail_cuti(url, nip) {
     $.ajax({
       url: url,
       type: "POST",
       dataType: 'JSON',
       success: function(response) {
+        switch (response.data.jenis_cuti) {
+          case 'cuti_tahunan':
+            $j_cuti = 'Cuti Tahunan';
+            break;
+          case 'cuti_besar':
+            $j_cuti = 'Cuti Besar';
+            break;
+          case 'cuti_sakit':
+            $j_cuti = 'Cuti Sakit';
+            break;
+          case 'cuti_lahir':
+            $j_cuti = 'Cuti Lahir';
+            break;
+          case 'cuti_alpen':
+            $j_cuti = 'Cuti Alasan Penting';
+            break;
+          case 'cuti_dtn':
+            $j_cuti = 'Cuti Diluar Tanggunggan Negara';
+            break;
+        }
+
         $('#dc1').text(response.data.nip);
         $('#dc2').text(response.data.nama);
         $('#dc3').text(response.data.jabatan);
@@ -114,17 +135,53 @@
         $('#dc6').text(response.data.nomor_hp);
         $('#dc7').text(response.data.tgl_awal);
         $('#dc8').text(response.data.tgl_akhir);
-        $('#dc9').text(response.data.jenis_cuti);
+        $('#dc9').text($j_cuti);
         $('#dc10').text(response.data.keterangan);
         $('#dc11').text(response.data.lama_cuti + ' Hari');
         $('#dc12').text(response.data.alamat_cuti);
         $('#dc13').text(response.data.nama1);
         $('#dc14').text(response.data.nama2);
+        $('#detail-cuti').attr('data-id', response.data.id);
+
+        if (response.data.status_pb == 2) {
+          $('#approve_pb').html('');
+          $('#approve_pb').html('<label style="padding:8px;" class="label label-danger"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbspPengajuan cuti ditolak</label>');
+        } else if (response.data.status_pb == 1) {
+          $('#approve_pb').html('');
+          $('#approve_pb').html('<label style="padding:8px;" class="label label-success"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbspPengajuan cuti diterima</label>');
+        } else {
+          if (response.data.nip == nip) {
+            $('#approve_pb').html('');
+          } else {
+            $('#approve_pb').html('');
+            $('#approve_pb').html('<a id="approve_pb1" style="margin-right: 5px;" href="<?= base_url('cuti/cutiditolak/pb') ?>" type="button" class="btn btn-sm btn-danger btn-reject"><i class="fa fa-times-circle"></i>Ditolak</a><a id="approve_pb2" href="<?= base_url('cuti/cutidisetujui/pb') ?>" class="btn btn-sm btn-success btn-accept"><span class="fa fa-check-circle"></span>Disetujui</a>');
+          }
+        }
+        //======================
+        if (response.data.status_al == 2) {
+          $('#approve_al').html('');
+          $('#approve_al').html('<label style="padding:8px;" class="label label-danger"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbspPengajuan cuti ditolak</label>');
+        } else if (response.data.status_al == 1) {
+          $('#approve_al').html('');
+          $('#approve_al').html('<label style="padding:8px;" class="label label-success"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbspPengajuan cuti diterima</label>');
+        } else {
+          if (response.data.nip == nip) {
+            $('#approve_al').html('');
+          } else {
+            $('#approve_al').html('');
+            $('#approve_al').html('<a id="approve_al1" style="margin-right: 5px;" href="<?= base_url('cuti/cutiditolak/al') ?>" type="button" class="btn btn-sm btn-danger btn-reject" name="btn_delete"><i class="fa fa-times-circle"></i>Ditolak</a><a id="approve_al2" href="<?= base_url('cuti/cutidisetujui/al') ?>" class="btn btn-sm btn-success btn-accept"><span class="fa fa-check-circle"></span>Disetujui</a>');
+          }
+        }
+
         $('#detail-cuti').modal('show');
 
       }
     });
   }
+
+  $("#detail-cuti").on("hidden.bs.modal", function() {
+    location.reload();
+  });
 </script>
 
 
@@ -175,8 +232,10 @@
     return false;
   });
 
-  $('.btn-reject').on('click', function() {
-    var getLink = $(this).attr('href');
+  $(document).on("click", ".btn-reject", function(e) {
+    var getLink = $(this).attr('href') + '/' + $('#detail-cuti').attr('data-id');
+    // alert(getLink);
+    // return false;
     swal({
       title: '',
       text: 'Anda akan menolak pengajuan cuti?',
@@ -199,7 +258,14 @@
                 timer: 2000,
                 showConfirmButton: false
               }, function() {
-                window.location.reload();
+                swal.close()
+                if (response.pihak == "al") {
+                  $('#approve_al').html('');
+                  $('#approve_al').html('<label style="padding:8px;" class="label label-danger"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbspPengajuan cuti ditolak</label>');
+                } else {
+                  $('#approve_pb').html('');
+                  $('#approve_pb').html('<label style="padding:8px;" class="label label-danger"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbspPengajuan cuti ditolak</label>');
+                }
               });
             }, 300);
           }
@@ -209,8 +275,8 @@
     return false;
   });
 
-  $('.btn-accept').on('click', function() {
-    var getLink = $(this).attr('href');
+  $(document).on("click", ".btn-accept", function(e) {
+    var getLink = $(this).attr('href') + '/' + $('#detail-cuti').attr('data-id');
     swal({
       title: '',
       text: 'Anda akan menyetujui pengajuan cuti?',
@@ -233,7 +299,14 @@
                 timer: 2000,
                 showConfirmButton: false
               }, function() {
-                window.location.reload();
+                swal.close();
+                if (response.pihak == "al") {
+                  $('#approve_al').html('');
+                  $('#approve_al').html('<label style="padding:8px;" class="label label-success"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbspPengajuan cuti diterima</label>');
+                } else {
+                  $('#approve_pb').html('');
+                  $('#approve_pb').html('<label style="padding:8px;" class="label label-success"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbspPengajuan cuti diterima</label>');
+                }
               });
             }, 300);
           }
@@ -243,19 +316,30 @@
     return false;
   });
 
+  $(document).on("click", "#example .export-word", function(e) {
+    e.preventDefault;
+    // var getLink = './exportword/' + $(this).attr('data-id');
+    var getLink = $(this).attr('href');
+
+    location.href = getLink;
+  });
+
   $(function() {
     $(".select2").select2();
   });
 
   $("#tanggal_awal").datepicker({
-    dateFormat: 'dd-mm-yy',
+    // dateFormat: 'dd-mm-yy',
     autoclose: true,
     todayHighlight: true,
     orientation: "top",
   })
+  $("#tanggal_awal").datepicker({
+    dateFormat: 'mm-dd-yy'
+  });
 
   $("#tanggal_akhir").datepicker({
-    dateFormat: 'dd-mm-yy',
+    // dateFormat: 'dd-mm-yy',
     autoclose: true,
     todayHighlight: true,
     orientation: "top",
@@ -273,12 +357,44 @@
   //   }
   // });
   $(document).ready(function() {
+    $.ajax({
+      url: '<?= site_url("cuti/notif_cuti/") ?>',
+      dataType: 'JSON',
+      async: false,
+      contentType: "application/json; charset=utf-8",
+      success: function(response) {
+        // $('#notif_cuti').html(response.data.jumlah);
+        // alert(response.data.jumlah);
+        if (response.data.jumlah != 0) {
+          $('#notif_cuti').html('<span class="label bg-red pull-right">' + response.data.jumlah + '</span>');
+        }
+      }
+    });
+  });
+
+  $(document).ready(function() {
     $("li.nav-item a").on("click", function() {
       $(".nav-item.active").removeClass("active");
       $(this).parent().addClass("active");
     }).filter(function() {
       return window.location.href.indexOf($(this).attr('href').trim()) > -1;
     }).click();
+  });
+
+  // $('input#submitButton').click(function() {
+  $("#form1").submit(function(event) {
+    event.preventDefault();
+    var getLink = $(this).attr('action');
+ 
+    $.ajax({
+      url: getLink,
+      type: 'post',
+      dataType: 'json',
+      data: $('form#form1').serialize(),
+      success: function(data) {
+        alert(data.message)
+      }
+    });
   });
 </script>
 </body>

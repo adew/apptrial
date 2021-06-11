@@ -28,7 +28,7 @@ class User extends CI_Controller
     $data['avatar'] = $this->session->userdata('foto_profil');
     // $this->session->set_userdata($data);
 
-    $data['title'] = 'DILMIL III-18 Ambon';
+    $data['title'] = 'PATTIMURA';
     $this->load->view('admin/template/adm_header', $data);
     $this->load->view('admin/template/adm_navbar', $data);
     $this->load->view('admin/template/adm_sidebar', $data);

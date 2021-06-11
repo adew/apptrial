@@ -1,3 +1,12 @@
+<!-- <style>
+  header.main-header {
+    width: 100%;
+    position: -webkit-sticky;
+    position: s;
+    top: 0;
+  }
+</style> -->
+
 <body class="hold-transition skin-blue sidebar-mini">
   <div class="wrapper">
 

@@ -1,28 +1,30 @@
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
-  <!-- Content Header (Page header) -->
-  <section class="content-header">
-    <h1>
-      Tabel Pegawai
-    </h1>
-    <!-- <ol class="breadcrumb">
+  <div class="body-content">
+
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        Tabel Pegawai
+      </h1>
+      <!-- <ol class="breadcrumb">
       <li><a href="<?= base_url('admin') ?>"><i class="fa fa-dashboard"></i> Home</a></li>
       <li><a href="<?= base_url('admin/users') ?>" class="active">Pegawai</a></li>
     </ol> -->
-  </section>
+    </section>
 
-  <!-- Main content -->
-  <section class="content">
-    <div class="row">
-      <div class="col-xs-12">
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div class="col-xs-12">
 
-        <!-- /.box -->
-        <div class="box box-warning">
-          <div class="box-header">
-            <h3 class="box-title"><i class="ion-ios-people-outline step size-96" aria-hidden="true"></i> Pegawai</h3>
-          </div>
-          <!-- /.box-header -->
-          <div class="scroller box-body" style="overflow-y: scroll;">
+          <!-- /.box -->
+          <div class="box box-warning">
+            <div class="box-header">
+              <h3 class="box-title"><i class="ion-ios-people-outline step size-96" aria-hidden="true"></i> Pegawai</h3>
+            </div>
+            <!-- /.box-header -->
+            <!-- <div class="scroller box-body" style="overflow-y: scroll;"> -->
             <div class="box-body">
               <a href="<?= base_url('admin/form_user') ?>" style="margin-bottom:10px;" type="button" class="btn btn-sm btn-primary" name="tambah_data"><i class="fa fa-plus" aria-hidden="true"></i>Tambah</a>
               <table id="example1" class="table table-bordered table-striped">
@@ -46,7 +48,7 @@
                         <td><?= $dd->jabatan ?></td>
                         <td><?= $dd->unit_kerja ?></td>
                         <?php if ($dd->role == 1) { ?>
-                          <td>User Admin</td>
+                          <td style="color:red; font-weight:bold">Admin</td>
                         <?php } else { ?>
                           <td>User Biasa</td>
                         <?php } ?>
@@ -64,16 +66,16 @@
                 </tbody>
               </table>
             </div>
+            <!-- /.box-body -->
           </div>
-          <!-- /.box-body -->
+
+
+          <!-- /.col -->
         </div>
-
-
-        <!-- /.col -->
-      </div>
-      <!-- /.row -->
-  </section>
-  <!-- /.content -->
+        <!-- /.row -->
+    </section>
+    <!-- /.content -->
+  </div>
 </div>
 <!-- /.content-wrapper -->
 <footer class="main-footer">
@@ -118,6 +120,36 @@
         window.location.href = getLink
       });
       return false;
+    });
+
+    $.ajax({
+      url: '<?= site_url("cuti/notif_cuti/") ?>',
+      dataType: 'JSON',
+      async: false,
+      contentType: "application/json; charset=utf-8",
+      success: function(response) {
+        if (response.data.jumlah != 0) {
+          $('#notif_cuti').html('<span class="label bg-red pull-right">' + response.data.jumlah + '</span>');
+        }
+      }
+    });
+  });
+  $(function() {
+    // $("#example1").DataTable({
+    //   "responsive": true,
+    //   "lengthChange": false,
+    //   "autoWidth": false,
+    //   "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+    // }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+    $('#example1').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": true,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+      "pageLength": 6
     });
   });
 </script>

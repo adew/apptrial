@@ -52,10 +52,7 @@
                       <div class="form-group">
                         <label class="col-sm-3 control-label">Unit Kerja</label>
                         <div class="col-sm-6">
-                          <textarea style="align-content:center; overflow:auto;" name="unit_kerja" type="text" id="keterangan" class="form-control" readonly>
-                          <?= $this->session->userdata('unit_kerja') ?>
-                          </textarea>
-                          <!-- <input name="unit_kerja" type="text" style="height:50px;" id="kode" class="form-control" value="<?= $this->session->userdata('unit_kerja') ?>" autofocus="on" readonly /> -->
+                          <textarea name="unit_kerja" type="text" id="unit_kerja" class="form-control" readonly><?= $this->session->userdata('unit_kerja') ?></textarea>
                         </div>
                       </div>
                       <div class="form-group">
@@ -77,14 +74,14 @@
                         <label class="col-sm-3 control-label">Tanggal Mulai Cuti</label>
                         <div class="col-sm-6">
                           <?php echo form_error('tanggal_awal', '<p class="callout callout-warning" style=" role="alert">', '</p>'); ?>
-                          <input type='text' class="input-group date form-control" data-date="" data-date-format="yyyy-mm-dd" name='tanggal_awal' id="tanggal_awal" placeholder='Pilih tanggal mulai cuti' autocomplete='off' required='required' />
+                          <input type='text' class="input-group date form-control" data-date="" data-date-format="dd-mm-yyyy" name='tanggal_awal' id="tanggal_awal" placeholder='Pilih tanggal mulai cuti' autocomplete='off' required='required' />
                         </div>
                       </div>
                       <div class="form-group">
                         <label class="col-sm-3 control-label">Tanggal akhir Cuti</label>
                         <div class="col-sm-6">
                           <?php echo form_error('tanggal_akhir', '<p class="callout callout-warning" style=" role="alert">', '</p>'); ?>
-                          <input type='text' class="input-group date form-control" data-date="" data-date-format="yyyy-mm-dd" name='tanggal_akhir' id="tanggal_akhir" placeholder='Pilih tanggal akhir cuti' autocomplete='off' required='required' />
+                          <input type='text' class="input-group date form-control" data-date="" data-date-format="dd-mm-yyyy" name='tanggal_akhir' id="tanggal_akhir" placeholder='Pilih tanggal akhir cuti' autocomplete='off' required='required' />
                         </div>
                       </div>
                     </div>
@@ -94,10 +91,13 @@
                         <div class="col-sm-6">
                           <?php echo form_error('jenis_cuti', '<p class="callout callout-warning" style=" role="alert">', '</p>'); ?>
                           <select name="jenis_cuti" id="jenis_cuti" class="form-control select2" required>
-                            <!-- <option value=""> Pilih Jenis Cuti </option> -->
-                            <?php foreach ($jenis_cuti as $value) : ?>
-                              <option value="<?= $value->jenis_cuti ?>"> <?= $value->jenis_cuti; ?> </option>
-                            <?php endforeach; ?>
+                            <option value=""> Pilih Jenis Cuti </option>
+                            <option value="cuti_tahunan"> Cuti Tahunan </option>
+                            <option value="cuti_besar"> Cuti Besar </option>
+                            <option value="cuti_sakit">Cuti Sakit</option>
+                            <option value="cuti_lahir"> Cuti Melahirkan </option>
+                            <option value="cuti_alpen"> Cuti Karena Alasan Penting </option>
+                            <option value="cuti_dtn"> Cuti Di Luar Tanggungan Negara </option>
                           </select>
                         </div>
                       </div>
@@ -129,8 +129,9 @@
                         <label class="col-sm-3 control-label">Pertimbangan Atasan Langsung</label>
                         <div class="col-sm-6">
                           <?php echo form_error('atasan__langsung', '<p class="callout callout-warning" style=" role="alert">', '</p>'); ?>
-                          <select name="atasan_langsung" id="atasan_langsung" class="form-control select2" required>
+                          <select name="atasan_langsung" id="atasan_langsung" class="form-control select2">
                             <option value=""> Pilih Atasan Langsung </option>
+                            <!-- <option value="kosong">-</option> -->
                             <?php foreach ($data_user as $value) : ?>
                               <option value="<?= $value->nip ?>"> <?= $value->nama; ?> </option>
                             <?php endforeach; ?>
