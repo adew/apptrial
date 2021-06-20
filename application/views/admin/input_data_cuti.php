@@ -26,7 +26,7 @@
               <h3 class="box-title">Input Data Cuti</h3>
             </div><!-- /.box-header -->
             <div class="box-body">
-              <form class="form-horizontal style-form" action="<?= base_url('cuti/pengajuancuti') ?>" method="post" enctype="multipart/form-data" name="form1" id="form1">
+              <form class="form-horizontal style-form" action="<?= base_url('cuti/pengajuancuti') ?>" method="post" enctype="multipart/form-data" name="form2" id="form2">
                 <div class="row">
                   <div class="form-panel">
                     <div class="col-md-6">
@@ -34,13 +34,13 @@
                         <label class="col-sm-3 control-label">NIP</label>
                         <div class="col-sm-6">
                           <?php echo form_error('nip', '<p class="callout callout-warning" style=" role="alert">', '</p>'); ?>
-                          <input name="nip" type="text" id="kode" class="form-control" value="<?= $this->session->userdata('nip') ?>" autofocus="on" readonly />
+                          <input name="nip" type="text" class="form-control" value="<?= $this->session->userdata('nip') ?>" autofocus="on" readonly />
                         </div>
                       </div>
                       <div class="form-group">
                         <label class="col-sm-3 control-label">Nama Pegawai</label>
                         <div class="col-sm-6">
-                          <input name="nama" type="text" id="kode" class="form-control" value="<?= $this->session->userdata('nama') ?>" autofocus="on" readonly />
+                          <input name="nama" type="text" class="form-control" value="<?= $this->session->userdata('nama') ?>" autofocus="on" readonly />
                         </div>
                       </div>
                       <div class="form-group">
@@ -59,7 +59,7 @@
                         <label class="col-sm-3 control-label">Masa Kerja</label>
                         <div class="col-sm-2">
                           <?php echo form_error('masa_kera', '<p class="callout callout-warning" style=" role="alert">', '</p>'); ?>
-                          <input name="masa_kerja" type="text" id="kode" class="form-control" value="" autofocus="on" placeholder="" />
+                          <input name="masa_kerja" type="text" class="form-control" value="" autofocus="on" placeholder="" />
                         </div>
                         <label class="col-sm-4 control-label" style="text-align:left !important; font-weight: normal !important; padding-left: 0px;">tahun</label>
                       </div>

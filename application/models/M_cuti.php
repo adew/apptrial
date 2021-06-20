@@ -22,7 +22,7 @@ class M_cuti extends CI_Model
 
   public function count_cuti_nip($id)
   {
-    $query = $this->db->query('select count(*) as jumlah from tb_pengajuan_cuti WHERE (atasan_langsung="' . $id . '" AND status_al=0) OR (pejabat_berwenang="' . $id . '" AND status_pb=0)');
+    $query = $this->db->query('select count(*) as jumlah from tb_pengajuan_cuti WHERE (atasan_langsung="' . $id . '" AND status_al=0) OR (pejabat_berwenang="' . $id . '" AND status_pb=0 AND status_al !=0)');
     return $query->row();
   }
 
@@ -43,7 +43,7 @@ class M_cuti extends CI_Model
     //   $where = 'WHERE i.nip =' . $nip . ' OR (atasan_langsung="' . $nip . '" OR pejabat_berwenang="' . $nip . '")';
     // }
 
-    $where = 'WHERE i.nip =' . $nip . ' OR (atasan_langsung="' . $nip . '" OR pejabat_berwenang="' . $nip . '")';
+    $where = 'WHERE i.nip =' . $nip . ' OR (atasan_langsung="' . $nip . '" AND status_al=0) OR (pejabat_berwenang="' . $nip . '" AND status_pb=0 AND status_al !=0)';
 
     $query = $this->db->query("select i.*,a.jabatan,a.unit_kerja, b.nama as nama1, c.nama as nama2
     from tb_pengajuan_cuti i
@@ -75,13 +75,13 @@ class M_cuti extends CI_Model
     return $query->row_array();
   }
 
-  public function get_data_array($tabel, $id_transaksi)
+  public function get_data_array($tabel, $id)
   {
     $query = $this->db->select()
       ->from($tabel)
-      ->where($id_transaksi)
+      ->where($id)
       ->get();
-    return $query->result_array();
+    return $query->row();
   }
 
   public function get_data($tabel, $id_transaksi)
@@ -135,10 +135,11 @@ class M_cuti extends CI_Model
     return $query->result();
   }
 
-  public function numrows($tabel)
+  public function numrows($tabel, $id)
   {
     $query = $this->db->select()
       ->from($tabel)
+      ->where($id)
       ->get();
     return $query->num_rows();
   }

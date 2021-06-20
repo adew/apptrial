@@ -34,8 +34,8 @@
                         <label class="col-sm-4 control-label">Nama Pegawai</label>
                         <div class="col-sm-3">
                           <?php echo form_error('nip', '<p style="color:red;">', '</p>'); ?>
-                          <select name="nip" id="nip" class="form-control select2">
-                            <option value=""> Pilih Pegawai </option>
+                          <select name="nip" id="nipjc" class="form-control select2">
+                            <option value="0"> Pilih Pegawai </option>
                             <!-- <option value="kosong">-</option> -->
                             <?php foreach ($data_user as $value) : ?>
                               <option value="<?= $value->nip ?>"> <?= $value->nama; ?> </option>
@@ -47,8 +47,8 @@
                         <label class="col-sm-4 control-label">Tahun</label>
                         <div class="col-sm-3">
                           <?php echo form_error('tahun', '<p style="color:red;">', '</p>'); ?>
-                          <select name="tahun" id="tahun" class="form-control select2">
-                            <option value="">Pilih Tahun </option>
+                          <select name="tahun" id="tahunjc" class="form-control select2">
+                            <!-- <option value="0">Pilih Tahun </option> -->
                             <!-- <option value="kosong">-</option> -->
                             <?php for ($i = date('Y'); $i >= date('Y') - 3; $i--) { ?>
                               <option value="<?= $i ?>"> <?= $i ?> </option>
@@ -60,96 +60,96 @@
                         <label class="col-sm-4 control-label">Cuti Tahunan Terpakai</label>
                         <div class="col-sm-1">
                           <?php echo form_error('cuti_tahunan_pakai', '<p style="color:red;">', '</p>'); ?>
-                          <input name="cuti_tahunan_pakai" type="text" class="form-control" value="0" autofocus="on" placeholder="" />
+                          <input id="cuti_tahunan_pakai" name="cuti_tahunan_pakai" type="text" class="form-control" value="0" autofocus="on" placeholder="" readonly />
                         </div>
                         <label class="col-sm-1 control-label">Jatah Cuti</label>
                         <div class="col-sm-1">
                           <?php echo form_error('cuti_tahunan_kuota', '<p style="color:red;">', '</p>'); ?>
-                          <input name="cuti_tahunan_kuota" type="text" class="form-control" value="12" autofocus="on" placeholder="" />
+                          <input id="cuti_tahunan_kuota" name="cuti_tahunan_kuota" type="text" class="form-control" value="12" autofocus="on" placeholder="" />
                         </div>
                         <label class="col-sm-1 control-label">Sisa</label>
                         <div class="col-sm-1">
-                          <input name="" type="text" class="form-control" value="0" autofocus="on" placeholder="" />
+                          <input id="cuti_tahunan_sisa" type="text" class="form-control" value="0" autofocus="on" placeholder="" readonly />
                         </div>
                       </div>
                       <div class="form-group">
                         <label class="col-sm-4 control-label">Cuti Besar Terpakai</label>
                         <div class="col-sm-1">
                           <?php echo form_error('cuti_besar_pakai', '<p style="color:red;">', '</p>'); ?>
-                          <input name="cuti_besar_pakai" type="text" class="form-control" value="0" autofocus="on" placeholder="" />
+                          <input id="cuti_besar_pakai" name="cuti_besar_pakai" type="text" class="form-control" value="0" autofocus="on" placeholder="" readonly />
                         </div>
                         <label class="col-sm-1 control-label">Jatah Cuti</label>
                         <div class="col-sm-1">
                           <?php echo form_error('cuti_besar_kuota', '<p style="color:red;">', '</p>'); ?>
-                          <input name="cuti_besar_kuota" type="text" class="form-control" value="90" autofocus="on" placeholder="" />
+                          <input id="cuti_besar_kuota" name="cuti_besar_kuota" type="text" class="form-control" value="90" autofocus="on" placeholder="" />
                         </div>
                         <label class="col-sm-1 control-label">Sisa</label>
                         <div class="col-sm-1">
-                          <input name="" type="text" class="form-control" value="0" autofocus="on" placeholder="" />
+                          <input id="cuti_besar_sisa" type="text" class="form-control" value="0" autofocus="on" placeholder="" readonly />
                         </div>
                       </div>
                       <div class="form-group">
                         <label class="col-sm-4 control-label">Cuti Sakit Terpakai</label>
                         <div class="col-sm-1">
                           <?php echo form_error('cuti_sakit_pakai', '<p style="color:red;">', '</p>'); ?>
-                          <input name="cuti_sakit_pakai" type="text" class="form-control" value="0" autofocus="on" placeholder="" />
+                          <input id="cuti_sakit_pakai" name="cuti_sakit_pakai" type="text" class="form-control" value="0" autofocus="on" placeholder="" readonly />
                         </div>
                         <label class="col-sm-1 control-label">Jatah Cuti</label>
                         <div class="col-sm-1">
                           <?php echo form_error('cuti_sakit_kuota', '<p style="color:red;">', '</p>'); ?>
-                          <input name="cuti_sakit_kuota" type="text" class="form-control" value="14" autofocus="on" placeholder="" />
+                          <input id="cuti_sakit_kuota" name="cuti_sakit_kuota" type="text" class="form-control" value="14" autofocus="on" placeholder="" />
                         </div>
                         <label class="col-sm-1 control-label">Sisa</label>
                         <div class="col-sm-1">
-                          <input name="" type="text" class="form-control" value="0" autofocus="on" placeholder="" />
+                          <input id="cuti_sakit_sisa" type="text" class="form-control" value="0" autofocus="on" placeholder="" readonly />
                         </div>
                       </div>
                       <div class="form-group">
                         <label class="col-sm-4 control-label">Cuti Lahiran Terpakai</label>
                         <div class="col-sm-1">
                           <?php echo form_error('cuti_lahir_pakai', '<p style="color:red;">', '</p>'); ?>
-                          <input name="cuti_lahir_pakai" type="text" class="form-control" value="0" autofocus="on" placeholder="" />
+                          <input id="cuti_lahir_pakai" name="cuti_lahir_pakai" type="text" class="form-control" value="0" autofocus="on" placeholder="" readonly />
                         </div>
                         <label class="col-sm-1 control-label">Jatah Cuti</label>
                         <div class="col-sm-1">
                           <?php echo form_error('cuti_lahir_kuota', '<p style="color:red;">', '</p>'); ?>
-                          <input name="cuti_lahir_kuota" type="text" class="form-control" value="90" autofocus="on" placeholder="" />
+                          <input id="cuti_lahir_kuota" name="cuti_lahir_kuota" type="text" class="form-control" value="90" autofocus="on" placeholder="" />
                         </div>
                         <label class="col-sm-1 control-label">Sisa</label>
                         <div class="col-sm-1">
-                          <input name="" type="text" class="form-control" value="0" autofocus="on" placeholder="" />
+                          <input id="cuti_lahir_sisa" type="text" class="form-control" value="0" autofocus="on" placeholder="" readonly />
                         </div>
                       </div>
                       <div class="form-group">
                         <label class="col-sm-4 control-label">Cuti Alasan Penting Terpakai</label>
                         <div class="col-sm-1">
                           <?php echo form_error('cuti_alpen_pakai', '<p style="color:red;">', '</p>'); ?>
-                          <input name="cuti_alpen_pakai" type="text" class="form-control" value="0" autofocus="on" placeholder="" />
+                          <input id="cuti_alpen_pakai" name="cuti_alpen_pakai" type="text" class="form-control" value="0" autofocus="on" placeholder="" readonly />
                         </div>
                         <label class="col-sm-1 control-label">Jatah Cuti</label>
                         <div class="col-sm-1">
                           <?php echo form_error('cuti_alpen_kuota', '<p style="color:red;">', '</p>'); ?>
-                          <input name="cuti_alpen_kuota" type="text" class="form-control" value="30" autofocus="on" placeholder="" />
+                          <input id="cuti_alpen_kuota" name="cuti_alpen_kuota" type="text" class="form-control" value="30" autofocus="on" placeholder="" />
                         </div>
                         <label class="col-sm-1 control-label">Sisa</label>
                         <div class="col-sm-1">
-                          <input name="" type="text" class="form-control" value="0" autofocus="on" placeholder="" />
+                          <input id="cuti_alpen_sisa" type="text" class="form-control" value="0" autofocus="on" placeholder="" readonly />
                         </div>
                       </div>
                       <div class="form-group">
                         <label class="col-sm-4 control-label">Cuti Diluar Tanggungan Negara Terpakai</label>
                         <div class="col-sm-1">
                           <?php echo form_error('cuti_dtn_pakai', '<p style="color:red;">', '</p>'); ?>
-                          <input name="cuti_dtn_pakai" type="text" class="form-control" value="0" autofocus="on" placeholder="" />
+                          <input id="cuti_dtn_pakai" name="cuti_dtn_pakai" type="text" class="form-control" value="0" autofocus="on" placeholder="" readonly />
                         </div>
                         <label class="col-sm-1 control-label">Jatah Cuti</label>
                         <div class="col-sm-1">
                           <?php echo form_error('cuti_dtn_kuota', '<p style="color:red;">', '</p>'); ?>
-                          <input name="cuti_dtn_kuota" type="text" class="form-control" value="60" autofocus="on" placeholder="" />
+                          <input id="cuti_dtn_kuota" name="cuti_dtn_kuota" type="text" class="form-control" value="60" autofocus="on" placeholder="" />
                         </div>
                         <label class="col-sm-1 control-label">Sisa</label>
                         <div class="col-sm-1">
-                          <input name="" type="text" class="form-control" value="0" autofocus="on" placeholder="" />
+                          <input id="cuti_dtn_sisa" type="text" class="form-control" value="0" autofocus="on" placeholder="" readonly />
                         </div>
                       </div>
                       <div class="row">

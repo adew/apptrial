@@ -59,19 +59,24 @@ class Pkp extends CI_Controller
     $where = array('nip' => $id);
     $data_pkp = $this->M_admin->get_data_array('tb_pkp', $where);
     $json_data = array();
-    foreach ($data_pkp as $key => $rec) {
-      $json_array['label'] = date('Y') . '-' . $rec['bulan'];
-      $json_array['skor'] = (int)$rec['skor'];
-      $key++;
-      array_push($json_data, $json_array);
+    if (!empty($data_pkp)) {
+      foreach ($data_pkp as $key => $rec) {
+        $json_array['label'] = date('Y') . '-' . $rec['bulan'];
+        $json_array['skor'] = (int)$rec['skor'];
+        $key++;
+        array_push($json_data, $json_array);
+      }
+      for ($x = $key; $x <= 12; $x++) {
+        $json_array['label'] = date('Y') . '-' . $x;
+        $json_array['skor'] = 0;
+        $key++;
+        array_push($json_data, $json_array);
+      }
+      // echo json_encode($json_data);
+      echo json_encode(array('status' => true, 'data' => $json_data));
+    } else {
+      echo json_encode(array('status' => false));
     }
-    for ($x = $key; $x <= 12; $x++) {
-      $json_array['label'] = date('Y') . '-' . $x;
-      $json_array['skor'] = 0;
-      $key++;
-      array_push($json_data, $json_array);
-    }
-    echo json_encode($json_data);
   }
 
   public function datapkp()

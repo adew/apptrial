@@ -20,13 +20,46 @@ class Cuti extends CI_Controller
     }
   }
 
+  public function index()
+  {
+    if ($this->session->userdata('status') == 'login') {
+      $data['avatar'] = $this->session->userdata('foto_profil');
+      $nip = $this->session->userdata('nip');
+      // $now = date('d-m-Y');
+      // $jml = $this->M_cuti->get_data_array('tb_jatah_cuti', 'c_nip=' . $nip);
+      // print_r($jml->c_nip);
+      // die;
+
+      // print_r("SELECT * FROM tb_pengajuan_cuti WHERE tgl_awal <= '" . $now . "' AND tgl_akhir >= '" . $now . "'");
+      // $query = $this->db->query("SELECT * FROM tb_pengajuan_cuti WHERE creat_at LIKE '%" . $now . "%'");
+      $query = $this->db->query("SELECT * FROM tb_pengajuan_cuti WHERE nip=$nip");
+      $data['list_data'] = $query->result();
+
+      $data['jatah_cuti'] = $this->M_cuti->get_data_array('tb_jatah_cuti', 'c_nip=' . $nip);
+
+
+      // $where = "c_nip='" . $nip . "' AND c_tahun='2021'";
+      // $cek_row = $this->M_cuti->numrows('tb_jatah_cuti', $where);
+
+      $data['title'] = 'PATTIMURA';
+      $this->load->view('admin/template/adm_header', $data);
+      $this->load->view('admin/template/adm_navbar', $data);
+      $this->load->view('admin/template/adm_sidebar', $data);
+      $this->load->view('admin/monitoring_cuti', $data);
+      $this->load->view('admin/template/adm_footer', $data);
+    } else {
+      $this->load->view('login/login');
+    }
+  }
+
   public function exportword()
   {
     $id = $this->uri->segment(3);
     $phpWord = new \PhpOffice\PhpWord\PhpWord();
     $template = $phpWord->loadTemplate('./template.docx');
+    // print_r($template);
+    // die;
     $data = $this->M_cuti->get_export_word($id);
-
     $key_jenis_cuti = $data['jenis_cuti'];
 
     $data['cuti_tahunan'] = '-';
@@ -52,42 +85,28 @@ class Cuti extends CI_Controller
       $data['setuju_pb'] = '-';
       $data['tidak_setuju_pb'] = 'V';
     }
+    // print_r($data);
+    // die;
 
 
-    $temp_filename = 'Cuti-' . $data['nama'] . date('Y-m-d') . '.docx';
+    $filename = 'Cuti-' . $data['nama'] . date('d-m-Y') . '.docx';
     $template->setValues($data);
-    header("Content-Disposition: attachment; filename=$temp_filename");
-    // $template->saveAs($temp_filename);
-    $template->saveAs('php://output');
-    // unlink($temp_filename);
+
+
+    header('Content-Description: File Transfer');
+    header('Content-Disposition: attachment; filename="' . $filename . '"');
+    // header('Content-Type: ' . $mime[$format]);
+    header('Content-Transfer-Encoding: binary');
+    header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+    header('Expires: 0');
+    $filename = 'php://output'; // Change filename to force download
+    // $template->saveAs($filename, 'Word2007', true);
+    $template->saveAs($filename);
+    // unlink($filename);
     // exit;
+
   }
 
-  public function index()
-  {
-    if ($this->session->userdata('status') == 'login') {
-      $data['avatar'] = $this->session->userdata('foto_profil');
-      $now = date('d-m-Y');
-
-      // print_r($now);
-      // die;
-
-      // print_r("SELECT * FROM tb_pengajuan_cuti WHERE tgl_awal <= '" . $now . "' AND tgl_akhir >= '" . $now . "'");
-      $query = $this->db->query("SELECT * FROM tb_pengajuan_cuti WHERE creat_at LIKE '%" . $now . "%'");
-      // print_r("SELECT * FROM tb_pengajuan_cuti WHERE creat_at like '%" . $now . "'");
-
-      $data['list_data'] = $query->result();
-
-      $data['title'] = 'PATTIMURA';
-      $this->load->view('admin/template/adm_header', $data);
-      $this->load->view('admin/template/adm_navbar', $data);
-      $this->load->view('admin/template/adm_sidebar', $data);
-      $this->load->view('admin/monitoring_cuti', $data);
-      $this->load->view('admin/template/adm_footer', $data);
-    } else {
-      $this->load->view('login/login');
-    }
-  }
 
   public function datacuti()
   {
@@ -95,7 +114,7 @@ class Cuti extends CI_Controller
     $nip = $this->session->userdata('nip');
     $data['avatar'] = $this->session->userdata('foto_profil');
     $data['list_data'] = $this->M_cuti->list_data_cuti($nip, $role);
-    $data['notif_data'] = $this->M_cuti->count_cuti_nip($this->session->userdata('nip'));
+    // $data['notif_data'] = $this->M_cuti->count_cuti_nip($this->session->userdata('nip'));
     // print_r($data);
     // die;
     $data['title'] = 'PATTIMURA';
@@ -104,6 +123,21 @@ class Cuti extends CI_Controller
     $this->load->view('admin/template/adm_sidebar', $data);
     $this->load->view('admin/data_cuti', $data);
     $this->load->view('admin/template/adm_footer', $data);
+  }
+
+  public function load_jatah_cuti()
+  {
+    $nip = $this->uri->segment(3);
+    $tahun = $this->uri->segment(4);
+    // echo ($tahun);
+    // die;
+    $data = $this->M_cuti->get_data_array('tb_jatah_cuti', "c_nip='" . $nip . "' AND c_tahun='" . $tahun . "'");
+
+    if ($data) {
+      echo json_encode(array('status' => true, 'data' => $data));
+    } else {
+      echo json_encode(array('status' => false, 'data' => $data));
+    }
   }
 
   public function get_data()
@@ -169,7 +203,6 @@ class Cuti extends CI_Controller
 
       $this->session->set_flashdata('msg_gagal', 'Input Jatah Cuti Gagal');
 
-      // redirect(base_url('cuti/inputdatacuti'));
       $data['title'] = 'PATTIMURA';
       $this->load->view('admin/template/adm_header', $data);
       $this->load->view('admin/template/adm_navbar', $data);
@@ -193,7 +226,7 @@ class Cuti extends CI_Controller
       $cuti_dtn_pakai       = $this->input->post('cuti_dtn_pakai', TRUE);
       $cuti_dtn_kuota       = $this->input->post('cuti_dtn_kuota', TRUE);
 
-      $data = array(
+      $data_record = array(
         'c_nip'     => $nip,
         'c_tahun'     => $tahun,
         'c_tahunan_pakai'     => $cuti_tahunan_pakai,
@@ -211,16 +244,17 @@ class Cuti extends CI_Controller
         'creat_at'        => date('d-m-Y H:i:s'),
       );
 
-      $execute = $this->M_admin->insert('tb_jatah_cuti', $data);
-      print_r( $execute);
-      die;
-
-    
-        echo json_encode(array('status' => true, 'message' =>'Data berhasil disimpan'));
-      // }else{
-      //   echo json_encode(array('status' => false,  'message' =>'Data gagal disimpan'));
-      // }
-      // redirect(base_url('cuti/datacuti'));
+      $where = "c_nip='" . $nip . "' AND c_tahun='" . $tahun . "'";
+      $cek_row = $this->M_cuti->numrows('tb_jatah_cuti', $where);
+      if ($cek_row == 0) {
+        $this->M_admin->insert('tb_jatah_cuti', $data_record);
+      } else {
+        // echo 'update';
+        // die;
+        $where = array('c_nip' => $nip);
+        $this->M_admin->update('tb_jatah_cuti', $data_record, $where);
+      }
+      echo json_encode(array('status' => true, 'message' => 'Data berhasil disimpan'));
     }
   }
   //SALDO CUTI
@@ -282,21 +316,6 @@ class Cuti extends CI_Controller
       $atasan_langsung       = $this->input->post('atasan_langsung');
       $pejabat_berwenang       = $this->input->post('pejabat_berwenang', TRUE);
 
-      $id = $this->session->userdata('nip');
-      $cek_data = $this->M_cuti->sum_cuti_terpakai($id);
-      $cuti_terpakai = $cek_data[0]->jumlah;
-
-
-      if ((JATAH_CUTI - $cuti_terpakai) < $lama_cuti) {
-        $this->session->set_flashdata('msg_gagal', 'Maaf jumlah cuti yang anda ajukan melebihi sisa cuti anda saat ini');
-        redirect(base_url('cuti/inputdatacuti'));
-      }
-      $saldo_cuti = JATAH_CUTI -  $lama_cuti;
-      if ($cuti_terpakai == 0) {
-        $saldo_cuti = JATAH_CUTI -  $lama_cuti;
-      } else {
-        $saldo_cuti = JATAH_CUTI - ($cuti_terpakai + $lama_cuti);
-      }
 
       $data = array(
         'nip'     => $nip,
@@ -306,7 +325,7 @@ class Cuti extends CI_Controller
         'tgl_awal'     => $tanggal_awal,
         'tgl_akhir'     => $tanggal_akhir,
         'lama_cuti'     => $lama_cuti,
-        'saldo_cuti'     => $saldo_cuti,
+        // 'saldo_cuti'     => $saldo_cuti,
         'jenis_cuti'     => $jenis_cuti,
         'keterangan'        => $keterangan,
         'alamat_cuti'        => $alamat_cuti,
@@ -316,9 +335,7 @@ class Cuti extends CI_Controller
         'creat_at'        => date('d-m-Y H:i:s'),
       );
 
-      // print_r($data);
-      // die;
-      $execute = $this->M_admin->insert('tb_pengajuan_cuti', $data);
+      $this->M_admin->insert('tb_pengajuan_cuti', $data);
 
       $this->session->set_flashdata('msg_berhasil', 'Pengajuan Cuti Berhasil dikirim');
       redirect(base_url('cuti/datacuti'));
@@ -343,6 +360,7 @@ class Cuti extends CI_Controller
     echo json_encode(array('status' => true, 'pihak' => $pihak));
     // redirect(base_url('cuti/datacuti'));
   }
+
   public function cutidisetujui()
   {
     $id = $this->uri->segment(4);
@@ -359,6 +377,51 @@ class Cuti extends CI_Controller
       );
     }
     $this->M_admin->update('tb_pengajuan_cuti', $data, $where);
+
+    $query = $this->db->query("SELECT * FROM tb_pengajuan_cuti WHERE status_al=1 AND status_pb=1 AND id =$id");
+    $row = $query->row();
+    if (!empty($row)) {
+
+      //UPDATE DATA JATAH CUTI
+      $where = "c_nip='" . $row->nip . "' AND c_tahun='" . date('Y', strtotime($row->tgl_awal)) . "'";
+      $jml = $this->M_cuti->get_data_array('tb_jatah_cuti', $where);
+      switch ($row->jenis_cuti) {
+        case 'cuti_tahunan':
+          $data = array(
+            'c_tahunan_pakai'     => $jml->c_tahunan_pakai + $row->lama_cuti,
+          );
+          break;
+        case 'cuti_besar':
+          $data = array(
+            'c_besar_pakai'     => $jml->c_besar_pakai + $row->lama_cuti,
+          );
+          break;
+        case 'cuti_sakit':
+          $data = array(
+            'c_sakit_pakai'     => $jml->c_sakit_pakai + $row->lama_cuti,
+          );
+          break;
+        case 'cuti_lahir':
+          $data = array(
+            'c_lahir_pakai'     => $jml->c_lahir_pakai + $row->lama_cuti,
+          );
+          break;
+        case 'cuti_alpen':
+          $data = array(
+            'c_alpen_pakai'     => $jml->c_alpen_pakai + $row->lama_cuti,
+          );
+          break;
+        case 'cuti_dtn':
+          $data = array(
+            'c_dtn_pakai'     => $jml->c_dtn_pakai + $row->lama_cuti,
+          );
+          break;
+      }
+      $this->M_admin->update('tb_jatah_cuti', $data, $where);
+      //UPDATE DATA JATAH CUTI//
+
+    }
+
     echo json_encode(array('status' => true, 'pihak' => $pihak));
   }
 

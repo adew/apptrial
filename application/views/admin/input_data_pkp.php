@@ -64,8 +64,8 @@
                   <div class="form-group">
                     <label class="col-sm-2 col-sm-2 control-label"></label>
                     <div class="col-sm-8">
-                      <input type="submit" name="simpan" value="Simpan" class="btn btn-sm btn-primary" />&nbsp;
                       <a href="<?= base_url('pkp/datapkp') ?>" class="btn btn-sm btn-danger">Batal </a>
+                      <input type="submit" name="simpan" value="Simpan" class="btn btn-sm btn-primary" />&nbsp;
                     </div>
                   </div>
                 </form>

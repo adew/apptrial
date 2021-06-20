@@ -89,53 +89,57 @@
                 </tr>
               </thead>
               <tbody>
-                <?php foreach ($list_data as $list => $value) : ?>
-                  <tr>
-                    <td><?= $list + 1 ?></td>
-                    <td><?= $value->creat_at ?></td>
-                    <td><a style="background-color: #bbff00;" href="#" onclick="detail_cuti('<?= base_url() . 'cuti/get_data/' . $value->id ?>','<?= $this->session->userdata('nip') ?>')"><?= $value->nama ?></a></td>
-                    <td><?= $value->tgl_awal . ' s/d ' . $value->tgl_akhir ?></td>
-                    <!-- <td><?= $value->tgl_akhir ?></td> -->
-                    <td><?= $value->lama_cuti ?>&nbsp;Hari</td>
-                    <?php switch ($value->jenis_cuti) {
-                      case 'cuti_tahunan':
-                        $j_cuti = 'Cuti Tahunan';
-                        break;
-                      case 'cuti_besar':
-                        $j_cuti = 'Cuti Besar';
-                        break;
-                      case 'cuti_sakit':
-                        $j_cuti = 'Cuti Sakit';
-                        break;
-                      case 'cuti_lahir':
-                        $j_cuti = 'Cuti Lahir';
-                        break;
-                      case 'cuti_alpen':
-                        $j_cuti = 'Cuti Alasan Penting';
-                        break;
-                      case 'cuti_dtn':
-                        $j_cuti = 'Cuti Diluar Tanggunggan Negara';
-                        break;
-                    } ?>
-                    <td><?= $j_cuti ?></td>
-                    <td><?= $value->keterangan ?></td>
-                    <?php if ($value->status_al == 0 || $value->status_pb == 0) {
-                      $status_cuti = '<span class="label label-warning">Menunggu</span>';
-                    } elseif ($value->status_al != 0 && $value->status_pb == 1) {
-                      $status_cuti = '<span class="label label-success">Disetujui</span>&nbsp;';
-                      $status_cuti .= '<a href="' . base_url() . 'cuti/exportword/' . $value->id . '" class="label label-default export-word"><i class="fa fa-download"></i> Export</a>';
-                    } else {
-                      $status_cuti = '<span class="label label-danger">Ditolak</span>';
-                    } ?>
-                    <td><?= $status_cuti ?></td>
+                <?php if ($list_data != null) { ?>
+                  <?php foreach ($list_data as $list => $value) : ?>
+                    <tr>
+                      <td><?= $list + 1 ?></td>
+                      <td><?= $value->creat_at ?></td>
+                      <td><a style="background-color: #bbff00;" href="#" onclick="detail_cuti('<?= base_url() . 'cuti/get_data/' . $value->id ?>','<?= $this->session->userdata('nip') ?>')"><?= $value->nama ?></a></td>
+                      <td><?= $value->tgl_awal . ' <b> s/d </b> ' . $value->tgl_akhir ?></td>
+                      <!-- <td><?= $value->tgl_akhir ?></td> -->
+                      <td><?= $value->lama_cuti ?>&nbsp;Hari</td>
+                      <?php switch ($value->jenis_cuti) {
+                        case 'cuti_tahunan':
+                          $j_cuti = 'Cuti Tahunan';
+                          break;
+                        case 'cuti_besar':
+                          $j_cuti = 'Cuti Besar';
+                          break;
+                        case 'cuti_sakit':
+                          $j_cuti = 'Cuti Sakit';
+                          break;
+                        case 'cuti_lahir':
+                          $j_cuti = 'Cuti Lahir';
+                          break;
+                        case 'cuti_alpen':
+                          $j_cuti = 'Cuti Alasan Penting';
+                          break;
+                        case 'cuti_dtn':
+                          $j_cuti = 'Cuti Diluar Tanggunggan Negara';
+                          break;
+                      } ?>
+                      <td><?= $j_cuti ?></td>
+                      <td><?= $value->keterangan ?></td>
+                      <?php if ($value->status_al == 0 || $value->status_pb == 0) {
+                        $status_cuti = '<span class="label label-warning">Menunggu</span>';
+                      } elseif ($value->status_al == 1 && $value->status_pb == 1) {
+                        $status_cuti = '<span class="label label-success">Disetujui</span>&nbsp;';
+                        $status_cuti .= '<a href="' . base_url() . 'cuti/exportword/' . $value->id . '" class="label label-default export-word"><i class="fa fa-download"></i> Export</a>';
+                      } else {
+                        $status_cuti = '<span class="label label-danger">Ditolak</span>';
+                      } ?>
+                      <td><?= $status_cuti ?></td>
 
-                    <!-- <td style="display:inline-flex;">
+                      <!-- <td style="display:inline-flex;">
                       <a style="margin-right: 5px;" href="<?= base_url('cuti/cutiditolak/' . $value->id) ?>" type="button" class="btn btn-xs btn-danger btn-reject" name="btn_delete"><i class="fa fa-times-circle"></i>Ditolak</a>
                       <a href="<?= base_url('cuti/cutidisetujui/' . $value->id) ?>" class="btn btn-xs btn-success btn-accept"><span class="fa fa-check-circle"></span>Disetujui</a>
                     </td> -->
-                  </tr>
-                <?php endforeach; ?>
-
+                    </tr>
+                  <?php endforeach; ?>
+                <?php } else {
+                  echo '<tr><td colspan="8" style="text-align:center">DATA KOSONG
+                    </td><tr/>';
+                } ?>
               </tbody>
             </table>
           </div><!-- /.box-body -->

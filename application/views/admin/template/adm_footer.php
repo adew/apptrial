@@ -142,7 +142,6 @@
         $('#dc13').text(response.data.nama1);
         $('#dc14').text(response.data.nama2);
         $('#detail-cuti').attr('data-id', response.data.id);
-
         if (response.data.status_pb == 2) {
           $('#approve_pb').html('');
           $('#approve_pb').html('<label style="padding:8px;" class="label label-danger"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbspPengajuan cuti ditolak</label>');
@@ -154,7 +153,9 @@
             $('#approve_pb').html('');
           } else {
             $('#approve_pb').html('');
-            $('#approve_pb').html('<a id="approve_pb1" style="margin-right: 5px;" href="<?= base_url('cuti/cutiditolak/pb') ?>" type="button" class="btn btn-sm btn-danger btn-reject"><i class="fa fa-times-circle"></i>Ditolak</a><a id="approve_pb2" href="<?= base_url('cuti/cutidisetujui/pb') ?>" class="btn btn-sm btn-success btn-accept"><span class="fa fa-check-circle"></span>Disetujui</a>');
+            if (response.data.pejabat_berwenang == nip && response.data.status_al != 0) {
+              $('#approve_pb').html('<a id="approve_pb1" style="margin-right: 5px;" href="<?= base_url('cuti/cutiditolak/pb') ?>" type="button" class="btn btn-sm btn-danger btn-reject"><i class="fa fa-times-circle"></i>Ditolak</a><a id="approve_pb2" href="<?= base_url('cuti/cutidisetujui/pb') ?>" class="btn btn-sm btn-success btn-accept"><span class="fa fa-check-circle"></span>Disetujui</a>');
+            }
           }
         }
         //======================
@@ -169,7 +170,9 @@
             $('#approve_al').html('');
           } else {
             $('#approve_al').html('');
-            $('#approve_al').html('<a id="approve_al1" style="margin-right: 5px;" href="<?= base_url('cuti/cutiditolak/al') ?>" type="button" class="btn btn-sm btn-danger btn-reject" name="btn_delete"><i class="fa fa-times-circle"></i>Ditolak</a><a id="approve_al2" href="<?= base_url('cuti/cutidisetujui/al') ?>" class="btn btn-sm btn-success btn-accept"><span class="fa fa-check-circle"></span>Disetujui</a>');
+            if (response.data.atasan_langsung == nip) {
+              $('#approve_al').html('<a id="approve_al1" style="margin-right: 5px;" href="<?= base_url('cuti/cutiditolak/al') ?>" type="button" class="btn btn-sm btn-danger btn-reject" name="btn_delete"><i class="fa fa-times-circle"></i>Ditolak</a><a id="approve_al2" href="<?= base_url('cuti/cutidisetujui/al') ?>" class="btn btn-sm btn-success btn-accept"><span class="fa fa-check-circle"></span>Disetujui</a>');
+            }
           }
         }
 
@@ -182,9 +185,62 @@
   $("#detail-cuti").on("hidden.bs.modal", function() {
     location.reload();
   });
+
+  // SELECT JATAH CUTI
+  $('#nipjc').on('change', function() {
+    var nip = $('#nipjc').val();
+    var th = $('#tahunjc').val();
+    load_jatah_cuti(nip, th);
+  });
+
+  $('#tahunjc').on('change', function() {
+    var nip = $('#nipjc').val();
+    var th = $('#tahunjc').val();
+    load_jatah_cuti(nip, th);
+  });
+
+
+  function load_jatah_cuti(nip, th) {
+    $.ajax({
+      url: '<?= site_url("cuti/load_jatah_cuti/") ?>' + nip + '/' + th,
+      type: "GET",
+      dataType: 'JSON',
+      success: function(response) {
+        if (response.status == true) {
+          $('#cuti_tahunan_pakai').val(response.data.c_tahunan_pakai);
+          $('#cuti_besar_pakai').val(response.data.c_besar_pakai);
+          $('#cuti_sakit_pakai').val(response.data.c_sakit_pakai);
+          $('#cuti_lahir_pakai').val(response.data.c_lahir_pakai);
+          $('#cuti_alpen_pakai').val(response.data.c_alpen_pakai);
+          $('#cuti_dtn_pakai').val(response.data.c_dtn_pakai);
+
+          $('#cuti_tahunan_sisa').val($('#cuti_tahunan_kuota').val() - response.data.c_tahunan_pakai);
+          $('#cuti_besar_sisa').val($('#cuti_besar_kuota').val() - response.data.c_besar_pakai);
+          $('#cuti_sakit_sisa').val($('#cuti_sakit_kuota').val() - response.data.c_sakit_pakai);
+          $('#cuti_lahir_sisa').val($('#cuti_lahir_kuota').val() - response.data.c_lahir_pakai);
+          $('#cuti_alpen_sisa').val($('#cuti_alpen_kuota').val() - response.data.c_alpen_pakai);
+          $('#cuti_dtn_sisa').val($('#cuti_dtn_kuota').val() - response.data.c_dtn_pakai);
+        } else {
+          $('#cuti_tahunan_pakai').val('');
+          $('#cuti_besar_pakai').val('');
+          $('#cuti_sakit_pakai').val('');
+          $('#cuti_lahir_pakai').val('');
+          $('#cuti_alpen_pakai').val('');
+          $('#cuti_dtn_pakai').val('');
+
+          $('#cuti_tahunan_sisa').val('');
+          $('#cuti_besar_sisa').val('');
+          $('#cuti_sakit_sisa').val('');
+          $('#cuti_lahir_sisa').val('');
+          $('#cuti_alpen_sisa').val('');
+          $('#cuti_dtn_sisa').val('');
+        }
+
+
+      }
+    });
+  }
 </script>
-
-
 
 <script>
   //GRAPH
@@ -212,7 +268,13 @@
       async: false,
       contentType: "application/json; charset=utf-8",
       success: function(jsonObject) {
-        graph.setData(jsonObject);
+        // alert(jsonObject.status);
+        if (jsonObject.status == true) {
+          graph.setData(jsonObject.data);
+        } else {
+          $('#examplefirst').html('<span colspan="8" style="text-align:center">DATA KOSONG</span>');
+        }
+
       }
     });
   });
@@ -385,14 +447,26 @@
   $("#form1").submit(function(event) {
     event.preventDefault();
     var getLink = $(this).attr('action');
- 
+
     $.ajax({
       url: getLink,
       type: 'post',
       dataType: 'json',
       data: $('form#form1').serialize(),
       success: function(data) {
-        alert(data.message)
+        if (data.status == true) {
+          setTimeout(function() {
+            swal({
+              title: data.message,
+              // text: "Message!",
+              type: "success",
+              timer: 2000,
+              showConfirmButton: false
+            }, function() {
+              swal.close();
+            });
+          }, 300);
+        }
       }
     });
   });
