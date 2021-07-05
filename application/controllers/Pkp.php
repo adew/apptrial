@@ -8,6 +8,7 @@ class Pkp extends CI_Controller
   {
     parent::__construct();
     $this->load->model('M_admin');
+    $this->load->model('M_cuti');
     $this->load->library('upload');
     if ($this->session->userdata('status') == 'login') {
       return true;
@@ -18,7 +19,6 @@ class Pkp extends CI_Controller
 
   public function index()
   {
-
     if ($this->session->userdata('status') == 'login') {
       $data['avatar'] = $this->session->userdata('foto_profil');
 
@@ -38,9 +38,16 @@ class Pkp extends CI_Controller
   public function details()
   {
     $id = $this->uri->segment(3);
+
+    //MOITORING PKP
     $where = array('nip' => $id);
     $data['data_user'] = $this->M_admin->get_data('user', $where);
     $data['data_pkp'] = $this->M_admin->get_data('tb_pkp', $where);
+
+    //MOITORING CUTI
+    $query = $this->db->query("SELECT * FROM tb_pengajuan_cuti WHERE nip=$id");
+    $data['list_data'] = $query->result();
+    $data['jatah_cuti'] = $this->M_cuti->get_data_array('tb_jatah_cuti', 'c_nip=' . $id);
 
     $data['avatar'] = $this->session->userdata('foto_profil');
     $this->session->set_userdata($data);

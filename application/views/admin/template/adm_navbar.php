@@ -1,11 +1,15 @@
-<!-- <style>
-  header.main-header {
+<style>
+  /* header.main-header {
     width: 100%;
     position: -webkit-sticky;
     position: s;
     top: 0;
+  } */
+  .logo-p {
+    font-weight: 700;
+    text-shadow: 3px 2px 2px #000000;
   }
-</style> -->
+</style>
 
 <body class="hold-transition skin-blue sidebar-mini">
   <div class="wrapper">
@@ -18,7 +22,7 @@
         <!-- logo for regular state and mobile devices -->
         <span class="logo-lg" style="font-family :Courier New, Courier, monospace; font-size:35px; color:
 #fff">
-          <b>PATTIMURA</b></span>
+          <b class="logo-p">PATTIMURA</b></span>
       </li>
       <!-- Header Navbar: style can be found in header.less -->
       <nav class="navbar navbar-static-top">

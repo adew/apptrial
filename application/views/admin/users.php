@@ -122,6 +122,15 @@
       return false;
     });
 
+    $(document).ready(function() {
+      $("li.nav-item a").on("click", function() {
+        $(".nav-item.active").removeClass("active");
+        $(this).parent().addClass("active");
+      }).filter(function() {
+        return window.location.href.indexOf($(this).attr('href').trim()) > -1;
+      }).click();
+    });
+
     $.ajax({
       url: '<?= site_url("cuti/notif_cuti/") ?>',
       dataType: 'JSON',

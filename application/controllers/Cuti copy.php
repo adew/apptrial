@@ -1,8 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 define('JATAH_CUTI', 12);
-// require_once './application/libraries/phpword/bootstrap.php';
-require './application/libraries/vendor/autoload.php';
+require_once './application/libraries/phpword/bootstrap.php';
 
 class Cuti extends CI_Controller
 {
@@ -56,25 +55,13 @@ class Cuti extends CI_Controller
   public function exportword()
   {
     $id = $this->uri->segment(3);
-
-    $template = new \PhpOffice\PhpWord\TemplateProcessor('template.docx');
-
-    // $phpWord = new \PhpOffice\PhpWord\PhpWord();
-    // $template = $phpWord->loadTemplate('./template.docx');
-
+    $phpWord = new \PhpOffice\PhpWord\PhpWord();
+    $template = $phpWord->loadTemplate('./template.docx');
+    // print_r($template);
+    // die;
     $data = $this->M_cuti->get_export_word($id);
-    $tahun = date('Y', strtotime($data['tgl_awal']));
-    $data1 = $this->M_cuti->get_array('tb_jatah_cuti', "c_nip='" . $data['nip'] . "' AND c_tahun='" . $tahun . "'");
-    $data['sc_tahunan'] = $data1['c_tahunan_kuota'] - $data1['c_tahunan_pakai'];
-    $data['sc_besar'] = $data1['c_besar_kuota'] - $data1['c_besar_pakai'];
-    $data['sc_sakit'] = $data1['c_sakit_kuota'] - $data1['c_sakit_pakai'];
-    $data['sc_lahir'] = $data1['c_lahir_kuota'] - $data1['c_lahir_pakai'];
-    $data['sc_alpen'] = $data1['c_alpen_kuota'] - $data1['c_alpen_pakai'];
-    $data['sc_dtn'] = $data1['c_dtn_kuota'] - $data1['c_dtn_pakai'];
-
-
     $key_jenis_cuti = $data['jenis_cuti'];
-    $data['creat_at'] = date('d-m-Y', strtotime($data['creat_at']));
+
     $data['cuti_tahunan'] = '-';
     $data['cuti_besar'] = '-';
     $data['cuti_sakit'] = '-';
@@ -100,6 +87,8 @@ class Cuti extends CI_Controller
     }
     // print_r($data);
     // die;
+
+
     $filename = 'Cuti-' . $data['nama'] . date('d-m-Y') . '.docx';
     $template->setValues($data);
 
@@ -111,6 +100,7 @@ class Cuti extends CI_Controller
     header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
     header('Expires: 0');
     $filename = 'php://output'; // Change filename to force download
+    // $template->saveAs($filename, 'Word2007', true);
     $template->saveAs($filename);
     // unlink($filename);
     // exit;
@@ -125,7 +115,8 @@ class Cuti extends CI_Controller
     $data['avatar'] = $this->session->userdata('foto_profil');
     $data['list_data'] = $this->M_cuti->list_data_cuti($nip, $role);
     // $data['notif_data'] = $this->M_cuti->count_cuti_nip($this->session->userdata('nip'));
-
+    // print_r($data);
+    // die;
     $data['title'] = 'PATTIMURA';
     $this->load->view('admin/template/adm_header', $data);
     $this->load->view('admin/template/adm_navbar', $data);

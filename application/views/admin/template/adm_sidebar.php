@@ -21,13 +21,14 @@
     <!-- /.search form -->
     <!-- sidebar menu: : style can be found in sidebar.less -->
     <ul class="sidebar-menu" data-widget="tree">
-      <li class="header">MENU PKP</li>
+      <li class="header">MONITORING</li>
 
       <li class="nav-item">
         <a href="<?php echo base_url('pkp') ?>">
-          <i class="fa fa-desktop"></i> <span>Monitoring Kinerja</span>
+          <i class="fa fa-desktop"></i> <span>Monitoring Cuti & Kinerja</span>
         </a>
       </li>
+      <li class="header">MENU PKP</li>
       <li class="nav-item">
         <a href="<?php echo base_url('pkp/datapkp') ?>">
           <i class="fa fa-database" aria-hidden="true"></i> <span>Data PKP</span></a>
@@ -37,10 +38,10 @@
           <i class="fa fa-file-excel-o" aria-hidden="true"></i> <span>Input Data PKP</span></a>
       </li>
       <li class="header">MENU CUTI</li>
-      <li class="nav-item">
+      <!-- <li class="nav-item">
         <a href="<?php echo base_url('cuti') ?>">
           <i class="fa fa-desktop" aria-hidden="true"></i> <span>Monitoring Cuti</span></a>
-      </li>
+      </li> -->
       <li class="nav-item">
         <a href="<?php echo base_url('cuti/datacuti') ?>">
           <i class="fa fa-database" aria-hidden="true"></i>
@@ -70,7 +71,7 @@
           <i class="fa fa-cogs" aria-hidden="true"></i> <span>Profile</span></a>
       </li>
       <?php if ($this->session->userdata('role') == 1) { ?>
-        <li class="nav-item active">
+        <li class="nav-item">
           <a href="<?php echo base_url('admin/users') ?>">
             <i class="fa fa-fw fa-users" aria-hidden="true"></i> <span>Pegawai</span></a>
         </li>

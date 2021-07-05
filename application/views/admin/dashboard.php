@@ -22,7 +22,7 @@
   <section class="content">
     <div class="row">
       <section class="col-lg-12 connectedSortable">
-        <div class="scroller box box-warning" style="overflow-y: scroll; max-height:500px;">
+        <div class="scroller box box-warning" style="overflow-y: scroll; height:80%">
           <div class="box-body">
             <?php foreach ($list_data as $list => $value) : ?>
               <ul class="users-list">

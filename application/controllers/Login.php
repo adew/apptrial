@@ -76,11 +76,11 @@ class Login extends CI_Controller
 							}
 						}
 						if ($isi->role == 1) {
-							redirect(base_url('admin/users'));
-						} else if ($isi->role == 0) {
+							// 	redirect(base_url('admin/users'));
+							// } else if ($isi->role == 0) {
 							redirect(base_url('pkp'));
 						} else {
-							redirect(base_url());
+							redirect(base_url('pkp'));
 						}
 					} else {
 						$this->session->set_flashdata('msg', 'Username Dan Password Salah');

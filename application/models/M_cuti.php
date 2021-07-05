@@ -84,6 +84,15 @@ class M_cuti extends CI_Model
     return $query->row();
   }
 
+  public function get_array($tabel, $id)
+  {
+    $query = $this->db->select()
+      ->from($tabel)
+      ->where($id)
+      ->get();
+    return $query->row_array();
+  }
+
   public function get_data($tabel, $id_transaksi)
   {
     $query = $this->db->select()

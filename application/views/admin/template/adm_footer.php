@@ -221,19 +221,19 @@
           $('#cuti_alpen_sisa').val($('#cuti_alpen_kuota').val() - response.data.c_alpen_pakai);
           $('#cuti_dtn_sisa').val($('#cuti_dtn_kuota').val() - response.data.c_dtn_pakai);
         } else {
-          $('#cuti_tahunan_pakai').val('');
-          $('#cuti_besar_pakai').val('');
-          $('#cuti_sakit_pakai').val('');
-          $('#cuti_lahir_pakai').val('');
-          $('#cuti_alpen_pakai').val('');
-          $('#cuti_dtn_pakai').val('');
+          $('#cuti_tahunan_pakai').val('0');
+          $('#cuti_besar_pakai').val('0');
+          $('#cuti_sakit_pakai').val('0');
+          $('#cuti_lahir_pakai').val('0');
+          $('#cuti_alpen_pakai').val('0');
+          $('#cuti_dtn_pakai').val('0');
 
-          $('#cuti_tahunan_sisa').val('');
-          $('#cuti_besar_sisa').val('');
-          $('#cuti_sakit_sisa').val('');
-          $('#cuti_lahir_sisa').val('');
-          $('#cuti_alpen_sisa').val('');
-          $('#cuti_dtn_sisa').val('');
+          $('#cuti_tahunan_sisa').val('0');
+          $('#cuti_besar_sisa').val('0');
+          $('#cuti_sakit_sisa').val('0');
+          $('#cuti_lahir_sisa').val('0');
+          $('#cuti_alpen_sisa').val('0');
+          $('#cuti_dtn_sisa').val('0');
         }
 
 
@@ -289,7 +289,7 @@
       confirmButtonColor: '#d9534f',
       showCancelButton: true,
     }, function() {
-      window.location.href = getLink
+      window.location = getLink;
     });
     return false;
   });
@@ -443,7 +443,6 @@
     }).click();
   });
 
-  // $('input#submitButton').click(function() {
   $("#form1").submit(function(event) {
     event.preventDefault();
     var getLink = $(this).attr('action');
@@ -466,6 +465,40 @@
               swal.close();
             });
           }, 300);
+        } else {
+          alert(data.message);
+        }
+      }
+    });
+  });
+
+  $("#form2").submit(function(event) {
+    event.preventDefault();
+    var getLink = $(this).attr('action');
+    // alert(getLink);
+    // return false;
+    $.ajax({
+      url: getLink,
+      type: 'post',
+      dataType: 'json',
+      data: $('form#form2').serialize(),
+      success: function(data) {
+        if (data.status == true) {
+          setTimeout(function() {
+            swal({
+              title: data.message,
+              // text: "Message!",
+              type: "success",
+              timer: 2000,
+              showConfirmButton: false
+            }, function() {
+              swal.close();
+              // window.location.href = 'http://localhost/pattimura/cuti/datacuti';
+              window.location = "<?= base_url('cuti/datacuti'); ?>";
+            });
+          }, 300);
+        } else {
+          alert(data.message);
         }
       }
     });
